@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jinshipark.hfzf.mapper.JinshiAreaMapper">
+  <resultMap id="BaseResultMap" type="com.jinshipark.hfzf.model.JinshiArea">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="agent_id" jdbcType="INTEGER" property="agentId" />
+    <result column="park_id" jdbcType="INTEGER" property="parkId" />
+    <result column="area_number" jdbcType="VARCHAR" property="areaNumber" />
+    <result column="parking_count" jdbcType="INTEGER" property="parkingCount" />
+    <result column="temporary_parking_count" jdbcType="INTEGER" property="temporaryParkingCount" />
+    <result column="pay_month" jdbcType="INTEGER" property="payMonth" />
+    <result column="pay_quarter" jdbcType="INTEGER" property="payQuarter" />
+    <result column="pay_year" jdbcType="INTEGER" property="payYear" />
+    <result column="allow_negative_car" jdbcType="INTEGER" property="allowNegativeCar" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, area_name, agent_id, park_id, area_number, parking_count, temporary_parking_count, 
+    pay_month, pay_quarter, pay_year, allow_negative_car
+  </sql>
+  <select id="selectByExample" parameterType="com.jinshipark.hfzf.model.JinshiAreaExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from jinshi_area
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from jinshi_area
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from jinshi_area
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jinshipark.hfzf.model.JinshiAreaExample">
+    delete from jinshi_area
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jinshipark.hfzf.model.JinshiArea">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into jinshi_area (area_name, agent_id, park_id, 
+      area_number, parking_count, temporary_parking_count, 
+      pay_month, pay_quarter, pay_year, 
+      allow_negative_car)
+    values (#{areaName,jdbcType=VARCHAR}, #{agentId,jdbcType=INTEGER}, #{parkId,jdbcType=INTEGER}, 
+      #{areaNumber,jdbcType=VARCHAR}, #{parkingCount,jdbcType=INTEGER}, #{temporaryParkingCount,jdbcType=INTEGER}, 
+      #{payMonth,jdbcType=INTEGER}, #{payQuarter,jdbcType=INTEGER}, #{payYear,jdbcType=INTEGER}, 
+      #{allowNegativeCar,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jinshipark.hfzf.model.JinshiArea">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into jinshi_area
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="areaName != null">
+        area_name,
+      </if>
+      <if test="agentId != null">
+        agent_id,
+      </if>
+      <if test="parkId != null">
+        park_id,
+      </if>
+      <if test="areaNumber != null">
+        area_number,
+      </if>
+      <if test="parkingCount != null">
+        parking_count,
+      </if>
+      <if test="temporaryParkingCount != null">
+        temporary_parking_count,
+      </if>
+      <if test="payMonth != null">
+        pay_month,
+      </if>
+      <if test="payQuarter != null">
+        pay_quarter,
+      </if>
+      <if test="payYear != null">
+        pay_year,
+      </if>
+      <if test="allowNegativeCar != null">
+        allow_negative_car,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="areaName != null">
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="agentId != null">
+        #{agentId,jdbcType=INTEGER},
+      </if>
+      <if test="parkId != null">
+        #{parkId,jdbcType=INTEGER},
+      </if>
+      <if test="areaNumber != null">
+        #{areaNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingCount != null">
+        #{parkingCount,jdbcType=INTEGER},
+      </if>
+      <if test="temporaryParkingCount != null">
+        #{temporaryParkingCount,jdbcType=INTEGER},
+      </if>
+      <if test="payMonth != null">
+        #{payMonth,jdbcType=INTEGER},
+      </if>
+      <if test="payQuarter != null">
+        #{payQuarter,jdbcType=INTEGER},
+      </if>
+      <if test="payYear != null">
+        #{payYear,jdbcType=INTEGER},
+      </if>
+      <if test="allowNegativeCar != null">
+        #{allowNegativeCar,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jinshipark.hfzf.model.JinshiAreaExample" resultType="java.lang.Long">
+    select count(*) from jinshi_area
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update jinshi_area
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.areaName != null">
+        area_name = #{record.areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agentId != null">
+        agent_id = #{record.agentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.parkId != null">
+        park_id = #{record.parkId,jdbcType=INTEGER},
+      </if>
+      <if test="record.areaNumber != null">
+        area_number = #{record.areaNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parkingCount != null">
+        parking_count = #{record.parkingCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.temporaryParkingCount != null">
+        temporary_parking_count = #{record.temporaryParkingCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.payMonth != null">
+        pay_month = #{record.payMonth,jdbcType=INTEGER},
+      </if>
+      <if test="record.payQuarter != null">
+        pay_quarter = #{record.payQuarter,jdbcType=INTEGER},
+      </if>
+      <if test="record.payYear != null">
+        pay_year = #{record.payYear,jdbcType=INTEGER},
+      </if>
+      <if test="record.allowNegativeCar != null">
+        allow_negative_car = #{record.allowNegativeCar,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update jinshi_area
+    set id = #{record.id,jdbcType=INTEGER},
+      area_name = #{record.areaName,jdbcType=VARCHAR},
+      agent_id = #{record.agentId,jdbcType=INTEGER},
+      park_id = #{record.parkId,jdbcType=INTEGER},
+      area_number = #{record.areaNumber,jdbcType=VARCHAR},
+      parking_count = #{record.parkingCount,jdbcType=INTEGER},
+      temporary_parking_count = #{record.temporaryParkingCount,jdbcType=INTEGER},
+      pay_month = #{record.payMonth,jdbcType=INTEGER},
+      pay_quarter = #{record.payQuarter,jdbcType=INTEGER},
+      pay_year = #{record.payYear,jdbcType=INTEGER},
+      allow_negative_car = #{record.allowNegativeCar,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jinshipark.hfzf.model.JinshiArea">
+    update jinshi_area
+    <set>
+      <if test="areaName != null">
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="agentId != null">
+        agent_id = #{agentId,jdbcType=INTEGER},
+      </if>
+      <if test="parkId != null">
+        park_id = #{parkId,jdbcType=INTEGER},
+      </if>
+      <if test="areaNumber != null">
+        area_number = #{areaNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingCount != null">
+        parking_count = #{parkingCount,jdbcType=INTEGER},
+      </if>
+      <if test="temporaryParkingCount != null">
+        temporary_parking_count = #{temporaryParkingCount,jdbcType=INTEGER},
+      </if>
+      <if test="payMonth != null">
+        pay_month = #{payMonth,jdbcType=INTEGER},
+      </if>
+      <if test="payQuarter != null">
+        pay_quarter = #{payQuarter,jdbcType=INTEGER},
+      </if>
+      <if test="payYear != null">
+        pay_year = #{payYear,jdbcType=INTEGER},
+      </if>
+      <if test="allowNegativeCar != null">
+        allow_negative_car = #{allowNegativeCar,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jinshipark.hfzf.model.JinshiArea">
+    update jinshi_area
+    set area_name = #{areaName,jdbcType=VARCHAR},
+      agent_id = #{agentId,jdbcType=INTEGER},
+      park_id = #{parkId,jdbcType=INTEGER},
+      area_number = #{areaNumber,jdbcType=VARCHAR},
+      parking_count = #{parkingCount,jdbcType=INTEGER},
+      temporary_parking_count = #{temporaryParkingCount,jdbcType=INTEGER},
+      pay_month = #{payMonth,jdbcType=INTEGER},
+      pay_quarter = #{payQuarter,jdbcType=INTEGER},
+      pay_year = #{payYear,jdbcType=INTEGER},
+      allow_negative_car = #{allowNegativeCar,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

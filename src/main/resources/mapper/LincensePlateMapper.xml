@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jinshipark.hfzf.mapper.LincensePlateMapper">
+  <resultMap id="BaseResultMap" type="com.jinshipark.hfzf.model.LincensePlate">
+    <id column="lp_id" jdbcType="INTEGER" property="lpId" />
+    <result column="lp_member_id_car" jdbcType="VARCHAR" property="lpMemberIdCar" />
+    <result column="lp_lincense_plate_id_car" jdbcType="VARCHAR" property="lpLincensePlateIdCar" />
+    <result column="lp_service_type_car" jdbcType="VARCHAR" property="lpServiceTypeCar" />
+    <result column="lp_inbound_time" jdbcType="TIMESTAMP" property="lpInboundTime" />
+    <result column="lp_departure_time" jdbcType="TIMESTAMP" property="lpDepartureTime" />
+    <result column="lp_rent_time" jdbcType="VARCHAR" property="lpRentTime" />
+    <result column="lp_create_time" jdbcType="TIMESTAMP" property="lpCreateTime" />
+    <result column="lp_order_id" jdbcType="VARCHAR" property="lpOrderId" />
+    <result column="lp_car_type" jdbcType="VARCHAR" property="lpCarType" />
+    <result column="lp_car_color" jdbcType="VARCHAR" property="lpCarColor" />
+    <result column="lp_lincense_type" jdbcType="VARCHAR" property="lpLincenseType" />
+    <result column="lp_parking_often" jdbcType="VARCHAR" property="lpParkingOften" />
+    <result column="lp_parking_cost" jdbcType="VARCHAR" property="lpParkingCost" />
+    <result column="lp_parking_real_cost" jdbcType="VARCHAR" property="lpParkingRealCost" />
+    <result column="lp_inbound_cname" jdbcType="VARCHAR" property="lpInboundCname" />
+    <result column="lp_departure_cname" jdbcType="VARCHAR" property="lpDepartureCname" />
+    <result column="lp_parking_name" jdbcType="VARCHAR" property="lpParkingName" />
+    <result column="lp_agent_name" jdbcType="VARCHAR" property="lpAgentName" />
+    <result column="lp_order_state" jdbcType="VARCHAR" property="lpOrderState" />
+    <result column="lp_payment_type" jdbcType="VARCHAR" property="lpPaymentType" />
+    <result column="lp_lg_id" jdbcType="INTEGER" property="lpLgId" />
+    <result column="lp_lg_type" jdbcType="INTEGER" property="lpLgType" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    lp_id, lp_member_id_car, lp_lincense_plate_id_car, lp_service_type_car, lp_inbound_time, 
+    lp_departure_time, lp_rent_time, lp_create_time, lp_order_id, lp_car_type, lp_car_color, 
+    lp_lincense_type, lp_parking_often, lp_parking_cost, lp_parking_real_cost, lp_inbound_cname, 
+    lp_departure_cname, lp_parking_name, lp_agent_name, lp_order_state, lp_payment_type, 
+    lp_lg_id, lp_lg_type
+  </sql>
+  <select id="selectByExample" parameterType="com.jinshipark.hfzf.model.LincensePlateExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from lincense_plate
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lincense_plate
+    where lp_id = #{lpId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lincense_plate
+    where lp_id = #{lpId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jinshipark.hfzf.model.LincensePlateExample">
+    delete from lincense_plate
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jinshipark.hfzf.model.LincensePlate">
+    <selectKey keyProperty="lpId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into lincense_plate (lp_member_id_car, lp_lincense_plate_id_car, 
+      lp_service_type_car, lp_inbound_time, lp_departure_time, 
+      lp_rent_time, lp_create_time, lp_order_id, 
+      lp_car_type, lp_car_color, lp_lincense_type, 
+      lp_parking_often, lp_parking_cost, lp_parking_real_cost, 
+      lp_inbound_cname, lp_departure_cname, lp_parking_name, 
+      lp_agent_name, lp_order_state, lp_payment_type, 
+      lp_lg_id, lp_lg_type)
+    values (#{lpMemberIdCar,jdbcType=VARCHAR}, #{lpLincensePlateIdCar,jdbcType=VARCHAR}, 
+      #{lpServiceTypeCar,jdbcType=VARCHAR}, #{lpInboundTime,jdbcType=TIMESTAMP}, #{lpDepartureTime,jdbcType=TIMESTAMP}, 
+      #{lpRentTime,jdbcType=VARCHAR}, #{lpCreateTime,jdbcType=TIMESTAMP}, #{lpOrderId,jdbcType=VARCHAR}, 
+      #{lpCarType,jdbcType=VARCHAR}, #{lpCarColor,jdbcType=VARCHAR}, #{lpLincenseType,jdbcType=VARCHAR}, 
+      #{lpParkingOften,jdbcType=VARCHAR}, #{lpParkingCost,jdbcType=VARCHAR}, #{lpParkingRealCost,jdbcType=VARCHAR}, 
+      #{lpInboundCname,jdbcType=VARCHAR}, #{lpDepartureCname,jdbcType=VARCHAR}, #{lpParkingName,jdbcType=VARCHAR}, 
+      #{lpAgentName,jdbcType=VARCHAR}, #{lpOrderState,jdbcType=VARCHAR}, #{lpPaymentType,jdbcType=VARCHAR}, 
+      #{lpLgId,jdbcType=INTEGER}, #{lpLgType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jinshipark.hfzf.model.LincensePlate">
+    <selectKey keyProperty="lpId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into lincense_plate
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lpMemberIdCar != null">
+        lp_member_id_car,
+      </if>
+      <if test="lpLincensePlateIdCar != null">
+        lp_lincense_plate_id_car,
+      </if>
+      <if test="lpServiceTypeCar != null">
+        lp_service_type_car,
+      </if>
+      <if test="lpInboundTime != null">
+        lp_inbound_time,
+      </if>
+      <if test="lpDepartureTime != null">
+        lp_departure_time,
+      </if>
+      <if test="lpRentTime != null">
+        lp_rent_time,
+      </if>
+      <if test="lpCreateTime != null">
+        lp_create_time,
+      </if>
+      <if test="lpOrderId != null">
+        lp_order_id,
+      </if>
+      <if test="lpCarType != null">
+        lp_car_type,
+      </if>
+      <if test="lpCarColor != null">
+        lp_car_color,
+      </if>
+      <if test="lpLincenseType != null">
+        lp_lincense_type,
+      </if>
+      <if test="lpParkingOften != null">
+        lp_parking_often,
+      </if>
+      <if test="lpParkingCost != null">
+        lp_parking_cost,
+      </if>
+      <if test="lpParkingRealCost != null">
+        lp_parking_real_cost,
+      </if>
+      <if test="lpInboundCname != null">
+        lp_inbound_cname,
+      </if>
+      <if test="lpDepartureCname != null">
+        lp_departure_cname,
+      </if>
+      <if test="lpParkingName != null">
+        lp_parking_name,
+      </if>
+      <if test="lpAgentName != null">
+        lp_agent_name,
+      </if>
+      <if test="lpOrderState != null">
+        lp_order_state,
+      </if>
+      <if test="lpPaymentType != null">
+        lp_payment_type,
+      </if>
+      <if test="lpLgId != null">
+        lp_lg_id,
+      </if>
+      <if test="lpLgType != null">
+        lp_lg_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lpMemberIdCar != null">
+        #{lpMemberIdCar,jdbcType=VARCHAR},
+      </if>
+      <if test="lpLincensePlateIdCar != null">
+        #{lpLincensePlateIdCar,jdbcType=VARCHAR},
+      </if>
+      <if test="lpServiceTypeCar != null">
+        #{lpServiceTypeCar,jdbcType=VARCHAR},
+      </if>
+      <if test="lpInboundTime != null">
+        #{lpInboundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lpDepartureTime != null">
+        #{lpDepartureTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lpRentTime != null">
+        #{lpRentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="lpCreateTime != null">
+        #{lpCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lpOrderId != null">
+        #{lpOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="lpCarType != null">
+        #{lpCarType,jdbcType=VARCHAR},
+      </if>
+      <if test="lpCarColor != null">
+        #{lpCarColor,jdbcType=VARCHAR},
+      </if>
+      <if test="lpLincenseType != null">
+        #{lpLincenseType,jdbcType=VARCHAR},
+      </if>
+      <if test="lpParkingOften != null">
+        #{lpParkingOften,jdbcType=VARCHAR},
+      </if>
+      <if test="lpParkingCost != null">
+        #{lpParkingCost,jdbcType=VARCHAR},
+      </if>
+      <if test="lpParkingRealCost != null">
+        #{lpParkingRealCost,jdbcType=VARCHAR},
+      </if>
+      <if test="lpInboundCname != null">
+        #{lpInboundCname,jdbcType=VARCHAR},
+      </if>
+      <if test="lpDepartureCname != null">
+        #{lpDepartureCname,jdbcType=VARCHAR},
+      </if>
+      <if test="lpParkingName != null">
+        #{lpParkingName,jdbcType=VARCHAR},
+      </if>
+      <if test="lpAgentName != null">
+        #{lpAgentName,jdbcType=VARCHAR},
+      </if>
+      <if test="lpOrderState != null">
+        #{lpOrderState,jdbcType=VARCHAR},
+      </if>
+      <if test="lpPaymentType != null">
+        #{lpPaymentType,jdbcType=VARCHAR},
+      </if>
+      <if test="lpLgId != null">
+        #{lpLgId,jdbcType=INTEGER},
+      </if>
+      <if test="lpLgType != null">
+        #{lpLgType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jinshipark.hfzf.model.LincensePlateExample" resultType="java.lang.Long">
+    select count(*) from lincense_plate
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update lincense_plate
+    <set>
+      <if test="record.lpId != null">
+        lp_id = #{record.lpId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lpMemberIdCar != null">
+        lp_member_id_car = #{record.lpMemberIdCar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lpLincensePlateIdCar != null">
+        lp_lincense_plate_id_car = #{record.lpLincensePlateIdCar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lpServiceTypeCar != null">
+        lp_service_type_car = #{record.lpServiceTypeCar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lpInboundTime != null">
+        lp_inbound_time = #{record.lpInboundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lpDepartureTime != null">
+        lp_departure_time = #{record.lpDepartureTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lpRentTime != null">
+        lp_rent_time = #{record.lpRentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lpCreateTime != null">
+        lp_create_time = #{record.lpCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lpOrderId != null">
+        lp_order_id = #{record.lpOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lpCarType != null">
+        lp_car_type = #{record.lpCarType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lpCarColor != null">
+        lp_car_color = #{record.lpCarColor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lpLincenseType != null">
+        lp_lincense_type = #{record.lpLincenseType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lpParkingOften != null">
+        lp_parking_often = #{record.lpParkingOften,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lpParkingCost != null">
+        lp_parking_cost = #{record.lpParkingCost,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lpParkingRealCost != null">
+        lp_parking_real_cost = #{record.lpParkingRealCost,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lpInboundCname != null">
+        lp_inbound_cname = #{record.lpInboundCname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lpDepartureCname != null">
+        lp_departure_cname = #{record.lpDepartureCname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lpParkingName != null">
+        lp_parking_name = #{record.lpParkingName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lpAgentName != null">
+        lp_agent_name = #{record.lpAgentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lpOrderState != null">
+        lp_order_state = #{record.lpOrderState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lpPaymentType != null">
+        lp_payment_type = #{record.lpPaymentType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lpLgId != null">
+        lp_lg_id = #{record.lpLgId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lpLgType != null">
+        lp_lg_type = #{record.lpLgType,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update lincense_plate
+    set lp_id = #{record.lpId,jdbcType=INTEGER},
+      lp_member_id_car = #{record.lpMemberIdCar,jdbcType=VARCHAR},
+      lp_lincense_plate_id_car = #{record.lpLincensePlateIdCar,jdbcType=VARCHAR},
+      lp_service_type_car = #{record.lpServiceTypeCar,jdbcType=VARCHAR},
+      lp_inbound_time = #{record.lpInboundTime,jdbcType=TIMESTAMP},
+      lp_departure_time = #{record.lpDepartureTime,jdbcType=TIMESTAMP},
+      lp_rent_time = #{record.lpRentTime,jdbcType=VARCHAR},
+      lp_create_time = #{record.lpCreateTime,jdbcType=TIMESTAMP},
+      lp_order_id = #{record.lpOrderId,jdbcType=VARCHAR},
+      lp_car_type = #{record.lpCarType,jdbcType=VARCHAR},
+      lp_car_color = #{record.lpCarColor,jdbcType=VARCHAR},
+      lp_lincense_type = #{record.lpLincenseType,jdbcType=VARCHAR},
+      lp_parking_often = #{record.lpParkingOften,jdbcType=VARCHAR},
+      lp_parking_cost = #{record.lpParkingCost,jdbcType=VARCHAR},
+      lp_parking_real_cost = #{record.lpParkingRealCost,jdbcType=VARCHAR},
+      lp_inbound_cname = #{record.lpInboundCname,jdbcType=VARCHAR},
+      lp_departure_cname = #{record.lpDepartureCname,jdbcType=VARCHAR},
+      lp_parking_name = #{record.lpParkingName,jdbcType=VARCHAR},
+      lp_agent_name = #{record.lpAgentName,jdbcType=VARCHAR},
+      lp_order_state = #{record.lpOrderState,jdbcType=VARCHAR},
+      lp_payment_type = #{record.lpPaymentType,jdbcType=VARCHAR},
+      lp_lg_id = #{record.lpLgId,jdbcType=INTEGER},
+      lp_lg_type = #{record.lpLgType,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jinshipark.hfzf.model.LincensePlate">
+    update lincense_plate
+    <set>
+      <if test="lpMemberIdCar != null">
+        lp_member_id_car = #{lpMemberIdCar,jdbcType=VARCHAR},
+      </if>
+      <if test="lpLincensePlateIdCar != null">
+        lp_lincense_plate_id_car = #{lpLincensePlateIdCar,jdbcType=VARCHAR},
+      </if>
+      <if test="lpServiceTypeCar != null">
+        lp_service_type_car = #{lpServiceTypeCar,jdbcType=VARCHAR},
+      </if>
+      <if test="lpInboundTime != null">
+        lp_inbound_time = #{lpInboundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lpDepartureTime != null">
+        lp_departure_time = #{lpDepartureTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lpRentTime != null">
+        lp_rent_time = #{lpRentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="lpCreateTime != null">
+        lp_create_time = #{lpCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lpOrderId != null">
+        lp_order_id = #{lpOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="lpCarType != null">
+        lp_car_type = #{lpCarType,jdbcType=VARCHAR},
+      </if>
+      <if test="lpCarColor != null">
+        lp_car_color = #{lpCarColor,jdbcType=VARCHAR},
+      </if>
+      <if test="lpLincenseType != null">
+        lp_lincense_type = #{lpLincenseType,jdbcType=VARCHAR},
+      </if>
+      <if test="lpParkingOften != null">
+        lp_parking_often = #{lpParkingOften,jdbcType=VARCHAR},
+      </if>
+      <if test="lpParkingCost != null">
+        lp_parking_cost = #{lpParkingCost,jdbcType=VARCHAR},
+      </if>
+      <if test="lpParkingRealCost != null">
+        lp_parking_real_cost = #{lpParkingRealCost,jdbcType=VARCHAR},
+      </if>
+      <if test="lpInboundCname != null">
+        lp_inbound_cname = #{lpInboundCname,jdbcType=VARCHAR},
+      </if>
+      <if test="lpDepartureCname != null">
+        lp_departure_cname = #{lpDepartureCname,jdbcType=VARCHAR},
+      </if>
+      <if test="lpParkingName != null">
+        lp_parking_name = #{lpParkingName,jdbcType=VARCHAR},
+      </if>
+      <if test="lpAgentName != null">
+        lp_agent_name = #{lpAgentName,jdbcType=VARCHAR},
+      </if>
+      <if test="lpOrderState != null">
+        lp_order_state = #{lpOrderState,jdbcType=VARCHAR},
+      </if>
+      <if test="lpPaymentType != null">
+        lp_payment_type = #{lpPaymentType,jdbcType=VARCHAR},
+      </if>
+      <if test="lpLgId != null">
+        lp_lg_id = #{lpLgId,jdbcType=INTEGER},
+      </if>
+      <if test="lpLgType != null">
+        lp_lg_type = #{lpLgType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where lp_id = #{lpId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jinshipark.hfzf.model.LincensePlate">
+    update lincense_plate
+    set lp_member_id_car = #{lpMemberIdCar,jdbcType=VARCHAR},
+      lp_lincense_plate_id_car = #{lpLincensePlateIdCar,jdbcType=VARCHAR},
+      lp_service_type_car = #{lpServiceTypeCar,jdbcType=VARCHAR},
+      lp_inbound_time = #{lpInboundTime,jdbcType=TIMESTAMP},
+      lp_departure_time = #{lpDepartureTime,jdbcType=TIMESTAMP},
+      lp_rent_time = #{lpRentTime,jdbcType=VARCHAR},
+      lp_create_time = #{lpCreateTime,jdbcType=TIMESTAMP},
+      lp_order_id = #{lpOrderId,jdbcType=VARCHAR},
+      lp_car_type = #{lpCarType,jdbcType=VARCHAR},
+      lp_car_color = #{lpCarColor,jdbcType=VARCHAR},
+      lp_lincense_type = #{lpLincenseType,jdbcType=VARCHAR},
+      lp_parking_often = #{lpParkingOften,jdbcType=VARCHAR},
+      lp_parking_cost = #{lpParkingCost,jdbcType=VARCHAR},
+      lp_parking_real_cost = #{lpParkingRealCost,jdbcType=VARCHAR},
+      lp_inbound_cname = #{lpInboundCname,jdbcType=VARCHAR},
+      lp_departure_cname = #{lpDepartureCname,jdbcType=VARCHAR},
+      lp_parking_name = #{lpParkingName,jdbcType=VARCHAR},
+      lp_agent_name = #{lpAgentName,jdbcType=VARCHAR},
+      lp_order_state = #{lpOrderState,jdbcType=VARCHAR},
+      lp_payment_type = #{lpPaymentType,jdbcType=VARCHAR},
+      lp_lg_id = #{lpLgId,jdbcType=INTEGER},
+      lp_lg_type = #{lpLgType,jdbcType=INTEGER}
+    where lp_id = #{lpId,jdbcType=INTEGER}
+  </update>
+</mapper>
