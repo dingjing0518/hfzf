@@ -5,6 +5,7 @@ import com.huifu.adapay.core.AdapayCore;
 import com.huifu.adapay.core.util.AdapaySign;
 import com.jinshipark.hfzf.service.AdapayAliPayService;
 import com.jinshipark.hfzf.service.AdapayWxPubService;
+import com.jinshipark.hfzf.service.LincensePlateService;
 import com.jinshipark.hfzf.utils.JinshiparkJSONResult;
 import com.jinshipark.hfzf.vo.AdapayRequstVO;
 import org.slf4j.Logger;
@@ -27,6 +28,9 @@ public class AdapayController {
     private AdapayAliPayService adapayAliPayService;
     @Autowired
     private AdapayWxPubService adapayWxPubService;
+    @Autowired
+    private LincensePlateService lincensePlateService;
+
 
     /**
      * 支付宝APP支付
@@ -78,6 +82,9 @@ public class AdapayController {
                 JSONObject jsonObject = JSONObject.parseObject(data);
                 String order_no = jsonObject.getString("order_no");
                 String pay_channel = jsonObject.getString("pay_channel");
+                String pay_amt = jsonObject.getString("pay_amt");
+
+                lincensePlateService.updateLincensePlate(order_no, pay_channel, pay_amt);
             }
         } catch (Exception e) {
             logger.info("异步回调开始，参数，request={}");

@@ -8,6 +8,7 @@ import com.jinshipark.hfzf.vo.AdapayRequstVO;
 import com.jinshipark.hfzf.service.AdapayAliPayService;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,10 +22,11 @@ public class AdapayAliPayServiceImpl implements AdapayAliPayService {
         paymentParams.put("app_id", ADAPayPropertyConfig.getStrValueByKey("app_id"));
         paymentParams.put("order_no", adapayRequstVO.getOrder_no());
         paymentParams.put("pay_channel", "alipay");
-        paymentParams.put("pay_amt", "0.01");
+        paymentParams.put("pay_amt", new DecimalFormat("0.00").format(Float.parseFloat(adapayRequstVO.getPay_amt())));
         paymentParams.put("currency", "cny");
-        paymentParams.put("goods_title", "测试商品");
-        paymentParams.put("goods_desc", "用于支付流程测试的商品");
+        paymentParams.put("goods_title", "停车缴费");
+        paymentParams.put("goods_desc", "停车缴费说明");
+        paymentParams.put("notify_url", ADAPayPropertyConfig.getStrValueByKey("notify_url"));
         try {
             payment = Payment.create(paymentParams);
         } catch (BaseAdaPayException e) {
@@ -34,5 +36,9 @@ public class AdapayAliPayServiceImpl implements AdapayAliPayService {
             return JinshiparkJSONResult.errorMsg(String.valueOf(payment.get("error_msg")));
         }
         return JinshiparkJSONResult.ok(payment);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new DecimalFormat("0.00").format(Float.parseFloat("10")));
     }
 }

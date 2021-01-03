@@ -29,4 +29,16 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         }
         return JinshiparkJSONResult.ok(lincensePlateList.get(0));
     }
+
+    @Override
+    public void updateLincensePlate(String order_no, String pay_channel, String pay_amt) {
+        LincensePlateExample example = new LincensePlateExample();
+        LincensePlateExample.Criteria criteria = example.createCriteria();
+        criteria.andLpOrderIdEqualTo(order_no);
+        LincensePlate lincensePlate = new LincensePlate();
+        lincensePlate.setLpOrderState("支付成功");//订单状态
+        lincensePlate.setLpPaymentType("扫码支付出场");//支付方式
+        lincensePlate.setLpParkingRealCost(pay_amt);//实付金额
+        lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
+    }
 }

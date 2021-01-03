@@ -9,6 +9,7 @@ import com.jinshipark.hfzf.vo.AdapayRequstVO;
 import com.jinshipark.hfzf.service.AdapayWxPubService;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class AdapayWxPubServiceImpl implements AdapayWxPubService {
         paymentParams.put("order_no", adapayRequstVO.getOrder_no());
         paymentParams.put("open_id", adapayRequstVO.getOpen_id());
         paymentParams.put("pay_channel", "wx_pub");
-        paymentParams.put("pay_amt", adapayRequstVO.getPay_amt());
+        paymentParams.put("pay_amt", new DecimalFormat("0.00").format(Float.parseFloat(adapayRequstVO.getPay_amt())));
         paymentParams.put("currency", "cny");
         paymentParams.put("goods_title", adapayRequstVO.getGoods_title());
         paymentParams.put("goods_desc", adapayRequstVO.getGoods_desc());
