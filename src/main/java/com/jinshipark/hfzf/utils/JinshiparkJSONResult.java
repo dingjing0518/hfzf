@@ -98,4 +98,13 @@ public class JinshiparkJSONResult {
         this.ok = ok;
     }
 
+    @Override
+    public String toString() {
+        return "JinshiparkJSONResult{" +
+                "status=" + status +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                ", ok='" + ok + '\'' +
+                '}';
+    }
 }

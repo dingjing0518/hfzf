@@ -22,13 +22,13 @@ public class AdapayWxPubServiceImpl implements AdapayWxPubService {
         Map<String, Object> paymentParams = new HashMap<String, Object>();
         paymentParams.put("app_id", ADAPayPropertyConfig.getStrValueByKey("app_id"));
         paymentParams.put("order_no", adapayRequstVO.getOrder_no());
-        paymentParams.put("open_id", adapayRequstVO.getOpen_id());
         paymentParams.put("pay_channel", "wx_pub");
+        paymentParams.put("expend", "{\"open_id\":\""+adapayRequstVO.getOpen_id()+"\"}");
         paymentParams.put("pay_amt", new DecimalFormat("0.00").format(Float.parseFloat(adapayRequstVO.getPay_amt())));
         paymentParams.put("currency", "cny");
         paymentParams.put("goods_title", adapayRequstVO.getGoods_title());
         paymentParams.put("goods_desc", adapayRequstVO.getGoods_desc());
-        paymentParams.put("notify_url", ADAPayPropertyConfig.getStrValueByKey("notify_url"));
+//        paymentParams.put("notify_url", ADAPayPropertyConfig.getStrValueByKey("notify_url"));
         try {
             payment = Payment.create(paymentParams);
         } catch (BaseAdaPayException e) {

@@ -55,7 +55,9 @@ public class AdapayController {
     @RequestMapping(value = "/wxPubExecutePayment", method = RequestMethod.POST)
     @ResponseBody
     public JinshiparkJSONResult wxPubExecutePayment(@RequestBody AdapayRequstVO adapayRequstVO) {
-        return adapayWxPubService.wxPubExecutePayment(adapayRequstVO);
+        JinshiparkJSONResult jinshiparkJSONResult = adapayWxPubService.wxPubExecutePayment(adapayRequstVO);
+        System.out.println(jinshiparkJSONResult);
+        return jinshiparkJSONResult;
     }
 
     /**
