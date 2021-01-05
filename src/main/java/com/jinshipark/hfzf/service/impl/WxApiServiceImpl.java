@@ -23,8 +23,8 @@ public class WxApiServiceImpl implements WxApiService {
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             JSONObject jsonObject = JSONObject.parseObject(responseEntity.getBody());
-            System.out.println(jsonObject.containsKey("openid"));
             if (jsonObject.containsKey("openid")) {
+                System.out.println(jsonObject.getString("openid"));
                 return JinshiparkJSONResult.ok(jsonObject.getString("openid"));
             } else {
                 return JinshiparkJSONResult.errorMsg(jsonObject.getString("errmsg"));
