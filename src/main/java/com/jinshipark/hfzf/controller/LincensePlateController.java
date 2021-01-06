@@ -20,4 +20,10 @@ public class LincensePlateController {
     public JinshiparkJSONResult getLincensePlate(@RequestBody LincensePlateVO lincensePlateVO) {
           return lincensePlateService.getLincensePlate(lincensePlateVO);
     }
+    @CrossOrigin
+    @RequestMapping(value = "/getLincensePlateByPlate", method = RequestMethod.POST)
+    @ResponseBody
+    public JinshiparkJSONResult getLincensePlateByPlate(@RequestBody LincensePlateVO lincensePlateVO) {
+        return lincensePlateService.getLincensePlateByPlate(lincensePlateVO);
+    }
 }

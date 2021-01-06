@@ -41,4 +41,16 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         lincensePlate.setLpParkingRealCost(pay_amt);//实付金额
         lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
     }
+
+    @Override
+    public JinshiparkJSONResult getLincensePlateByPlate(LincensePlateVO lincensePlateVO) {
+        LincensePlateExample example = new LincensePlateExample();
+        LincensePlateExample.Criteria criteria = example.createCriteria();
+        criteria.andLpLincensePlateIdCarEqualTo(lincensePlateVO.getLpLincensePlateIdCar());
+        List<LincensePlate> lincensePlateList = lincensePlateMapper.selectByExample(example);
+        if (lincensePlateList.size() == 0) {
+            return JinshiparkJSONResult.errorMsg("未查询到车辆");
+        }
+        return JinshiparkJSONResult.ok(lincensePlateList.get(0));
+    }
 }
