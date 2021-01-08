@@ -13,6 +13,7 @@ public class AdapayRequstVO {
     private String description;//订单附加说明
     private String div_members;//分账对象信息列表
     private String open_id;//微信公众号渠道需要传的open_id
+    private String plate;//车牌
 
     public String getOrder_no() {
         return order_no;
@@ -84,5 +85,13 @@ public class AdapayRequstVO {
 
     public void setOpen_id(String open_id) {
         this.open_id = open_id;
+    }
+
+    public String getPlate() {
+        return plate;
+    }
+
+    public void setPlate(String plate) {
+        this.plate = plate;
     }
 }

@@ -6,6 +6,7 @@ import com.huifu.adapay.core.util.AdapaySign;
 import com.jinshipark.hfzf.service.AdapayAliPayService;
 import com.jinshipark.hfzf.service.AdapayWxPubService;
 import com.jinshipark.hfzf.service.LincensePlateService;
+import com.jinshipark.hfzf.service.PrePayService;
 import com.jinshipark.hfzf.utils.JinshiparkJSONResult;
 import com.jinshipark.hfzf.vo.AdapayRequstVO;
 import org.slf4j.Logger;
@@ -31,6 +32,8 @@ public class AdapayController {
     @Autowired
     private LincensePlateService lincensePlateService;
 
+    @Autowired
+    private PrePayService prePayService;
 
     /**
      * 支付宝APP支付
@@ -56,6 +59,21 @@ public class AdapayController {
     @ResponseBody
     public JinshiparkJSONResult wxPubExecutePayment(@RequestBody AdapayRequstVO adapayRequstVO) {
         JinshiparkJSONResult jinshiparkJSONResult = adapayWxPubService.wxPubExecutePayment(adapayRequstVO);
+        System.out.println(jinshiparkJSONResult);
+        return jinshiparkJSONResult;
+    }
+
+    /**
+     * 预支付接口
+     *
+     * @param adapayRequstVO 请求参数实体
+     * @return 处理结果
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/prePayExecutePayment", method = RequestMethod.POST)
+    @ResponseBody
+    public JinshiparkJSONResult prePayExecutePayment(@RequestBody AdapayRequstVO adapayRequstVO) {
+        JinshiparkJSONResult jinshiparkJSONResult = prePayService.prePayExecutePayment(adapayRequstVO);
         System.out.println(jinshiparkJSONResult);
         return jinshiparkJSONResult;
     }
