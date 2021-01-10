@@ -3,6 +3,7 @@ package com.jinshipark.hfzf.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.huifu.adapay.core.AdapayCore;
 import com.huifu.adapay.core.util.AdapaySign;
+import com.jinshipark.hfzf.config.ADAPayPropertyConfig;
 import com.jinshipark.hfzf.service.AdapayAliPayService;
 import com.jinshipark.hfzf.service.AdapayWxPubService;
 import com.jinshipark.hfzf.service.LincensePlateService;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 
 /**
  * 汇付天下相关控制类
@@ -45,6 +47,7 @@ public class AdapayController {
     @RequestMapping(value = "/alipayExecutePayment", method = RequestMethod.POST)
     @ResponseBody
     public JinshiparkJSONResult alipayExecutePayment(@RequestBody AdapayRequstVO adapayRequstVO) {
+        adapayRequstVO.setNotify_url(ADAPayPropertyConfig.getStrValueByKey("notify_url"));
         return adapayAliPayService.alipayExecutePayment(adapayRequstVO);
     }
 
@@ -58,6 +61,7 @@ public class AdapayController {
     @RequestMapping(value = "/wxPubExecutePayment", method = RequestMethod.POST)
     @ResponseBody
     public JinshiparkJSONResult wxPubExecutePayment(@RequestBody AdapayRequstVO adapayRequstVO) {
+        adapayRequstVO.setNotify_url(ADAPayPropertyConfig.getStrValueByKey("notify_url"));
         JinshiparkJSONResult jinshiparkJSONResult = adapayWxPubService.wxPubExecutePayment(adapayRequstVO);
         System.out.println(jinshiparkJSONResult);
         return jinshiparkJSONResult;
@@ -72,7 +76,8 @@ public class AdapayController {
     @CrossOrigin
     @RequestMapping(value = "/prePayExecutePayment", method = RequestMethod.POST)
     @ResponseBody
-    public JinshiparkJSONResult prePayExecutePayment(@RequestBody AdapayRequstVO adapayRequstVO) {
+    public JinshiparkJSONResult prePayExecutePayment(@RequestBody AdapayRequstVO adapayRequstVO) throws ParseException {
+        adapayRequstVO.setNotify_url(ADAPayPropertyConfig.getStrValueByKey("pre_notify_url"));
         JinshiparkJSONResult jinshiparkJSONResult = prePayService.prePayExecutePayment(adapayRequstVO);
         System.out.println(jinshiparkJSONResult);
         return jinshiparkJSONResult;
@@ -105,6 +110,39 @@ public class AdapayController {
                 String pay_amt = jsonObject.getString("pay_amt");
 
                 lincensePlateService.updateLincensePlate(order_no, pay_channel, pay_amt);
+            }
+        } catch (Exception e) {
+            logger.info("异步回调开始，参数，request={}");
+        }
+    }
+
+    /**
+     * 汇付预支付回调
+     *
+     * @param request 请求
+     */
+    @PostMapping("/preCallback")
+    public void preCallback(HttpServletRequest request) {
+        try {
+            //验签请参data
+            String data = request.getParameter("data");
+            //验签请参sign
+            String sign = request.getParameter("sign");
+            //验签标记
+            boolean checkSign;
+            //验签请参publicKey
+            String publicKey = AdapayCore.PUBLIC_KEY;
+            logger.info("验签请参：data={}sign={}");
+            //验签
+            checkSign = AdapaySign.verifySign(data, sign, publicKey);
+            if (checkSign) {
+                //验签成功逻辑
+                JSONObject jsonObject = JSONObject.parseObject(data);
+                String order_no = jsonObject.getString("order_no");
+                String pay_channel = jsonObject.getString("pay_channel");
+                String pay_amt = jsonObject.getString("pay_amt");
+
+                lincensePlateService.updateLincensePlateForPrePay(order_no, pay_channel, pay_amt);
             }
         } catch (Exception e) {
             logger.info("异步回调开始，参数，request={}");

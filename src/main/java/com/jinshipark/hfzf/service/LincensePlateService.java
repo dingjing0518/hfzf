@@ -8,5 +8,7 @@ public interface LincensePlateService {
 
     void updateLincensePlate(String order_no, String pay_channel, String pay_amt);
 
+    void updateLincensePlateForPrePay(String order_no, String pay_channel, String pay_amt);
+
     JinshiparkJSONResult getLincensePlateByPlate(LincensePlateVO lincensePlateVO);
 }

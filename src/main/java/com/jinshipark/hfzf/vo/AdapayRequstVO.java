@@ -14,6 +14,8 @@ public class AdapayRequstVO {
     private String div_members;//分账对象信息列表
     private String open_id;//微信公众号渠道需要传的open_id
     private String plate;//车牌
+    private String parkId;//车场Id
+    private String notify_url;//回调地址
 
     public String getOrder_no() {
         return order_no;
@@ -93,5 +95,21 @@ public class AdapayRequstVO {
 
     public void setPlate(String plate) {
         this.plate = plate;
+    }
+
+    public String getParkId() {
+        return parkId;
+    }
+
+    public void setParkId(String parkId) {
+        this.parkId = parkId;
+    }
+
+    public String getNotify_url() {
+        return notify_url;
+    }
+
+    public void setNotify_url(String notify_url) {
+        this.notify_url = notify_url;
     }
 }

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jinshipark.hfzf.mapper.JinshiparkFeeMapper">
+  <resultMap id="BaseResultMap" type="com.jinshipark.hfzf.model.JinshiparkFee">
+    <id column="jps_id" jdbcType="INTEGER" property="jpsId" />
+    <result column="jps_park_id" jdbcType="VARCHAR" property="jpsParkId" />
+    <result column="jps_agent_id" jdbcType="VARCHAR" property="jpsAgentId" />
+    <result column="jps_free_time" jdbcType="INTEGER" property="jpsFreeTime" />
+    <result column="jps_first_time" jdbcType="INTEGER" property="jpsFirstTime" />
+    <result column="jps_first_charge" jdbcType="INTEGER" property="jpsFirstCharge" />
+    <result column="jps_follow_time" jdbcType="INTEGER" property="jpsFollowTime" />
+    <result column="jps_follow_charge" jdbcType="INTEGER" property="jpsFollowCharge" />
+    <result column="jps_allday_limit" jdbcType="INTEGER" property="jpsAlldayLimit" />
+    <result column="jps_advance_charge_outtime" jdbcType="INTEGER" property="jpsAdvanceChargeOuttime" />
+    <result column="jps_createtime" jdbcType="TIMESTAMP" property="jpsCreatetime" />
+    <result column="jps_isdelete" jdbcType="INTEGER" property="jpsIsdelete" />
+    <result column="jps_car_type" jdbcType="INTEGER" property="jpsCarType" />
+    <result column="jps_remark" jdbcType="VARCHAR" property="jpsRemark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    jps_id, jps_park_id, jps_agent_id, jps_free_time, jps_first_time, jps_first_charge, 
+    jps_follow_time, jps_follow_charge, jps_allday_limit, jps_advance_charge_outtime, 
+    jps_createtime, jps_isdelete, jps_car_type, jps_remark
+  </sql>
+  <select id="selectByExample" parameterType="com.jinshipark.hfzf.model.JinshiparkFeeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from jinshipark_fee
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from jinshipark_fee
+    where jps_id = #{jpsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from jinshipark_fee
+    where jps_id = #{jpsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jinshipark.hfzf.model.JinshiparkFeeExample">
+    delete from jinshipark_fee
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jinshipark.hfzf.model.JinshiparkFee">
+    <selectKey keyProperty="jpsId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into jinshipark_fee (jps_park_id, jps_agent_id, jps_free_time, 
+      jps_first_time, jps_first_charge, jps_follow_time, 
+      jps_follow_charge, jps_allday_limit, jps_advance_charge_outtime, 
+      jps_createtime, jps_isdelete, jps_car_type, 
+      jps_remark)
+    values (#{jpsParkId,jdbcType=VARCHAR}, #{jpsAgentId,jdbcType=VARCHAR}, #{jpsFreeTime,jdbcType=INTEGER}, 
+      #{jpsFirstTime,jdbcType=INTEGER}, #{jpsFirstCharge,jdbcType=INTEGER}, #{jpsFollowTime,jdbcType=INTEGER}, 
+      #{jpsFollowCharge,jdbcType=INTEGER}, #{jpsAlldayLimit,jdbcType=INTEGER}, #{jpsAdvanceChargeOuttime,jdbcType=INTEGER}, 
+      #{jpsCreatetime,jdbcType=TIMESTAMP}, #{jpsIsdelete,jdbcType=INTEGER}, #{jpsCarType,jdbcType=INTEGER}, 
+      #{jpsRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jinshipark.hfzf.model.JinshiparkFee">
+    <selectKey keyProperty="jpsId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into jinshipark_fee
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jpsParkId != null">
+        jps_park_id,
+      </if>
+      <if test="jpsAgentId != null">
+        jps_agent_id,
+      </if>
+      <if test="jpsFreeTime != null">
+        jps_free_time,
+      </if>
+      <if test="jpsFirstTime != null">
+        jps_first_time,
+      </if>
+      <if test="jpsFirstCharge != null">
+        jps_first_charge,
+      </if>
+      <if test="jpsFollowTime != null">
+        jps_follow_time,
+      </if>
+      <if test="jpsFollowCharge != null">
+        jps_follow_charge,
+      </if>
+      <if test="jpsAlldayLimit != null">
+        jps_allday_limit,
+      </if>
+      <if test="jpsAdvanceChargeOuttime != null">
+        jps_advance_charge_outtime,
+      </if>
+      <if test="jpsCreatetime != null">
+        jps_createtime,
+      </if>
+      <if test="jpsIsdelete != null">
+        jps_isdelete,
+      </if>
+      <if test="jpsCarType != null">
+        jps_car_type,
+      </if>
+      <if test="jpsRemark != null">
+        jps_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jpsParkId != null">
+        #{jpsParkId,jdbcType=VARCHAR},
+      </if>
+      <if test="jpsAgentId != null">
+        #{jpsAgentId,jdbcType=VARCHAR},
+      </if>
+      <if test="jpsFreeTime != null">
+        #{jpsFreeTime,jdbcType=INTEGER},
+      </if>
+      <if test="jpsFirstTime != null">
+        #{jpsFirstTime,jdbcType=INTEGER},
+      </if>
+      <if test="jpsFirstCharge != null">
+        #{jpsFirstCharge,jdbcType=INTEGER},
+      </if>
+      <if test="jpsFollowTime != null">
+        #{jpsFollowTime,jdbcType=INTEGER},
+      </if>
+      <if test="jpsFollowCharge != null">
+        #{jpsFollowCharge,jdbcType=INTEGER},
+      </if>
+      <if test="jpsAlldayLimit != null">
+        #{jpsAlldayLimit,jdbcType=INTEGER},
+      </if>
+      <if test="jpsAdvanceChargeOuttime != null">
+        #{jpsAdvanceChargeOuttime,jdbcType=INTEGER},
+      </if>
+      <if test="jpsCreatetime != null">
+        #{jpsCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jpsIsdelete != null">
+        #{jpsIsdelete,jdbcType=INTEGER},
+      </if>
+      <if test="jpsCarType != null">
+        #{jpsCarType,jdbcType=INTEGER},
+      </if>
+      <if test="jpsRemark != null">
+        #{jpsRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jinshipark.hfzf.model.JinshiparkFeeExample" resultType="java.lang.Long">
+    select count(*) from jinshipark_fee
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update jinshipark_fee
+    <set>
+      <if test="record.jpsId != null">
+        jps_id = #{record.jpsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.jpsParkId != null">
+        jps_park_id = #{record.jpsParkId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jpsAgentId != null">
+        jps_agent_id = #{record.jpsAgentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jpsFreeTime != null">
+        jps_free_time = #{record.jpsFreeTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.jpsFirstTime != null">
+        jps_first_time = #{record.jpsFirstTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.jpsFirstCharge != null">
+        jps_first_charge = #{record.jpsFirstCharge,jdbcType=INTEGER},
+      </if>
+      <if test="record.jpsFollowTime != null">
+        jps_follow_time = #{record.jpsFollowTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.jpsFollowCharge != null">
+        jps_follow_charge = #{record.jpsFollowCharge,jdbcType=INTEGER},
+      </if>
+      <if test="record.jpsAlldayLimit != null">
+        jps_allday_limit = #{record.jpsAlldayLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.jpsAdvanceChargeOuttime != null">
+        jps_advance_charge_outtime = #{record.jpsAdvanceChargeOuttime,jdbcType=INTEGER},
+      </if>
+      <if test="record.jpsCreatetime != null">
+        jps_createtime = #{record.jpsCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.jpsIsdelete != null">
+        jps_isdelete = #{record.jpsIsdelete,jdbcType=INTEGER},
+      </if>
+      <if test="record.jpsCarType != null">
+        jps_car_type = #{record.jpsCarType,jdbcType=INTEGER},
+      </if>
+      <if test="record.jpsRemark != null">
+        jps_remark = #{record.jpsRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update jinshipark_fee
+    set jps_id = #{record.jpsId,jdbcType=INTEGER},
+      jps_park_id = #{record.jpsParkId,jdbcType=VARCHAR},
+      jps_agent_id = #{record.jpsAgentId,jdbcType=VARCHAR},
+      jps_free_time = #{record.jpsFreeTime,jdbcType=INTEGER},
+      jps_first_time = #{record.jpsFirstTime,jdbcType=INTEGER},
+      jps_first_charge = #{record.jpsFirstCharge,jdbcType=INTEGER},
+      jps_follow_time = #{record.jpsFollowTime,jdbcType=INTEGER},
+      jps_follow_charge = #{record.jpsFollowCharge,jdbcType=INTEGER},
+      jps_allday_limit = #{record.jpsAlldayLimit,jdbcType=INTEGER},
+      jps_advance_charge_outtime = #{record.jpsAdvanceChargeOuttime,jdbcType=INTEGER},
+      jps_createtime = #{record.jpsCreatetime,jdbcType=TIMESTAMP},
+      jps_isdelete = #{record.jpsIsdelete,jdbcType=INTEGER},
+      jps_car_type = #{record.jpsCarType,jdbcType=INTEGER},
+      jps_remark = #{record.jpsRemark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jinshipark.hfzf.model.JinshiparkFee">
+    update jinshipark_fee
+    <set>
+      <if test="jpsParkId != null">
+        jps_park_id = #{jpsParkId,jdbcType=VARCHAR},
+      </if>
+      <if test="jpsAgentId != null">
+        jps_agent_id = #{jpsAgentId,jdbcType=VARCHAR},
+      </if>
+      <if test="jpsFreeTime != null">
+        jps_free_time = #{jpsFreeTime,jdbcType=INTEGER},
+      </if>
+      <if test="jpsFirstTime != null">
+        jps_first_time = #{jpsFirstTime,jdbcType=INTEGER},
+      </if>
+      <if test="jpsFirstCharge != null">
+        jps_first_charge = #{jpsFirstCharge,jdbcType=INTEGER},
+      </if>
+      <if test="jpsFollowTime != null">
+        jps_follow_time = #{jpsFollowTime,jdbcType=INTEGER},
+      </if>
+      <if test="jpsFollowCharge != null">
+        jps_follow_charge = #{jpsFollowCharge,jdbcType=INTEGER},
+      </if>
+      <if test="jpsAlldayLimit != null">
+        jps_allday_limit = #{jpsAlldayLimit,jdbcType=INTEGER},
+      </if>
+      <if test="jpsAdvanceChargeOuttime != null">
+        jps_advance_charge_outtime = #{jpsAdvanceChargeOuttime,jdbcType=INTEGER},
+      </if>
+      <if test="jpsCreatetime != null">
+        jps_createtime = #{jpsCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jpsIsdelete != null">
+        jps_isdelete = #{jpsIsdelete,jdbcType=INTEGER},
+      </if>
+      <if test="jpsCarType != null">
+        jps_car_type = #{jpsCarType,jdbcType=INTEGER},
+      </if>
+      <if test="jpsRemark != null">
+        jps_remark = #{jpsRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where jps_id = #{jpsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jinshipark.hfzf.model.JinshiparkFee">
+    update jinshipark_fee
+    set jps_park_id = #{jpsParkId,jdbcType=VARCHAR},
+      jps_agent_id = #{jpsAgentId,jdbcType=VARCHAR},
+      jps_free_time = #{jpsFreeTime,jdbcType=INTEGER},
+      jps_first_time = #{jpsFirstTime,jdbcType=INTEGER},
+      jps_first_charge = #{jpsFirstCharge,jdbcType=INTEGER},
+      jps_follow_time = #{jpsFollowTime,jdbcType=INTEGER},
+      jps_follow_charge = #{jpsFollowCharge,jdbcType=INTEGER},
+      jps_allday_limit = #{jpsAlldayLimit,jdbcType=INTEGER},
+      jps_advance_charge_outtime = #{jpsAdvanceChargeOuttime,jdbcType=INTEGER},
+      jps_createtime = #{jpsCreatetime,jdbcType=TIMESTAMP},
+      jps_isdelete = #{jpsIsdelete,jdbcType=INTEGER},
+      jps_car_type = #{jpsCarType,jdbcType=INTEGER},
+      jps_remark = #{jpsRemark,jdbcType=VARCHAR}
+    where jps_id = #{jpsId,jdbcType=INTEGER}
+  </update>
+</mapper>

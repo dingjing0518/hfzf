@@ -43,6 +43,19 @@ public class LincensePlateServiceImpl implements LincensePlateService {
     }
 
     @Override
+    public void updateLincensePlateForPrePay(String order_no, String pay_channel, String pay_amt) {
+        LincensePlateExample example = new LincensePlateExample();
+        LincensePlateExample.Criteria criteria = example.createCriteria();
+        criteria.andLpOrderIdEqualTo(order_no);
+        LincensePlate lincensePlate = new LincensePlate();
+        lincensePlate.setLpOrderState("支付成功");//订单状态
+        lincensePlate.setLpPaymentType("预付款出场");//支付方式
+        lincensePlate.setLpParkingRealCost(pay_amt);//实付金额
+//        lincensePlate.setLpParkingCost(pay_amt);//应付金额
+        lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
+    }
+
+    @Override
     public JinshiparkJSONResult getLincensePlateByPlate(LincensePlateVO lincensePlateVO) {
         LincensePlateExample example = new LincensePlateExample();
         LincensePlateExample.Criteria criteria = example.createCriteria();
