@@ -3,8 +3,8 @@
 <mapper namespace="com.jinshipark.hfzf.mapper.JinshiParkSettingMapper">
   <resultMap id="BaseResultMap" type="com.jinshipark.hfzf.model.JinshiParkSetting">
     <id column="jps_id" jdbcType="INTEGER" property="jpsId" />
-    <result column="jps_park_id" jdbcType="INTEGER" property="jpsParkId" />
-    <result column="jps_agent_id" jdbcType="INTEGER" property="jpsAgentId" />
+    <result column="jps_park_id" jdbcType="VARCHAR" property="jpsParkId" />
+    <result column="jps_agent_id" jdbcType="VARCHAR" property="jpsAgentId" />
     <result column="jps_free_time" jdbcType="INTEGER" property="jpsFreeTime" />
     <result column="jps_first_time" jdbcType="INTEGER" property="jpsFirstTime" />
     <result column="jps_first_charge" jdbcType="INTEGER" property="jpsFirstCharge" />
@@ -12,10 +12,10 @@
     <result column="jps_follow_charge" jdbcType="INTEGER" property="jpsFollowCharge" />
     <result column="jps_allday_limit" jdbcType="INTEGER" property="jpsAlldayLimit" />
     <result column="jps_advance_charge_outtime" jdbcType="INTEGER" property="jpsAdvanceChargeOuttime" />
-    <result column="jps_remark" jdbcType="VARCHAR" property="jpsRemark" />
     <result column="jps_createtime" jdbcType="TIMESTAMP" property="jpsCreatetime" />
     <result column="jps_isdelete" jdbcType="INTEGER" property="jpsIsdelete" />
     <result column="jps_car_type" jdbcType="INTEGER" property="jpsCarType" />
+    <result column="jps_remark" jdbcType="VARCHAR" property="jpsRemark" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -78,7 +78,7 @@
   <sql id="Base_Column_List">
     jps_id, jps_park_id, jps_agent_id, jps_free_time, jps_first_time, jps_first_charge, 
     jps_follow_time, jps_follow_charge, jps_allday_limit, jps_advance_charge_outtime, 
-    jps_remark, jps_createtime, jps_isdelete, jps_car_type
+    jps_createtime, jps_isdelete, jps_car_type, jps_remark
   </sql>
   <select id="selectByExample" parameterType="com.jinshipark.hfzf.model.JinshiParkSettingExample" resultMap="BaseResultMap">
     select
@@ -117,13 +117,13 @@
     insert into jinshi_park_setting (jps_park_id, jps_agent_id, jps_free_time, 
       jps_first_time, jps_first_charge, jps_follow_time, 
       jps_follow_charge, jps_allday_limit, jps_advance_charge_outtime, 
-      jps_remark, jps_createtime, jps_isdelete, 
-      jps_car_type)
-    values (#{jpsParkId,jdbcType=INTEGER}, #{jpsAgentId,jdbcType=INTEGER}, #{jpsFreeTime,jdbcType=INTEGER}, 
+      jps_createtime, jps_isdelete, jps_car_type, 
+      jps_remark)
+    values (#{jpsParkId,jdbcType=VARCHAR}, #{jpsAgentId,jdbcType=VARCHAR}, #{jpsFreeTime,jdbcType=INTEGER}, 
       #{jpsFirstTime,jdbcType=INTEGER}, #{jpsFirstCharge,jdbcType=INTEGER}, #{jpsFollowTime,jdbcType=INTEGER}, 
       #{jpsFollowCharge,jdbcType=INTEGER}, #{jpsAlldayLimit,jdbcType=INTEGER}, #{jpsAdvanceChargeOuttime,jdbcType=INTEGER}, 
-      #{jpsRemark,jdbcType=VARCHAR}, #{jpsCreatetime,jdbcType=TIMESTAMP}, #{jpsIsdelete,jdbcType=INTEGER}, 
-      #{jpsCarType,jdbcType=INTEGER})
+      #{jpsCreatetime,jdbcType=TIMESTAMP}, #{jpsIsdelete,jdbcType=INTEGER}, #{jpsCarType,jdbcType=INTEGER}, 
+      #{jpsRemark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jinshipark.hfzf.model.JinshiParkSetting">
     <selectKey keyProperty="jpsId" order="AFTER" resultType="java.lang.Integer">
@@ -158,9 +158,6 @@
       <if test="jpsAdvanceChargeOuttime != null">
         jps_advance_charge_outtime,
       </if>
-      <if test="jpsRemark != null">
-        jps_remark,
-      </if>
       <if test="jpsCreatetime != null">
         jps_createtime,
       </if>
@@ -170,13 +167,16 @@
       <if test="jpsCarType != null">
         jps_car_type,
       </if>
+      <if test="jpsRemark != null">
+        jps_remark,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="jpsParkId != null">
-        #{jpsParkId,jdbcType=INTEGER},
+        #{jpsParkId,jdbcType=VARCHAR},
       </if>
       <if test="jpsAgentId != null">
-        #{jpsAgentId,jdbcType=INTEGER},
+        #{jpsAgentId,jdbcType=VARCHAR},
       </if>
       <if test="jpsFreeTime != null">
         #{jpsFreeTime,jdbcType=INTEGER},
@@ -199,9 +199,6 @@
       <if test="jpsAdvanceChargeOuttime != null">
         #{jpsAdvanceChargeOuttime,jdbcType=INTEGER},
       </if>
-      <if test="jpsRemark != null">
-        #{jpsRemark,jdbcType=VARCHAR},
-      </if>
       <if test="jpsCreatetime != null">
         #{jpsCreatetime,jdbcType=TIMESTAMP},
       </if>
@@ -210,6 +207,9 @@
       </if>
       <if test="jpsCarType != null">
         #{jpsCarType,jdbcType=INTEGER},
+      </if>
+      <if test="jpsRemark != null">
+        #{jpsRemark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -226,10 +226,10 @@
         jps_id = #{record.jpsId,jdbcType=INTEGER},
       </if>
       <if test="record.jpsParkId != null">
-        jps_park_id = #{record.jpsParkId,jdbcType=INTEGER},
+        jps_park_id = #{record.jpsParkId,jdbcType=VARCHAR},
       </if>
       <if test="record.jpsAgentId != null">
-        jps_agent_id = #{record.jpsAgentId,jdbcType=INTEGER},
+        jps_agent_id = #{record.jpsAgentId,jdbcType=VARCHAR},
       </if>
       <if test="record.jpsFreeTime != null">
         jps_free_time = #{record.jpsFreeTime,jdbcType=INTEGER},
@@ -252,9 +252,6 @@
       <if test="record.jpsAdvanceChargeOuttime != null">
         jps_advance_charge_outtime = #{record.jpsAdvanceChargeOuttime,jdbcType=INTEGER},
       </if>
-      <if test="record.jpsRemark != null">
-        jps_remark = #{record.jpsRemark,jdbcType=VARCHAR},
-      </if>
       <if test="record.jpsCreatetime != null">
         jps_createtime = #{record.jpsCreatetime,jdbcType=TIMESTAMP},
       </if>
@@ -264,6 +261,9 @@
       <if test="record.jpsCarType != null">
         jps_car_type = #{record.jpsCarType,jdbcType=INTEGER},
       </if>
+      <if test="record.jpsRemark != null">
+        jps_remark = #{record.jpsRemark,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -272,8 +272,8 @@
   <update id="updateByExample" parameterType="map">
     update jinshi_park_setting
     set jps_id = #{record.jpsId,jdbcType=INTEGER},
-      jps_park_id = #{record.jpsParkId,jdbcType=INTEGER},
-      jps_agent_id = #{record.jpsAgentId,jdbcType=INTEGER},
+      jps_park_id = #{record.jpsParkId,jdbcType=VARCHAR},
+      jps_agent_id = #{record.jpsAgentId,jdbcType=VARCHAR},
       jps_free_time = #{record.jpsFreeTime,jdbcType=INTEGER},
       jps_first_time = #{record.jpsFirstTime,jdbcType=INTEGER},
       jps_first_charge = #{record.jpsFirstCharge,jdbcType=INTEGER},
@@ -281,10 +281,10 @@
       jps_follow_charge = #{record.jpsFollowCharge,jdbcType=INTEGER},
       jps_allday_limit = #{record.jpsAlldayLimit,jdbcType=INTEGER},
       jps_advance_charge_outtime = #{record.jpsAdvanceChargeOuttime,jdbcType=INTEGER},
-      jps_remark = #{record.jpsRemark,jdbcType=VARCHAR},
       jps_createtime = #{record.jpsCreatetime,jdbcType=TIMESTAMP},
       jps_isdelete = #{record.jpsIsdelete,jdbcType=INTEGER},
-      jps_car_type = #{record.jpsCarType,jdbcType=INTEGER}
+      jps_car_type = #{record.jpsCarType,jdbcType=INTEGER},
+      jps_remark = #{record.jpsRemark,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -293,10 +293,10 @@
     update jinshi_park_setting
     <set>
       <if test="jpsParkId != null">
-        jps_park_id = #{jpsParkId,jdbcType=INTEGER},
+        jps_park_id = #{jpsParkId,jdbcType=VARCHAR},
       </if>
       <if test="jpsAgentId != null">
-        jps_agent_id = #{jpsAgentId,jdbcType=INTEGER},
+        jps_agent_id = #{jpsAgentId,jdbcType=VARCHAR},
       </if>
       <if test="jpsFreeTime != null">
         jps_free_time = #{jpsFreeTime,jdbcType=INTEGER},
@@ -319,9 +319,6 @@
       <if test="jpsAdvanceChargeOuttime != null">
         jps_advance_charge_outtime = #{jpsAdvanceChargeOuttime,jdbcType=INTEGER},
       </if>
-      <if test="jpsRemark != null">
-        jps_remark = #{jpsRemark,jdbcType=VARCHAR},
-      </if>
       <if test="jpsCreatetime != null">
         jps_createtime = #{jpsCreatetime,jdbcType=TIMESTAMP},
       </if>
@@ -331,13 +328,16 @@
       <if test="jpsCarType != null">
         jps_car_type = #{jpsCarType,jdbcType=INTEGER},
       </if>
+      <if test="jpsRemark != null">
+        jps_remark = #{jpsRemark,jdbcType=VARCHAR},
+      </if>
     </set>
     where jps_id = #{jpsId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jinshipark.hfzf.model.JinshiParkSetting">
     update jinshi_park_setting
-    set jps_park_id = #{jpsParkId,jdbcType=INTEGER},
-      jps_agent_id = #{jpsAgentId,jdbcType=INTEGER},
+    set jps_park_id = #{jpsParkId,jdbcType=VARCHAR},
+      jps_agent_id = #{jpsAgentId,jdbcType=VARCHAR},
       jps_free_time = #{jpsFreeTime,jdbcType=INTEGER},
       jps_first_time = #{jpsFirstTime,jdbcType=INTEGER},
       jps_first_charge = #{jpsFirstCharge,jdbcType=INTEGER},
@@ -345,10 +345,10 @@
       jps_follow_charge = #{jpsFollowCharge,jdbcType=INTEGER},
       jps_allday_limit = #{jpsAlldayLimit,jdbcType=INTEGER},
       jps_advance_charge_outtime = #{jpsAdvanceChargeOuttime,jdbcType=INTEGER},
-      jps_remark = #{jpsRemark,jdbcType=VARCHAR},
       jps_createtime = #{jpsCreatetime,jdbcType=TIMESTAMP},
       jps_isdelete = #{jpsIsdelete,jdbcType=INTEGER},
-      jps_car_type = #{jpsCarType,jdbcType=INTEGER}
+      jps_car_type = #{jpsCarType,jdbcType=INTEGER},
+      jps_remark = #{jpsRemark,jdbcType=VARCHAR}
     where jps_id = #{jpsId,jdbcType=INTEGER}
   </update>
 </mapper>

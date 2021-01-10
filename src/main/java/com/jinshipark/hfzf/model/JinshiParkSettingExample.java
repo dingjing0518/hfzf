@@ -175,52 +175,62 @@ public class JinshiParkSettingExample {
             return (Criteria) this;
         }
 
-        public Criteria andJpsParkIdEqualTo(Integer value) {
+        public Criteria andJpsParkIdEqualTo(String value) {
             addCriterion("jps_park_id =", value, "jpsParkId");
             return (Criteria) this;
         }
 
-        public Criteria andJpsParkIdNotEqualTo(Integer value) {
+        public Criteria andJpsParkIdNotEqualTo(String value) {
             addCriterion("jps_park_id <>", value, "jpsParkId");
             return (Criteria) this;
         }
 
-        public Criteria andJpsParkIdGreaterThan(Integer value) {
+        public Criteria andJpsParkIdGreaterThan(String value) {
             addCriterion("jps_park_id >", value, "jpsParkId");
             return (Criteria) this;
         }
 
-        public Criteria andJpsParkIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andJpsParkIdGreaterThanOrEqualTo(String value) {
             addCriterion("jps_park_id >=", value, "jpsParkId");
             return (Criteria) this;
         }
 
-        public Criteria andJpsParkIdLessThan(Integer value) {
+        public Criteria andJpsParkIdLessThan(String value) {
             addCriterion("jps_park_id <", value, "jpsParkId");
             return (Criteria) this;
         }
 
-        public Criteria andJpsParkIdLessThanOrEqualTo(Integer value) {
+        public Criteria andJpsParkIdLessThanOrEqualTo(String value) {
             addCriterion("jps_park_id <=", value, "jpsParkId");
             return (Criteria) this;
         }
 
-        public Criteria andJpsParkIdIn(List<Integer> values) {
+        public Criteria andJpsParkIdLike(String value) {
+            addCriterion("jps_park_id like", value, "jpsParkId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJpsParkIdNotLike(String value) {
+            addCriterion("jps_park_id not like", value, "jpsParkId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJpsParkIdIn(List<String> values) {
             addCriterion("jps_park_id in", values, "jpsParkId");
             return (Criteria) this;
         }
 
-        public Criteria andJpsParkIdNotIn(List<Integer> values) {
+        public Criteria andJpsParkIdNotIn(List<String> values) {
             addCriterion("jps_park_id not in", values, "jpsParkId");
             return (Criteria) this;
         }
 
-        public Criteria andJpsParkIdBetween(Integer value1, Integer value2) {
+        public Criteria andJpsParkIdBetween(String value1, String value2) {
             addCriterion("jps_park_id between", value1, value2, "jpsParkId");
             return (Criteria) this;
         }
 
-        public Criteria andJpsParkIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andJpsParkIdNotBetween(String value1, String value2) {
             addCriterion("jps_park_id not between", value1, value2, "jpsParkId");
             return (Criteria) this;
         }
@@ -235,52 +245,62 @@ public class JinshiParkSettingExample {
             return (Criteria) this;
         }
 
-        public Criteria andJpsAgentIdEqualTo(Integer value) {
+        public Criteria andJpsAgentIdEqualTo(String value) {
             addCriterion("jps_agent_id =", value, "jpsAgentId");
             return (Criteria) this;
         }
 
-        public Criteria andJpsAgentIdNotEqualTo(Integer value) {
+        public Criteria andJpsAgentIdNotEqualTo(String value) {
             addCriterion("jps_agent_id <>", value, "jpsAgentId");
             return (Criteria) this;
         }
 
-        public Criteria andJpsAgentIdGreaterThan(Integer value) {
+        public Criteria andJpsAgentIdGreaterThan(String value) {
             addCriterion("jps_agent_id >", value, "jpsAgentId");
             return (Criteria) this;
         }
 
-        public Criteria andJpsAgentIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andJpsAgentIdGreaterThanOrEqualTo(String value) {
             addCriterion("jps_agent_id >=", value, "jpsAgentId");
             return (Criteria) this;
         }
 
-        public Criteria andJpsAgentIdLessThan(Integer value) {
+        public Criteria andJpsAgentIdLessThan(String value) {
             addCriterion("jps_agent_id <", value, "jpsAgentId");
             return (Criteria) this;
         }
 
-        public Criteria andJpsAgentIdLessThanOrEqualTo(Integer value) {
+        public Criteria andJpsAgentIdLessThanOrEqualTo(String value) {
             addCriterion("jps_agent_id <=", value, "jpsAgentId");
             return (Criteria) this;
         }
 
-        public Criteria andJpsAgentIdIn(List<Integer> values) {
+        public Criteria andJpsAgentIdLike(String value) {
+            addCriterion("jps_agent_id like", value, "jpsAgentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJpsAgentIdNotLike(String value) {
+            addCriterion("jps_agent_id not like", value, "jpsAgentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJpsAgentIdIn(List<String> values) {
             addCriterion("jps_agent_id in", values, "jpsAgentId");
             return (Criteria) this;
         }
 
-        public Criteria andJpsAgentIdNotIn(List<Integer> values) {
+        public Criteria andJpsAgentIdNotIn(List<String> values) {
             addCriterion("jps_agent_id not in", values, "jpsAgentId");
             return (Criteria) this;
         }
 
-        public Criteria andJpsAgentIdBetween(Integer value1, Integer value2) {
+        public Criteria andJpsAgentIdBetween(String value1, String value2) {
             addCriterion("jps_agent_id between", value1, value2, "jpsAgentId");
             return (Criteria) this;
         }
 
-        public Criteria andJpsAgentIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andJpsAgentIdNotBetween(String value1, String value2) {
             addCriterion("jps_agent_id not between", value1, value2, "jpsAgentId");
             return (Criteria) this;
         }
@@ -705,76 +725,6 @@ public class JinshiParkSettingExample {
             return (Criteria) this;
         }
 
-        public Criteria andJpsRemarkIsNull() {
-            addCriterion("jps_remark is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andJpsRemarkIsNotNull() {
-            addCriterion("jps_remark is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andJpsRemarkEqualTo(String value) {
-            addCriterion("jps_remark =", value, "jpsRemark");
-            return (Criteria) this;
-        }
-
-        public Criteria andJpsRemarkNotEqualTo(String value) {
-            addCriterion("jps_remark <>", value, "jpsRemark");
-            return (Criteria) this;
-        }
-
-        public Criteria andJpsRemarkGreaterThan(String value) {
-            addCriterion("jps_remark >", value, "jpsRemark");
-            return (Criteria) this;
-        }
-
-        public Criteria andJpsRemarkGreaterThanOrEqualTo(String value) {
-            addCriterion("jps_remark >=", value, "jpsRemark");
-            return (Criteria) this;
-        }
-
-        public Criteria andJpsRemarkLessThan(String value) {
-            addCriterion("jps_remark <", value, "jpsRemark");
-            return (Criteria) this;
-        }
-
-        public Criteria andJpsRemarkLessThanOrEqualTo(String value) {
-            addCriterion("jps_remark <=", value, "jpsRemark");
-            return (Criteria) this;
-        }
-
-        public Criteria andJpsRemarkLike(String value) {
-            addCriterion("jps_remark like", value, "jpsRemark");
-            return (Criteria) this;
-        }
-
-        public Criteria andJpsRemarkNotLike(String value) {
-            addCriterion("jps_remark not like", value, "jpsRemark");
-            return (Criteria) this;
-        }
-
-        public Criteria andJpsRemarkIn(List<String> values) {
-            addCriterion("jps_remark in", values, "jpsRemark");
-            return (Criteria) this;
-        }
-
-        public Criteria andJpsRemarkNotIn(List<String> values) {
-            addCriterion("jps_remark not in", values, "jpsRemark");
-            return (Criteria) this;
-        }
-
-        public Criteria andJpsRemarkBetween(String value1, String value2) {
-            addCriterion("jps_remark between", value1, value2, "jpsRemark");
-            return (Criteria) this;
-        }
-
-        public Criteria andJpsRemarkNotBetween(String value1, String value2) {
-            addCriterion("jps_remark not between", value1, value2, "jpsRemark");
-            return (Criteria) this;
-        }
-
         public Criteria andJpsCreatetimeIsNull() {
             addCriterion("jps_createtime is null");
             return (Criteria) this;
@@ -952,6 +902,76 @@ public class JinshiParkSettingExample {
 
         public Criteria andJpsCarTypeNotBetween(Integer value1, Integer value2) {
             addCriterion("jps_car_type not between", value1, value2, "jpsCarType");
+            return (Criteria) this;
+        }
+
+        public Criteria andJpsRemarkIsNull() {
+            addCriterion("jps_remark is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJpsRemarkIsNotNull() {
+            addCriterion("jps_remark is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJpsRemarkEqualTo(String value) {
+            addCriterion("jps_remark =", value, "jpsRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andJpsRemarkNotEqualTo(String value) {
+            addCriterion("jps_remark <>", value, "jpsRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andJpsRemarkGreaterThan(String value) {
+            addCriterion("jps_remark >", value, "jpsRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andJpsRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("jps_remark >=", value, "jpsRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andJpsRemarkLessThan(String value) {
+            addCriterion("jps_remark <", value, "jpsRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andJpsRemarkLessThanOrEqualTo(String value) {
+            addCriterion("jps_remark <=", value, "jpsRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andJpsRemarkLike(String value) {
+            addCriterion("jps_remark like", value, "jpsRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andJpsRemarkNotLike(String value) {
+            addCriterion("jps_remark not like", value, "jpsRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andJpsRemarkIn(List<String> values) {
+            addCriterion("jps_remark in", values, "jpsRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andJpsRemarkNotIn(List<String> values) {
+            addCriterion("jps_remark not in", values, "jpsRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andJpsRemarkBetween(String value1, String value2) {
+            addCriterion("jps_remark between", value1, value2, "jpsRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andJpsRemarkNotBetween(String value1, String value2) {
+            addCriterion("jps_remark not between", value1, value2, "jpsRemark");
             return (Criteria) this;
         }
     }

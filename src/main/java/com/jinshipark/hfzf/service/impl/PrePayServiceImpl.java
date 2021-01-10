@@ -67,18 +67,8 @@ public class PrePayServiceImpl implements PrePayService {
         }
         JinshiParkSettingExample jinshiParkSettingExample = new JinshiParkSettingExample();
         JinshiParkSettingExample.Criteria settingExampleCriteria = jinshiParkSettingExample.createCriteria();
-        settingExampleCriteria.andJpsParkIdEqualTo(Integer.valueOf(lpParkingName));
+        settingExampleCriteria.andJpsParkIdEqualTo(lpParkingName);
         settingExampleCriteria.andJpsCarTypeEqualTo(lpLincenseType);
-////        if ("5".equals(lpLincenseType)) {
-////            return JinshiparkJSONResult.errorMsg("车牌号：" + lincensePlate.getLpLincensePlateIdCar() + "为特种车辆，无需付款可直接出场");
-////        }
-//        if (lpLincenseType == null || "1".equals(lpLincenseType)) {
-//            settingExampleCriteria.andJpsCarTypeEqualTo(0);
-//        } else if ("11".equals(lpLincenseType) || "2".equals(lpLincenseType)) {
-//            settingExampleCriteria.andJpsCarTypeEqualTo(2);
-//        } else if ("3".equals(lpLincenseType)) {
-//            settingExampleCriteria.andJpsCarTypeEqualTo(1);
-//        }
         List<JinshiParkSetting> jinshiParkSettings = jinshiParkSettingMapper.selectByExample(jinshiParkSettingExample);
         //判断是否在免费时间之内
         if (dateOften <= jinshiParkSettings.get(0).getJpsFreeTime()) {

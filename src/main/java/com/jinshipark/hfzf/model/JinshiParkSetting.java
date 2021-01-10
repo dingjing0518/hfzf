@@ -7,9 +7,9 @@ import java.util.Date;
 public class JinshiParkSetting implements Serializable {
     private Integer jpsId;
 
-    private Integer jpsParkId;
+    private String jpsParkId;
 
-    private Integer jpsAgentId;
+    private String jpsAgentId;
 
     @ApiModelProperty(value = "免费时间(分钟）")
     private Integer jpsFreeTime;
@@ -32,9 +32,6 @@ public class JinshiParkSetting implements Serializable {
     @ApiModelProperty(value = "预付款后出场时间(分钟)")
     private Integer jpsAdvanceChargeOuttime;
 
-    @ApiModelProperty(value = "名称")
-    private String jpsRemark;
-
     @ApiModelProperty(value = "创建时间")
     private Date jpsCreatetime;
 
@@ -43,6 +40,9 @@ public class JinshiParkSetting implements Serializable {
 
     @ApiModelProperty(value = "牌照类型(0:小型车  1:中型车(黄牌)   2:新能源车   3:特种车   4:大型车(黄牌))")
     private Integer jpsCarType;
+
+    @ApiModelProperty(value = "名称")
+    private String jpsRemark;
 
     private static final long serialVersionUID = 1L;
 
@@ -54,19 +54,19 @@ public class JinshiParkSetting implements Serializable {
         this.jpsId = jpsId;
     }
 
-    public Integer getJpsParkId() {
+    public String getJpsParkId() {
         return jpsParkId;
     }
 
-    public void setJpsParkId(Integer jpsParkId) {
+    public void setJpsParkId(String jpsParkId) {
         this.jpsParkId = jpsParkId;
     }
 
-    public Integer getJpsAgentId() {
+    public String getJpsAgentId() {
         return jpsAgentId;
     }
 
-    public void setJpsAgentId(Integer jpsAgentId) {
+    public void setJpsAgentId(String jpsAgentId) {
         this.jpsAgentId = jpsAgentId;
     }
 
@@ -126,14 +126,6 @@ public class JinshiParkSetting implements Serializable {
         this.jpsAdvanceChargeOuttime = jpsAdvanceChargeOuttime;
     }
 
-    public String getJpsRemark() {
-        return jpsRemark;
-    }
-
-    public void setJpsRemark(String jpsRemark) {
-        this.jpsRemark = jpsRemark;
-    }
-
     public Date getJpsCreatetime() {
         return jpsCreatetime;
     }
@@ -158,6 +150,14 @@ public class JinshiParkSetting implements Serializable {
         this.jpsCarType = jpsCarType;
     }
 
+    public String getJpsRemark() {
+        return jpsRemark;
+    }
+
+    public void setJpsRemark(String jpsRemark) {
+        this.jpsRemark = jpsRemark;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -174,10 +174,10 @@ public class JinshiParkSetting implements Serializable {
         sb.append(", jpsFollowCharge=").append(jpsFollowCharge);
         sb.append(", jpsAlldayLimit=").append(jpsAlldayLimit);
         sb.append(", jpsAdvanceChargeOuttime=").append(jpsAdvanceChargeOuttime);
-        sb.append(", jpsRemark=").append(jpsRemark);
         sb.append(", jpsCreatetime=").append(jpsCreatetime);
         sb.append(", jpsIsdelete=").append(jpsIsdelete);
         sb.append(", jpsCarType=").append(jpsCarType);
+        sb.append(", jpsRemark=").append(jpsRemark);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
