@@ -37,12 +37,11 @@ public class AdapayAliPayServiceImpl implements AdapayAliPayService {
         if (list.size() == 0) {
             return JinshiparkJSONResult.errorMsg("支付参数不正确");
         }
-        String orderId = KeyUtils.getOrderIdByPlate(adapayRequstVO.getPlate(), adapayRequstVO.getParkId());
         JinshiparkApakey jinshiparkApakey = list.get(0);
         Map<String, Object> payment = new HashMap<>();
         Map<String, Object> paymentParams = new HashMap<String, Object>();
         paymentParams.put("app_id", jinshiparkApakey.getAppid());
-        paymentParams.put("order_no", orderId);
+        paymentParams.put("order_no", adapayRequstVO.getOrder_no());
         paymentParams.put("pay_channel", "alipay");
         paymentParams.put("pay_amt", new DecimalFormat("0.00").format(Float.parseFloat(adapayRequstVO.getPay_amt())));
         paymentParams.put("currency", "cny");
@@ -61,7 +60,7 @@ public class AdapayAliPayServiceImpl implements AdapayAliPayService {
         LincensePlateExample.Criteria lincensePlateExampleCriteria = lincensePlateExample.createCriteria();
         lincensePlateExampleCriteria.andLpLincensePlateIdCarEqualTo(adapayRequstVO.getPlate());
         LincensePlate lincensePlate=new LincensePlate();
-        lincensePlate.setLpOrderId(orderId);
+        lincensePlate.setLpOrderId(adapayRequstVO.getOrder_no());
         lincensePlateMapper.updateByExampleSelective(lincensePlate,lincensePlateExample);
         return JinshiparkJSONResult.ok(payment);
     }

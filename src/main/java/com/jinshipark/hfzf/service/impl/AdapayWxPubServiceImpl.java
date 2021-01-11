@@ -39,12 +39,11 @@ public class AdapayWxPubServiceImpl implements AdapayWxPubService {
         if (list.size() == 0) {
             return JinshiparkJSONResult.errorMsg("支付参数不正确");
         }
-        String orderId = KeyUtils.getOrderIdByPlate(adapayRequstVO.getPlate(), adapayRequstVO.getParkId());
         JinshiparkApakey jinshiparkApakey = list.get(0);
         Map<String, Object> payment = new HashMap<>();
         Map<String, Object> paymentParams = new HashMap<String, Object>();
         paymentParams.put("app_id", jinshiparkApakey.getAppid());
-        paymentParams.put("order_no", orderId);
+        paymentParams.put("order_no", adapayRequstVO.getOrder_no());
         paymentParams.put("pay_channel", "wx_pub");
         paymentParams.put("expend", "{\"open_id\":\"" + adapayRequstVO.getOpen_id() + "\"}");
         paymentParams.put("pay_amt", new DecimalFormat("0.00").format(Float.parseFloat(adapayRequstVO.getPay_amt())));
@@ -54,7 +53,7 @@ public class AdapayWxPubServiceImpl implements AdapayWxPubService {
         paymentParams.put("notify_url", adapayRequstVO.getNotify_url());
 
         System.out.println(jinshiparkApakey.getAppid());
-        System.out.println(orderId);
+        System.out.println(adapayRequstVO.getOrder_no());
         System.out.println(new DecimalFormat("0.00").format(Float.parseFloat(adapayRequstVO.getPay_amt())));
         System.out.println(adapayRequstVO.getOpen_id());
         System.out.println(adapayRequstVO.getParkId());
@@ -71,7 +70,7 @@ public class AdapayWxPubServiceImpl implements AdapayWxPubService {
         LincensePlateExample.Criteria lincensePlateExampleCriteria = lincensePlateExample.createCriteria();
         lincensePlateExampleCriteria.andLpLincensePlateIdCarEqualTo(adapayRequstVO.getPlate());
         LincensePlate lincensePlate=new LincensePlate();
-        lincensePlate.setLpOrderId(orderId);
+        lincensePlate.setLpOrderId(adapayRequstVO.getOrder_no());
         lincensePlateMapper.updateByExampleSelective(lincensePlate,lincensePlateExample);
         JSONObject expand = (JSONObject) payment.get("expend");
         return JinshiparkJSONResult.ok(JSONObject.parse(expand.getString("pay_info")));
