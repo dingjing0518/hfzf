@@ -9,6 +9,7 @@ import com.jinshipark.hfzf.config.ADAPayPropertyConfig;
 import com.jinshipark.hfzf.mapper2.JinshiparkApakeyMapper;
 import com.jinshipark.hfzf.model.JinshiparkApakey;
 import com.jinshipark.hfzf.model.JinshiparkApakeyExample;
+import com.jinshipark.hfzf.model.vo.JinshiparkApakeyVO;
 import com.jinshipark.hfzf.service.AdapayAliPayService;
 import com.jinshipark.hfzf.service.AdapayWxPubService;
 import com.jinshipark.hfzf.service.LincensePlateService;
@@ -200,6 +201,33 @@ public class AdapayController {
             Adapay.addMerConfig(merConfig, jinshiparkApakey.getParkid());
         } catch (Exception e) {
             return JinshiparkJSONResult.errorMsg("增加商户配置异常");
+        }
+        return JinshiparkJSONResult.ok();
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/addJinshiparkApakey", method = RequestMethod.POST)
+    @ResponseBody
+    public JinshiparkJSONResult addJinshiparkApakey(@RequestBody JinshiparkApakeyVO jinshiparkApakeyVO) {
+        if (StringUtils.isBlank(jinshiparkApakeyVO.getParkId())
+                || StringUtils.isBlank(jinshiparkApakeyVO.getParkName())
+                || StringUtils.isBlank(jinshiparkApakeyVO.getAppId())
+                || StringUtils.isBlank(jinshiparkApakeyVO.getApiKeyLive())
+                || StringUtils.isBlank(jinshiparkApakeyVO.getApiKeyTest())
+                || StringUtils.isBlank(jinshiparkApakeyVO.getRsaPrivateKey())) {
+            return JinshiparkJSONResult.errorMsg("参数不能为空");
+        }
+        JinshiparkApakey jinshiparkApakey = new JinshiparkApakey();
+        jinshiparkApakey.setParkid(jinshiparkApakeyVO.getParkId());
+        jinshiparkApakey.setParkname(jinshiparkApakeyVO.getParkName());
+        jinshiparkApakey.setAppid(jinshiparkApakeyVO.getAppId());
+        jinshiparkApakey.setApikeylive(jinshiparkApakeyVO.getApiKeyLive());
+        jinshiparkApakey.setApikeytest(jinshiparkApakeyVO.getApiKeyTest());
+        jinshiparkApakey.setRsaprivatekey(jinshiparkApakeyVO.getRsaPrivateKey());
+        jinshiparkApakey.setRemarks(jinshiparkApakeyVO.getRemarks());
+        int result = jinshiparkApakeyMapper.insert(jinshiparkApakey);
+        if (result < 1) {
+            return JinshiparkJSONResult.errorMsg("新增失败！");
         }
         return JinshiparkJSONResult.ok();
     }
