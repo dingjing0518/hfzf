@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jinshipark.hfzf.mapper2.JinshiparkAdvertImageMapper">
+  <resultMap id="BaseResultMap" type="com.jinshipark.hfzf.model.JinshiparkAdvertImage">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="Type" jdbcType="VARCHAR" property="type" />
+    <result column="Address" jdbcType="VARCHAR" property="address" />
+    <result column="ImagePath" jdbcType="VARCHAR" property="imagepath" />
+    <result column="WebLink" jdbcType="VARCHAR" property="weblink" />
+    <result column="Area" jdbcType="VARCHAR" property="area" />
+    <result column="Remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, Type, Address, ImagePath, WebLink, Area, Remarks
+  </sql>
+  <select id="selectByExample" parameterType="com.jinshipark.hfzf.model.JinshiparkAdvertImageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from jinshipark_advert_image
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from jinshipark_advert_image
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from jinshipark_advert_image
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jinshipark.hfzf.model.JinshiparkAdvertImageExample">
+    delete from jinshipark_advert_image
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jinshipark.hfzf.model.JinshiparkAdvertImage">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into jinshipark_advert_image (Type, Address, ImagePath, 
+      WebLink, Area, Remarks
+      )
+    values (#{type,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{imagepath,jdbcType=VARCHAR}, 
+      #{weblink,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jinshipark.hfzf.model.JinshiparkAdvertImage">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into jinshipark_advert_image
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        Type,
+      </if>
+      <if test="address != null">
+        Address,
+      </if>
+      <if test="imagepath != null">
+        ImagePath,
+      </if>
+      <if test="weblink != null">
+        WebLink,
+      </if>
+      <if test="area != null">
+        Area,
+      </if>
+      <if test="remarks != null">
+        Remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="imagepath != null">
+        #{imagepath,jdbcType=VARCHAR},
+      </if>
+      <if test="weblink != null">
+        #{weblink,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jinshipark.hfzf.model.JinshiparkAdvertImageExample" resultType="java.lang.Long">
+    select count(*) from jinshipark_advert_image
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update jinshipark_advert_image
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null">
+        Type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        Address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imagepath != null">
+        ImagePath = #{record.imagepath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weblink != null">
+        WebLink = #{record.weblink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null">
+        Area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarks != null">
+        Remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update jinshipark_advert_image
+    set id = #{record.id,jdbcType=INTEGER},
+      Type = #{record.type,jdbcType=VARCHAR},
+      Address = #{record.address,jdbcType=VARCHAR},
+      ImagePath = #{record.imagepath,jdbcType=VARCHAR},
+      WebLink = #{record.weblink,jdbcType=VARCHAR},
+      Area = #{record.area,jdbcType=VARCHAR},
+      Remarks = #{record.remarks,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jinshipark.hfzf.model.JinshiparkAdvertImage">
+    update jinshipark_advert_image
+    <set>
+      <if test="type != null">
+        Type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        Address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="imagepath != null">
+        ImagePath = #{imagepath,jdbcType=VARCHAR},
+      </if>
+      <if test="weblink != null">
+        WebLink = #{weblink,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        Area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        Remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jinshipark.hfzf.model.JinshiparkAdvertImage">
+    update jinshipark_advert_image
+    set Type = #{type,jdbcType=VARCHAR},
+      Address = #{address,jdbcType=VARCHAR},
+      ImagePath = #{imagepath,jdbcType=VARCHAR},
+      WebLink = #{weblink,jdbcType=VARCHAR},
+      Area = #{area,jdbcType=VARCHAR},
+      Remarks = #{remarks,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
