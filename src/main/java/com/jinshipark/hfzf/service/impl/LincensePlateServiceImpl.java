@@ -6,9 +6,11 @@ import com.jinshipark.hfzf.model.LincensePlateExample;
 import com.jinshipark.hfzf.model.vo.LincensePlateVO;
 import com.jinshipark.hfzf.service.LincensePlateService;
 import com.jinshipark.hfzf.utils.JinshiparkJSONResult;
+import com.jinshipark.hfzf.utils.KeyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -65,5 +67,37 @@ public class LincensePlateServiceImpl implements LincensePlateService {
             return JinshiparkJSONResult.errorMsg("未查询到车辆");
         }
         return JinshiparkJSONResult.ok(lincensePlateList.get(0));
+    }
+
+    @Override
+    public JinshiparkJSONResult saveLincensePlate(LincensePlateVO lincensePlateVO) {
+        //判断是否重复入场
+        LincensePlateExample example = new LincensePlateExample();
+        LincensePlateExample.Criteria criteria = example.createCriteria();
+        criteria.andLpLincensePlateIdCarEqualTo(lincensePlateVO.getLpLincensePlateIdCar());
+        List<LincensePlate> lincensePlates = lincensePlateMapper.selectByExample(example);
+        if (lincensePlates.size() > 0) {
+            return JinshiparkJSONResult.errorMsg("车牌：" + lincensePlateVO.getLpLincensePlateIdCar() + "已入场,请勿重复入场");
+        }
+        String orderId = KeyUtils.getOrderIdByPlate(lincensePlateVO.getLpLincensePlateIdCar(), lincensePlateVO.getLpParkingName());
+        LincensePlate lincensePlate = new LincensePlate();
+        lincensePlate.setLpLincensePlateIdCar(lincensePlateVO.getLpLincensePlateIdCar());//车牌号
+        lincensePlate.setLpServiceTypeCar("");
+        lincensePlate.setLpInboundTime(new Date());//入场时间
+        lincensePlate.setLpCreateTime(new Date());//创建时间
+        lincensePlate.setLpOrderId(orderId);//订单Id
+        lincensePlate.setLpCarType(lincensePlateVO.getLpCarType());//区域名称
+        lincensePlate.setLpLincenseType("0");//车辆类型 默认0
+        lincensePlate.setLpInboundCname(lincensePlateVO.getLpInboundCname());//入场口名
+        lincensePlate.setLpParkingName(lincensePlateVO.getLpParkingName());//停车场名
+        lincensePlate.setLpAgentName(lincensePlateVO.getLpParkingName().substring(0, 6));//代理商名
+        lincensePlate.setLpOrderState("未付款");//订单状态
+        lincensePlate.setLpLgId(0);//车牌组id 默认0
+        lincensePlate.setLpLgType(0);//车牌收费类型 默认0
+        int result = lincensePlateMapper.insertSelective(lincensePlate);
+        if (result > 0) {
+            return JinshiparkJSONResult.ok("入场成功");
+        }
+        return JinshiparkJSONResult.errorMsg("系统异常");
     }
 }
