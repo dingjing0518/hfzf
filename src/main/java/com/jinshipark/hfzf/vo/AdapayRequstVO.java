@@ -16,6 +16,7 @@ public class AdapayRequstVO {
     private String plate;//车牌
     private String parkId;//车场Id
     private String notify_url;//回调地址
+    private String lpDepartureCname;//出场口名
 
     public String getOrder_no() {
         return order_no;
@@ -111,5 +112,13 @@ public class AdapayRequstVO {
 
     public void setNotify_url(String notify_url) {
         this.notify_url = notify_url;
+    }
+
+    public String getLpDepartureCname() {
+        return lpDepartureCname;
+    }
+
+    public void setLpDepartureCname(String lpDepartureCname) {
+        this.lpDepartureCname = lpDepartureCname;
     }
 }

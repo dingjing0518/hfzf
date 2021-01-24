@@ -10,10 +10,7 @@ import com.jinshipark.hfzf.mapper2.JinshiparkApakeyMapper;
 import com.jinshipark.hfzf.model.JinshiparkApakey;
 import com.jinshipark.hfzf.model.JinshiparkApakeyExample;
 import com.jinshipark.hfzf.model.vo.JinshiparkApakeyVO;
-import com.jinshipark.hfzf.service.AdapayAliPayService;
-import com.jinshipark.hfzf.service.AdapayWxPubService;
-import com.jinshipark.hfzf.service.LincensePlateService;
-import com.jinshipark.hfzf.service.PrePayService;
+import com.jinshipark.hfzf.service.*;
 import com.jinshipark.hfzf.utils.JinshiparkJSONResult;
 import com.jinshipark.hfzf.vo.AdapayRequstVO;
 import org.apache.commons.lang3.StringUtils;
@@ -44,6 +41,9 @@ public class AdapayController {
 
     @Autowired
     private PrePayService prePayService;
+
+    @Autowired
+    private NoPlatePayService noPlatePayService;
     @Autowired
     private JinshiparkApakeyMapper jinshiparkApakeyMapper;
 
@@ -82,6 +82,7 @@ public class AdapayController {
      *
      * @param adapayRequstVO 请求参数实体
      * @return 处理结果
+     * @throws ParseException 异常
      */
     @CrossOrigin
     @RequestMapping(value = "/prePayExecutePayment", method = RequestMethod.POST)
@@ -89,6 +90,22 @@ public class AdapayController {
     public JinshiparkJSONResult prePayExecutePayment(@RequestBody AdapayRequstVO adapayRequstVO) throws ParseException {
         adapayRequstVO.setNotify_url(ADAPayPropertyConfig.getStrValueByKey("pre_notify_url"));
         JinshiparkJSONResult jinshiparkJSONResult = prePayService.prePayExecutePayment(adapayRequstVO);
+        System.out.println(jinshiparkJSONResult);
+        return jinshiparkJSONResult;
+    }
+
+    /**
+     * 无牌车支付接口
+     *
+     * @param adapayRequstVO 请求参数实体
+     * @return 处理结果
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/noPlatePayExecutePayment", method = RequestMethod.POST)
+    @ResponseBody
+    public JinshiparkJSONResult noPlatePayExecutePayment(@RequestBody AdapayRequstVO adapayRequstVO) {
+        adapayRequstVO.setNotify_url(ADAPayPropertyConfig.getStrValueByKey("no_notify_url"));
+        JinshiparkJSONResult jinshiparkJSONResult = noPlatePayService.noPlatePayExecutePayment(adapayRequstVO);
         System.out.println(jinshiparkJSONResult);
         return jinshiparkJSONResult;
     }

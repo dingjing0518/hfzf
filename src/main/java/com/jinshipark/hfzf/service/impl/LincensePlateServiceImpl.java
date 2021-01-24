@@ -96,6 +96,7 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         lincensePlate.setLpLgType(0);//车牌收费类型 默认0
         int result = lincensePlateMapper.insertSelective(lincensePlate);
         if (result > 0) {
+            //todo 修改摄像机表标志位抬杆
             return JinshiparkJSONResult.ok("入场成功");
         }
         return JinshiparkJSONResult.errorMsg("系统异常");
