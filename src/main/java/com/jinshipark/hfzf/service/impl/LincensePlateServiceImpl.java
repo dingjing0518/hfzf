@@ -1,12 +1,14 @@
 package com.jinshipark.hfzf.service.impl;
 
+import com.jinshipark.hfzf.mapper.JinshiparkCamerasMapper;
+import com.jinshipark.hfzf.mapper.LincensePlateHistoryMapper;
 import com.jinshipark.hfzf.mapper.LincensePlateMapper;
-import com.jinshipark.hfzf.model.LincensePlate;
-import com.jinshipark.hfzf.model.LincensePlateExample;
+import com.jinshipark.hfzf.model.*;
 import com.jinshipark.hfzf.model.vo.LincensePlateVO;
 import com.jinshipark.hfzf.service.LincensePlateService;
 import com.jinshipark.hfzf.utils.JinshiparkJSONResult;
 import com.jinshipark.hfzf.utils.KeyUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,10 @@ import java.util.List;
 public class LincensePlateServiceImpl implements LincensePlateService {
     @Autowired
     private LincensePlateMapper lincensePlateMapper;
+    @Autowired
+    private JinshiparkCamerasMapper jinshiparkCamerasMapper;
+    @Autowired
+    private LincensePlateHistoryMapper lincensePlateHistoryMapper;
 
     @Override
     public JinshiparkJSONResult getLincensePlate(LincensePlateVO lincensePlateVO) {
@@ -58,6 +64,40 @@ public class LincensePlateServiceImpl implements LincensePlateService {
     }
 
     @Override
+    public void updateLincensePlateForNoPlate(String order_no, String pay_channel, String pay_amt) {
+        //1.更新在场记录表数据
+        LincensePlateExample example = new LincensePlateExample();
+        LincensePlateExample.Criteria criteria = example.createCriteria();
+        criteria.andLpOrderIdEqualTo(order_no);
+        LincensePlate lincensePlate = new LincensePlate();
+        lincensePlate.setLpOrderState("支付成功");//订单状态
+        lincensePlate.setLpPaymentType("扫码支付出场");//支付方式
+        lincensePlate.setLpParkingRealCost(pay_amt);//实付金额
+        lincensePlate.setLpParkingCost(pay_amt);//应付金额
+        lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
+
+        List<LincensePlate> lincensePlateList = lincensePlateMapper.selectByExample(example);
+        LincensePlate lp = lincensePlateList.get(0);
+        //2.抬杆
+        JinshiparkCamerasExample camerasExample = new JinshiparkCamerasExample();
+        JinshiparkCamerasExample.Criteria exampleCriteria = camerasExample.createCriteria();
+        exampleCriteria.andCameraidEqualTo(lp.getLpDepartureCname());//出场口名
+        exampleCriteria.andAreanameEqualTo(lp.getLpCarType());//区域名称
+        JinshiparkCameras jinshiparkCameras = new JinshiparkCameras();
+        jinshiparkCameras.setStatus("0");
+        jinshiparkCamerasMapper.updateByExampleSelective(jinshiparkCameras, camerasExample);
+
+        //3.移动在场记录表里数据到在场历史表里
+        LincensePlateHistory lincensePlateHistory = new LincensePlateHistory();
+        BeanUtils.copyProperties(lp, lincensePlateHistory);
+        lincensePlateHistory.setLpId(null);
+        int result = lincensePlateHistoryMapper.insertSelective(lincensePlateHistory);
+        if (result > 0) {
+            lincensePlateMapper.deleteByExample(example);
+        }
+    }
+
+    @Override
     public JinshiparkJSONResult getLincensePlateByPlate(LincensePlateVO lincensePlateVO) {
         LincensePlateExample example = new LincensePlateExample();
         LincensePlateExample.Criteria criteria = example.createCriteria();
@@ -96,8 +136,19 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         lincensePlate.setLpLgType(0);//车牌收费类型 默认0
         int result = lincensePlateMapper.insertSelective(lincensePlate);
         if (result > 0) {
-            //todo 修改摄像机表标志位抬杆
-            return JinshiparkJSONResult.ok("入场成功");
+            //修改摄像机表标志位抬杆
+            JinshiparkCamerasExample camerasExample = new JinshiparkCamerasExample();
+            JinshiparkCamerasExample.Criteria exampleCriteria = camerasExample.createCriteria();
+            exampleCriteria.andCameraidEqualTo(lincensePlateVO.getLpInboundCname());//入场口名
+            exampleCriteria.andAreanameEqualTo(lincensePlateVO.getLpCarType());//区域名称
+            JinshiparkCameras jinshiparkCameras = new JinshiparkCameras();
+            jinshiparkCameras.setStatus("0");
+            int count = jinshiparkCamerasMapper.updateByExampleSelective(jinshiparkCameras, camerasExample);
+            if (count > 0) {
+                return JinshiparkJSONResult.ok("入场成功");
+            } else {
+                return JinshiparkJSONResult.ok("系统异常");
+            }
         }
         return JinshiparkJSONResult.errorMsg("系统异常");
     }

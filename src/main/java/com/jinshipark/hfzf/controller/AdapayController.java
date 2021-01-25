@@ -175,7 +175,38 @@ public class AdapayController {
             logger.info("异步回调开始，参数，request={}");
         }
     }
+    /**
+     * 无牌车支付回调
+     *
+     * @param request 请求
+     */
+    @PostMapping("/noCallback")
+    public void noCallback(HttpServletRequest request) {
+        try {
+            //验签请参data
+            String data = request.getParameter("data");
+            //验签请参sign
+            String sign = request.getParameter("sign");
+            //验签标记
+            boolean checkSign;
+            //验签请参publicKey
+            String publicKey = AdapayCore.PUBLIC_KEY;
+            logger.info("验签请参：data={}sign={}");
+            //验签
+            checkSign = AdapaySign.verifySign(data, sign, publicKey);
+            if (checkSign) {
+                //验签成功逻辑
+                JSONObject jsonObject = JSONObject.parseObject(data);
+                String order_no = jsonObject.getString("order_no");
+                String pay_channel = jsonObject.getString("pay_channel");
+                String pay_amt = jsonObject.getString("pay_amt");
 
+                lincensePlateService.updateLincensePlateForNoPlate(order_no, pay_channel, pay_amt);
+            }
+        } catch (Exception e) {
+            logger.info("异步回调开始，参数，request={}");
+        }
+    }
     /**
      * 添加商户配置
      */

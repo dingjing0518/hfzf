@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jinshipark.hfzf.mapper.JinshiparkCamerasMapper">
+  <resultMap id="BaseResultMap" type="com.jinshipark.hfzf.model.JinshiparkCameras">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="CameraName" jdbcType="VARCHAR" property="cameraname" />
+    <result column="WatchHouse" jdbcType="VARCHAR" property="watchhouse" />
+    <result column="CameraID" jdbcType="VARCHAR" property="cameraid" />
+    <result column="IPAddress" jdbcType="VARCHAR" property="ipaddress" />
+    <result column="IPSubnet" jdbcType="VARCHAR" property="ipsubnet" />
+    <result column="IPGateway" jdbcType="VARCHAR" property="ipgateway" />
+    <result column="InOrOut" jdbcType="VARCHAR" property="inorout" />
+    <result column="Status" jdbcType="VARCHAR" property="status" />
+    <result column="ParkID" jdbcType="VARCHAR" property="parkid" />
+    <result column="AgentID" jdbcType="VARCHAR" property="agentid" />
+    <result column="AreaName" jdbcType="VARCHAR" property="areaname" />
+    <result column="Remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, CameraName, WatchHouse, CameraID, IPAddress, IPSubnet, IPGateway, InOrOut, Status, 
+    ParkID, AgentID, AreaName, Remarks
+  </sql>
+  <select id="selectByExample" parameterType="com.jinshipark.hfzf.model.JinshiparkCamerasExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from jinshipark_cameras
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from jinshipark_cameras
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from jinshipark_cameras
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jinshipark.hfzf.model.JinshiparkCamerasExample">
+    delete from jinshipark_cameras
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jinshipark.hfzf.model.JinshiparkCameras">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into jinshipark_cameras (CameraName, WatchHouse, CameraID, 
+      IPAddress, IPSubnet, IPGateway, 
+      InOrOut, Status, ParkID, 
+      AgentID, AreaName, Remarks
+      )
+    values (#{cameraname,jdbcType=VARCHAR}, #{watchhouse,jdbcType=VARCHAR}, #{cameraid,jdbcType=VARCHAR}, 
+      #{ipaddress,jdbcType=VARCHAR}, #{ipsubnet,jdbcType=VARCHAR}, #{ipgateway,jdbcType=VARCHAR}, 
+      #{inorout,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{parkid,jdbcType=VARCHAR}, 
+      #{agentid,jdbcType=VARCHAR}, #{areaname,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jinshipark.hfzf.model.JinshiparkCameras">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into jinshipark_cameras
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cameraname != null">
+        CameraName,
+      </if>
+      <if test="watchhouse != null">
+        WatchHouse,
+      </if>
+      <if test="cameraid != null">
+        CameraID,
+      </if>
+      <if test="ipaddress != null">
+        IPAddress,
+      </if>
+      <if test="ipsubnet != null">
+        IPSubnet,
+      </if>
+      <if test="ipgateway != null">
+        IPGateway,
+      </if>
+      <if test="inorout != null">
+        InOrOut,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="parkid != null">
+        ParkID,
+      </if>
+      <if test="agentid != null">
+        AgentID,
+      </if>
+      <if test="areaname != null">
+        AreaName,
+      </if>
+      <if test="remarks != null">
+        Remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cameraname != null">
+        #{cameraname,jdbcType=VARCHAR},
+      </if>
+      <if test="watchhouse != null">
+        #{watchhouse,jdbcType=VARCHAR},
+      </if>
+      <if test="cameraid != null">
+        #{cameraid,jdbcType=VARCHAR},
+      </if>
+      <if test="ipaddress != null">
+        #{ipaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ipsubnet != null">
+        #{ipsubnet,jdbcType=VARCHAR},
+      </if>
+      <if test="ipgateway != null">
+        #{ipgateway,jdbcType=VARCHAR},
+      </if>
+      <if test="inorout != null">
+        #{inorout,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="parkid != null">
+        #{parkid,jdbcType=VARCHAR},
+      </if>
+      <if test="agentid != null">
+        #{agentid,jdbcType=VARCHAR},
+      </if>
+      <if test="areaname != null">
+        #{areaname,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jinshipark.hfzf.model.JinshiparkCamerasExample" resultType="java.lang.Long">
+    select count(*) from jinshipark_cameras
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update jinshipark_cameras
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.cameraname != null">
+        CameraName = #{record.cameraname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.watchhouse != null">
+        WatchHouse = #{record.watchhouse,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cameraid != null">
+        CameraID = #{record.cameraid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ipaddress != null">
+        IPAddress = #{record.ipaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ipsubnet != null">
+        IPSubnet = #{record.ipsubnet,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ipgateway != null">
+        IPGateway = #{record.ipgateway,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inorout != null">
+        InOrOut = #{record.inorout,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        Status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parkid != null">
+        ParkID = #{record.parkid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agentid != null">
+        AgentID = #{record.agentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaname != null">
+        AreaName = #{record.areaname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarks != null">
+        Remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update jinshipark_cameras
+    set id = #{record.id,jdbcType=INTEGER},
+      CameraName = #{record.cameraname,jdbcType=VARCHAR},
+      WatchHouse = #{record.watchhouse,jdbcType=VARCHAR},
+      CameraID = #{record.cameraid,jdbcType=VARCHAR},
+      IPAddress = #{record.ipaddress,jdbcType=VARCHAR},
+      IPSubnet = #{record.ipsubnet,jdbcType=VARCHAR},
+      IPGateway = #{record.ipgateway,jdbcType=VARCHAR},
+      InOrOut = #{record.inorout,jdbcType=VARCHAR},
+      Status = #{record.status,jdbcType=VARCHAR},
+      ParkID = #{record.parkid,jdbcType=VARCHAR},
+      AgentID = #{record.agentid,jdbcType=VARCHAR},
+      AreaName = #{record.areaname,jdbcType=VARCHAR},
+      Remarks = #{record.remarks,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jinshipark.hfzf.model.JinshiparkCameras">
+    update jinshipark_cameras
+    <set>
+      <if test="cameraname != null">
+        CameraName = #{cameraname,jdbcType=VARCHAR},
+      </if>
+      <if test="watchhouse != null">
+        WatchHouse = #{watchhouse,jdbcType=VARCHAR},
+      </if>
+      <if test="cameraid != null">
+        CameraID = #{cameraid,jdbcType=VARCHAR},
+      </if>
+      <if test="ipaddress != null">
+        IPAddress = #{ipaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ipsubnet != null">
+        IPSubnet = #{ipsubnet,jdbcType=VARCHAR},
+      </if>
+      <if test="ipgateway != null">
+        IPGateway = #{ipgateway,jdbcType=VARCHAR},
+      </if>
+      <if test="inorout != null">
+        InOrOut = #{inorout,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="parkid != null">
+        ParkID = #{parkid,jdbcType=VARCHAR},
+      </if>
+      <if test="agentid != null">
+        AgentID = #{agentid,jdbcType=VARCHAR},
+      </if>
+      <if test="areaname != null">
+        AreaName = #{areaname,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        Remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jinshipark.hfzf.model.JinshiparkCameras">
+    update jinshipark_cameras
+    set CameraName = #{cameraname,jdbcType=VARCHAR},
+      WatchHouse = #{watchhouse,jdbcType=VARCHAR},
+      CameraID = #{cameraid,jdbcType=VARCHAR},
+      IPAddress = #{ipaddress,jdbcType=VARCHAR},
+      IPSubnet = #{ipsubnet,jdbcType=VARCHAR},
+      IPGateway = #{ipgateway,jdbcType=VARCHAR},
+      InOrOut = #{inorout,jdbcType=VARCHAR},
+      Status = #{status,jdbcType=VARCHAR},
+      ParkID = #{parkid,jdbcType=VARCHAR},
+      AgentID = #{agentid,jdbcType=VARCHAR},
+      AreaName = #{areaname,jdbcType=VARCHAR},
+      Remarks = #{remarks,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
