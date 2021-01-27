@@ -4,17 +4,18 @@ package com.jinshipark.hfzf.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.huifu.adapay.core.exception.BaseAdaPayException;
 import com.huifu.adapay.model.Payment;
-import com.jinshipark.hfzf.config.ADAPayPropertyConfig;
 import com.jinshipark.hfzf.mapper.LincensePlateMapper;
 import com.jinshipark.hfzf.mapper2.JinshiparkApakeyMapper;
 import com.jinshipark.hfzf.model.JinshiparkApakey;
 import com.jinshipark.hfzf.model.JinshiparkApakeyExample;
 import com.jinshipark.hfzf.model.LincensePlate;
 import com.jinshipark.hfzf.model.LincensePlateExample;
+import com.jinshipark.hfzf.service.AdapayWxPubService;
 import com.jinshipark.hfzf.utils.JinshiparkJSONResult;
 import com.jinshipark.hfzf.utils.KeyUtils;
 import com.jinshipark.hfzf.vo.AdapayRequstVO;
-import com.jinshipark.hfzf.service.AdapayWxPubService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ import java.util.Map;
 
 @Service
 public class AdapayWxPubServiceImpl implements AdapayWxPubService {
+    public static final Logger logger = LoggerFactory.getLogger(AdapayWxPubServiceImpl.class);
     @Autowired
     private JinshiparkApakeyMapper jinshiparkApakeyMapper;
     @Autowired
@@ -52,13 +54,8 @@ public class AdapayWxPubServiceImpl implements AdapayWxPubService {
         paymentParams.put("goods_title", "停车缴费");
         paymentParams.put("goods_desc", "停车缴费说明");
         paymentParams.put("notify_url", adapayRequstVO.getNotify_url());
-
-        System.out.println(jinshiparkApakey.getAppid());
-        System.out.println(orderId);
-        System.out.println(new DecimalFormat("0.00").format(Float.parseFloat(adapayRequstVO.getPay_amt())));
-        System.out.println(adapayRequstVO.getOpen_id());
-        System.out.println(adapayRequstVO.getParkId());
-        System.out.println(adapayRequstVO.getNotify_url());
+        logger.error("===汇付支付微信渠道参数===");
+        logger.error("app_id:{},订单号:{},支付金额:{}元", jinshiparkApakey.getAppid(), orderId, paymentParams.get("pay_amt"));
         try {
             payment = Payment.create(paymentParams, adapayRequstVO.getParkId());
         } catch (BaseAdaPayException e) {
@@ -70,9 +67,9 @@ public class AdapayWxPubServiceImpl implements AdapayWxPubService {
         LincensePlateExample lincensePlateExample = new LincensePlateExample();
         LincensePlateExample.Criteria lincensePlateExampleCriteria = lincensePlateExample.createCriteria();
         lincensePlateExampleCriteria.andLpLincensePlateIdCarEqualTo(adapayRequstVO.getPlate());
-        LincensePlate lincensePlate=new LincensePlate();
+        LincensePlate lincensePlate = new LincensePlate();
         lincensePlate.setLpOrderId(orderId);
-        lincensePlateMapper.updateByExampleSelective(lincensePlate,lincensePlateExample);
+        lincensePlateMapper.updateByExampleSelective(lincensePlate, lincensePlateExample);
         JSONObject expand = (JSONObject) payment.get("expend");
         return JinshiparkJSONResult.ok(JSONObject.parse(expand.getString("pay_info")));
     }

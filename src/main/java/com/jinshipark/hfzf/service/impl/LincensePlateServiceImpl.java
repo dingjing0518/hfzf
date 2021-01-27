@@ -8,6 +8,8 @@ import com.jinshipark.hfzf.model.vo.LincensePlateVO;
 import com.jinshipark.hfzf.service.LincensePlateService;
 import com.jinshipark.hfzf.utils.JinshiparkJSONResult;
 import com.jinshipark.hfzf.utils.KeyUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import java.util.List;
 
 @Service
 public class LincensePlateServiceImpl implements LincensePlateService {
+    public static final Logger logger = LoggerFactory.getLogger(LincensePlateServiceImpl.class);
     @Autowired
     private LincensePlateMapper lincensePlateMapper;
     @Autowired
@@ -47,7 +50,14 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         lincensePlate.setLpOrderState("支付成功");//订单状态
         lincensePlate.setLpPaymentType("扫码支付出场");//支付方式
         lincensePlate.setLpParkingRealCost(pay_amt);//实付金额
-        lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
+        logger.error("===扫码支付回调参数===");
+        logger.error("订单号:{}", "支付金额:{}元", order_no, pay_amt);
+        int result = lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
+        if (result > 0) {
+            logger.error("===更新成功订单号:{}成功===", order_no);
+        } else {
+            logger.error("===更新成功订单号:{}失败===", order_no);
+        }
     }
 
     @Override
@@ -60,7 +70,14 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         lincensePlate.setLpPaymentType("预付款出场");//支付方式
         lincensePlate.setLpParkingRealCost(pay_amt);//实付金额
         lincensePlate.setLpParkingCost(pay_amt);//应付金额
-        lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
+        logger.error("===预支付回调参数===");
+        logger.error("订单号:{}", "支付金额:{}元", order_no, pay_amt);
+        int result = lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
+        if (result > 0) {
+            logger.error("===更新成功订单号:{}成功===", order_no);
+        } else {
+            logger.error("===更新成功订单号:{}失败===", order_no);
+        }
     }
 
     @Override
@@ -74,8 +91,14 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         lincensePlate.setLpPaymentType("扫码支付出场");//支付方式
         lincensePlate.setLpParkingRealCost(pay_amt);//实付金额
         lincensePlate.setLpParkingCost(pay_amt);//应付金额
-        lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
-
+        logger.error("===无牌车支付回调参数===");
+        logger.error("订单号:{}", "支付金额:{}元", order_no, pay_amt);
+        int result = lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
+        if (result > 0) {
+            logger.error("===更新成功订单号:{}成功===", order_no);
+        } else {
+            logger.error("===更新成功订单号:{}失败===", order_no);
+        }
         List<LincensePlate> lincensePlateList = lincensePlateMapper.selectByExample(example);
         LincensePlate lp = lincensePlateList.get(0);
         //2.抬杆
@@ -91,8 +114,8 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         LincensePlateHistory lincensePlateHistory = new LincensePlateHistory();
         BeanUtils.copyProperties(lp, lincensePlateHistory);
         lincensePlateHistory.setLpId(null);
-        int result = lincensePlateHistoryMapper.insertSelective(lincensePlateHistory);
-        if (result > 0) {
+        int count = lincensePlateHistoryMapper.insertSelective(lincensePlateHistory);
+        if (count > 0) {
             lincensePlateMapper.deleteByExample(example);
         }
     }

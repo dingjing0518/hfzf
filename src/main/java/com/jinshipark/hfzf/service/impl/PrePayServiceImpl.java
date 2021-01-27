@@ -1,25 +1,24 @@
 package com.jinshipark.hfzf.service.impl;
 
 import com.jinshipark.hfzf.mapper.JinshiParkSettingMapper;
-import com.jinshipark.hfzf.mapper.JinshiparkFeeMapper;
 import com.jinshipark.hfzf.mapper.LincensePlateMapper;
-import com.jinshipark.hfzf.mapper.MemberMapper;
-import com.jinshipark.hfzf.model.*;
+import com.jinshipark.hfzf.model.JinshiParkSetting;
+import com.jinshipark.hfzf.model.JinshiParkSettingExample;
+import com.jinshipark.hfzf.model.LincensePlate;
+import com.jinshipark.hfzf.model.LincensePlateExample;
 import com.jinshipark.hfzf.service.AdapayWxPubService;
 import com.jinshipark.hfzf.service.PrePayService;
-import com.jinshipark.hfzf.utils.DateUtils;
 import com.jinshipark.hfzf.utils.JinshiparkJSONResult;
 import com.jinshipark.hfzf.utils.KeyUtils;
 import com.jinshipark.hfzf.vo.AdapayRequstVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -29,8 +28,6 @@ public class PrePayServiceImpl implements PrePayService {
     private AdapayWxPubService adapayWxPubService;
     @Autowired
     private LincensePlateMapper lincensePlateMapper;
-    @Autowired
-    private MemberMapper memberMapper;
 
     @Autowired
     private JinshiParkSettingMapper jinshiParkSettingMapper;

@@ -72,9 +72,7 @@ public class AdapayController {
     @ResponseBody
     public JinshiparkJSONResult wxPubExecutePayment(@RequestBody AdapayRequstVO adapayRequstVO) {
         adapayRequstVO.setNotify_url(ADAPayPropertyConfig.getStrValueByKey("notify_url"));
-        JinshiparkJSONResult jinshiparkJSONResult = adapayWxPubService.wxPubExecutePayment(adapayRequstVO);
-        System.out.println(jinshiparkJSONResult);
-        return jinshiparkJSONResult;
+        return adapayWxPubService.wxPubExecutePayment(adapayRequstVO);
     }
 
     /**
@@ -89,9 +87,7 @@ public class AdapayController {
     @ResponseBody
     public JinshiparkJSONResult prePayExecutePayment(@RequestBody AdapayRequstVO adapayRequstVO) throws ParseException {
         adapayRequstVO.setNotify_url(ADAPayPropertyConfig.getStrValueByKey("pre_notify_url"));
-        JinshiparkJSONResult jinshiparkJSONResult = prePayService.prePayExecutePayment(adapayRequstVO);
-        System.out.println(jinshiparkJSONResult);
-        return jinshiparkJSONResult;
+        return prePayService.prePayExecutePayment(adapayRequstVO);
     }
 
     /**
@@ -105,9 +101,7 @@ public class AdapayController {
     @ResponseBody
     public JinshiparkJSONResult noPlatePayExecutePayment(@RequestBody AdapayRequstVO adapayRequstVO) {
         adapayRequstVO.setNotify_url(ADAPayPropertyConfig.getStrValueByKey("no_notify_url"));
-        JinshiparkJSONResult jinshiparkJSONResult = noPlatePayService.noPlatePayExecutePayment(adapayRequstVO);
-        System.out.println(jinshiparkJSONResult);
-        return jinshiparkJSONResult;
+        return noPlatePayService.noPlatePayExecutePayment(adapayRequstVO);
     }
 
     /**
@@ -126,7 +120,7 @@ public class AdapayController {
             boolean checkSign;
             //验签请参publicKey
             String publicKey = AdapayCore.PUBLIC_KEY;
-            logger.info("验签请参：data={}sign={}");
+            logger.error("验签请参：data={},sign={}", data, sign);
             //验签
             checkSign = AdapaySign.verifySign(data, sign, publicKey);
             if (checkSign) {
@@ -139,7 +133,7 @@ public class AdapayController {
                 lincensePlateService.updateLincensePlate(order_no, pay_channel, pay_amt);
             }
         } catch (Exception e) {
-            logger.info("异步回调开始，参数，request={}");
+            logger.error("异步回调异常，Exception：{}", e.getMessage());
         }
     }
 
@@ -159,7 +153,7 @@ public class AdapayController {
             boolean checkSign;
             //验签请参publicKey
             String publicKey = AdapayCore.PUBLIC_KEY;
-            logger.info("验签请参：data={}sign={}");
+            logger.error("验签请参：data={},sign={}", data, sign);
             //验签
             checkSign = AdapaySign.verifySign(data, sign, publicKey);
             if (checkSign) {
@@ -172,9 +166,10 @@ public class AdapayController {
                 lincensePlateService.updateLincensePlateForPrePay(order_no, pay_channel, pay_amt);
             }
         } catch (Exception e) {
-            logger.info("异步回调开始，参数，request={}");
+            logger.error("异步回调异常，Exception：{}", e.getMessage());
         }
     }
+
     /**
      * 无牌车支付回调
      *
@@ -191,7 +186,7 @@ public class AdapayController {
             boolean checkSign;
             //验签请参publicKey
             String publicKey = AdapayCore.PUBLIC_KEY;
-            logger.info("验签请参：data={}sign={}");
+            logger.error("验签请参：data={},sign={}", data, sign);
             //验签
             checkSign = AdapaySign.verifySign(data, sign, publicKey);
             if (checkSign) {
@@ -204,9 +199,10 @@ public class AdapayController {
                 lincensePlateService.updateLincensePlateForNoPlate(order_no, pay_channel, pay_amt);
             }
         } catch (Exception e) {
-            logger.info("异步回调开始，参数，request={}");
+            logger.error("异步回调异常，Exception：{}", e.getMessage());
         }
     }
+
     /**
      * 添加商户配置
      */

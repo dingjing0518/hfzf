@@ -12,6 +12,8 @@ import com.jinshipark.hfzf.service.AdapayAliPayService;
 import com.jinshipark.hfzf.utils.JinshiparkJSONResult;
 import com.jinshipark.hfzf.utils.KeyUtils;
 import com.jinshipark.hfzf.vo.AdapayRequstVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +24,12 @@ import java.util.Map;
 
 @Service
 public class AdapayAliPayServiceImpl implements AdapayAliPayService {
+    public static final Logger logger = LoggerFactory.getLogger(AdapayAliPayServiceImpl.class);
     @Autowired
     private JinshiparkApakeyMapper jinshiparkApakeyMapper;
     @Autowired
     private LincensePlateMapper lincensePlateMapper;
+
 
     @Override
     public JinshiparkJSONResult alipayExecutePayment(AdapayRequstVO adapayRequstVO) {
@@ -48,6 +52,8 @@ public class AdapayAliPayServiceImpl implements AdapayAliPayService {
         paymentParams.put("goods_title", "停车缴费");
         paymentParams.put("goods_desc", "停车缴费说明");
         paymentParams.put("notify_url", adapayRequstVO.getNotify_url());
+        logger.error("===汇付支付支付宝渠道参数===");
+        logger.error("app_id:{},订单号:{},支付金额:{}元", jinshiparkApakey.getAppid(), orderId, paymentParams.get("pay_amt"));
         try {
             payment = Payment.create(paymentParams, adapayRequstVO.getParkId());
         } catch (BaseAdaPayException e) {
@@ -59,9 +65,9 @@ public class AdapayAliPayServiceImpl implements AdapayAliPayService {
         LincensePlateExample lincensePlateExample = new LincensePlateExample();
         LincensePlateExample.Criteria lincensePlateExampleCriteria = lincensePlateExample.createCriteria();
         lincensePlateExampleCriteria.andLpLincensePlateIdCarEqualTo(adapayRequstVO.getPlate());
-        LincensePlate lincensePlate=new LincensePlate();
+        LincensePlate lincensePlate = new LincensePlate();
         lincensePlate.setLpOrderId(orderId);
-        lincensePlateMapper.updateByExampleSelective(lincensePlate,lincensePlateExample);
+        lincensePlateMapper.updateByExampleSelective(lincensePlate, lincensePlateExample);
         return JinshiparkJSONResult.ok(payment);
     }
 
