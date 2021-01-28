@@ -69,7 +69,6 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         lincensePlate.setLpOrderState("支付成功");//订单状态
         lincensePlate.setLpPaymentType("预付款出场");//支付方式
         lincensePlate.setLpParkingRealCost(pay_amt);//实付金额
-        lincensePlate.setLpParkingCost(pay_amt);//应付金额
         logger.error("===预支付回调参数===");
         logger.error("订单号:{}", "支付金额:{}元", order_no, pay_amt);
         int result = lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
@@ -90,7 +89,6 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         lincensePlate.setLpOrderState("支付成功");//订单状态
         lincensePlate.setLpPaymentType("扫码支付出场");//支付方式
         lincensePlate.setLpParkingRealCost(pay_amt);//实付金额
-        lincensePlate.setLpParkingCost(pay_amt);//应付金额
         logger.error("===无牌车支付回调参数===");
         logger.error("订单号:{}", "支付金额:{}元", order_no, pay_amt);
         int result = lincensePlateMapper.updateByExampleSelective(lincensePlate, example);

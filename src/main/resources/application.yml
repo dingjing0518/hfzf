@@ -42,3 +42,6 @@ spring:
         connection-test-query: SELECT 1
   jmx:
     enabled: false
+#  logging:
+#    level:
+#      com.jinshipark.hfzf.mapper: debug

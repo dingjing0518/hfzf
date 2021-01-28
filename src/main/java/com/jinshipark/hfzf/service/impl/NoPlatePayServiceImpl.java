@@ -68,7 +68,7 @@ public class NoPlatePayServiceImpl implements NoPlatePayService {
         String rentStr = new DecimalFormat("0.00").format(rent);
         //更新在场记录表的应付金额
         LincensePlateExample updateExample = new LincensePlateExample();
-        LincensePlateExample.Criteria updateCriteria = example.createCriteria();
+        LincensePlateExample.Criteria updateCriteria = updateExample.createCriteria();
         updateCriteria.andLpLincensePlateIdCarEqualTo(lincensePlate.getLpLincensePlateIdCar());
         LincensePlate updateLincensePlate = new LincensePlate();
         updateLincensePlate.setLpParkingCost(rentStr);
