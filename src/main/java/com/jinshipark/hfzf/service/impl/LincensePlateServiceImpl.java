@@ -51,7 +51,7 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         lincensePlate.setLpPaymentType("扫码支付出场");//支付方式
         lincensePlate.setLpParkingRealCost(pay_amt);//实付金额
         logger.error("===扫码支付回调参数===");
-        logger.error("订单号:{}", "支付金额:{}元", order_no, pay_amt);
+        logger.error("订单号:{},支付金额:{}元", order_no, pay_amt);
         int result = lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
         if (result > 0) {
             logger.error("===更新成功订单号:{}成功===", order_no);
@@ -70,7 +70,7 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         lincensePlate.setLpPaymentType("预付款出场");//支付方式
         lincensePlate.setLpParkingRealCost(pay_amt);//实付金额
         logger.error("===预支付回调参数===");
-        logger.error("订单号:{}", "支付金额:{}元", order_no, pay_amt);
+        logger.error("订单号:{},支付金额:{}元", order_no, pay_amt);
         int result = lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
         if (result > 0) {
             logger.error("===更新成功订单号:{}成功===", order_no);
@@ -90,7 +90,7 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         lincensePlate.setLpPaymentType("扫码支付出场");//支付方式
         lincensePlate.setLpParkingRealCost(pay_amt);//实付金额
         logger.error("===无牌车支付回调参数===");
-        logger.error("订单号:{}", "支付金额:{}元", order_no, pay_amt);
+        logger.error("订单号:{},支付金额:{}元", order_no, pay_amt);
         int result = lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
         if (result > 0) {
             logger.error("===更新成功订单号:{}成功===", order_no);
