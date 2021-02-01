@@ -10,6 +10,7 @@ import com.jinshipark.hfzf.service.AdapayWxPubService;
 import com.jinshipark.hfzf.service.NoPlatePayService;
 import com.jinshipark.hfzf.utils.JinshiparkJSONResult;
 import com.jinshipark.hfzf.utils.KeyUtils;
+import com.jinshipark.hfzf.utils.PayUtils;
 import com.jinshipark.hfzf.vo.AdapayRequstVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class NoPlatePayServiceImpl implements NoPlatePayService {
         LincensePlate lincense = new LincensePlate();
 
         BeanUtils.copyProperties(lincensePlate, lincense);
-        Integer dateOften = getDateOften(new Date(), lincense.getLpInboundTime());
+        Integer dateOften = PayUtils.getDateOften(new Date(), lincense.getLpInboundTime());
         String lpParkingName = lincense.getLpParkingName();
 
         String lpLincenseTypeStr = lincense.getLpLincenseType();
@@ -64,7 +65,7 @@ public class NoPlatePayServiceImpl implements NoPlatePayService {
             return JinshiparkJSONResult.errorMsg("车牌为：" + lincensePlate.getLpLincensePlateIdCar() + "的用户您好，您还在免费时长之内哦~");
         }
         Date tempDate = new Date();
-        Double rent = getRent(tempDate, lincense.getLpInboundTime(), jinshiParkSettings.get(0));
+        Double rent = PayUtils.getRent(tempDate, lincense.getLpInboundTime(), jinshiParkSettings.get(0));
         String rentStr = new DecimalFormat("0.00").format(rent);
         //更新在场记录表的应付金额
         LincensePlateExample updateExample = new LincensePlateExample();
@@ -79,68 +80,5 @@ public class NoPlatePayServiceImpl implements NoPlatePayService {
         adapayRequstVO.setPay_amt(rentStr);
         adapayRequstVO.setParkId(lincense.getLpParkingName());
         return adapayWxPubService.wxPubExecutePayment(adapayRequstVO);
-    }
-
-    public static Integer getDateOften(Date endDate, Date nowDate) {
-
-        long nd = 1000 * 24 * 60 * 60;
-        long nh = 1000 * 60 * 60;
-        long nm = 1000 * 60;
-        // long ns = 1000;
-        // 获得两个时间的毫秒时间差异
-        long diff = endDate.getTime() - nowDate.getTime();
-        // 计算差多少天
-        long day = diff / nd;
-        // 计算差多少小时
-        long hour = diff % nd / nh;
-        // 计算差多少分钟
-        long min = diff % nd % nh / nm;
-
-        long resMin = diff / nm;
-        // 计算差多少秒//输出结果
-        // long sec = diff % nd % nh % nm / ns;
-        return Math.toIntExact(resMin);
-    }
-
-    public Double getRent(Date endDate, Date nowDate, JinshiParkSetting jinshiParkSetting) {
-        if (endDate == null) {
-            return 0.0;
-        }
-        long nd = 1000 * 24 * 60 * 60;
-        long nh = 1000 * 60 * 60;
-        long nm = 1000 * 60;
-        long ns = 1000;
-        // 获得两个时间的毫秒时间差异
-        long diff = endDate.getTime() - nowDate.getTime();
-        // 计算差多少天
-//        long day = diff / nd;
-//        // 计算差多少小时
-//        long hour = diff % nd / nh;
-//        // 计算差多少分钟
-//        long min = diff % nd % nh / nm;
-//        // 计算差多少秒//输出结果
-//        long sec = diff % nd % nh % nm / ns;
-        //总分钟数
-        long allMin = diff / nm;
-        double allDayMin = 1440;
-        double dayCharge = 0;
-//        double res = 0;
-        double spareMin = allMin % allDayMin;
-        if (allMin > allDayMin) {
-            dayCharge = Math.floor(allMin / allDayMin) * jinshiParkSetting.getJpsAlldayLimit();
-        }
-        if (spareMin < jinshiParkSetting.getJpsFreeTime()) {
-            return dayCharge;
-        }
-        if (spareMin <= jinshiParkSetting.getJpsFirstTime()) {
-            return dayCharge + Double.valueOf(jinshiParkSetting.getJpsFirstCharge());
-        } else {
-            double sumTemp = Math.floor((spareMin - jinshiParkSetting.getJpsFirstTime()) / jinshiParkSetting.getJpsFollowTime()) + 1; //sumTemp是否能够取整数
-            double nowCharge = sumTemp * jinshiParkSetting.getJpsFollowCharge() + jinshiParkSetting.getJpsFirstCharge();
-            if (nowCharge > jinshiParkSetting.getJpsAlldayLimit()) {
-                nowCharge = jinshiParkSetting.getJpsAlldayLimit();
-            }   //当天费用大于20时取20
-            return dayCharge + nowCharge;//之前天数的费用加上当天费用
-        }
     }
 }

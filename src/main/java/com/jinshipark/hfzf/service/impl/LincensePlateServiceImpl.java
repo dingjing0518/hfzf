@@ -1,5 +1,6 @@
 package com.jinshipark.hfzf.service.impl;
 
+import com.jinshipark.hfzf.mapper.JinshiParkSettingMapper;
 import com.jinshipark.hfzf.mapper.JinshiparkCamerasMapper;
 import com.jinshipark.hfzf.mapper.LincensePlateHistoryMapper;
 import com.jinshipark.hfzf.mapper.LincensePlateMapper;
@@ -8,12 +9,14 @@ import com.jinshipark.hfzf.model.vo.LincensePlateVO;
 import com.jinshipark.hfzf.service.LincensePlateService;
 import com.jinshipark.hfzf.utils.JinshiparkJSONResult;
 import com.jinshipark.hfzf.utils.KeyUtils;
+import com.jinshipark.hfzf.utils.PayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +29,8 @@ public class LincensePlateServiceImpl implements LincensePlateService {
     private JinshiparkCamerasMapper jinshiparkCamerasMapper;
     @Autowired
     private LincensePlateHistoryMapper lincensePlateHistoryMapper;
+    @Autowired
+    private JinshiParkSettingMapper jinshiParkSettingMapper;
 
     @Override
     public JinshiparkJSONResult getLincensePlate(LincensePlateVO lincensePlateVO) {
@@ -150,6 +155,52 @@ public class LincensePlateServiceImpl implements LincensePlateService {
             return JinshiparkJSONResult.errorMsg("未查询到车辆");
         }
         return JinshiparkJSONResult.ok(lincensePlateList.get(0));
+    }
+
+    @Override
+    public JinshiparkJSONResult getLincensePlateByNoPlate(LincensePlateVO lincensePlateVO) {
+        //根据车牌查询在场记录表
+        LincensePlateExample example = new LincensePlateExample();
+        LincensePlateExample.Criteria criteria = example.createCriteria();
+        criteria.andLpLincensePlateIdCarEqualTo(lincensePlateVO.getLpLincensePlateIdCar());
+        List<LincensePlate> lincensePlateList = lincensePlateMapper.selectByExample(example);
+        //第一步：是否为在场车辆
+        if (lincensePlateList.size() == 0) {
+            return JinshiparkJSONResult.errorMsg("未查询到车辆");
+        }
+
+        LincensePlate lincensePlate = lincensePlateList.get(0);
+        LincensePlate lincense = new LincensePlate();
+
+        BeanUtils.copyProperties(lincensePlate, lincense);
+        Integer dateOften = PayUtils.getDateOften(new Date(), lincense.getLpInboundTime());
+        String lpParkingName = lincense.getLpParkingName();
+
+        String lpLincenseTypeStr = lincense.getLpLincenseType();
+        Integer lpLincenseType = null;
+        if (lpLincenseTypeStr == null || lpLincenseTypeStr.equals("")) {
+            lpLincenseType = 0;
+        } else {
+            lpLincenseType = Integer.valueOf(lpLincenseTypeStr);
+        }
+        JinshiParkSettingExample jinshiParkSettingExample = new JinshiParkSettingExample();
+        JinshiParkSettingExample.Criteria settingExampleCriteria = jinshiParkSettingExample.createCriteria();
+        settingExampleCriteria.andJpsParkIdEqualTo(lpParkingName);
+        settingExampleCriteria.andJpsCarTypeEqualTo(lpLincenseType);
+        List<JinshiParkSetting> jinshiParkSettings = jinshiParkSettingMapper.selectByExample(jinshiParkSettingExample);
+        //免费时间之内
+        if (dateOften <= jinshiParkSettings.get(0).getJpsFreeTime()) {
+            lincense.setLpDepartureTime(new Date());
+            lincense.setLpParkingOften(String.valueOf(dateOften));
+            lincense.setLpParkingCost("0");
+            return JinshiparkJSONResult.ok(lincense);
+        }
+        Date tempDate = new Date();
+        Double rent = PayUtils.getRent(tempDate, lincense.getLpInboundTime(), jinshiParkSettings.get(0));
+        lincense.setLpDepartureTime(new Date());
+        lincense.setLpParkingOften(String.valueOf(dateOften));
+        lincense.setLpParkingCost(new DecimalFormat("0").format(rent));
+        return JinshiparkJSONResult.ok(lincense);
     }
 
     @Override

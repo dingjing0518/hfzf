@@ -28,6 +28,12 @@ public class LincensePlateController {
         return lincensePlateService.getLincensePlateByPlate(lincensePlateVO);
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "/getLincensePlateByNoPlate", method = RequestMethod.POST)
+    @ResponseBody
+    public JinshiparkJSONResult getLincensePlateByNoPlate(@RequestBody LincensePlateVO lincensePlateVO) {
+        return lincensePlateService.getLincensePlateByNoPlate(lincensePlateVO);
+    }
     /**
      * 无牌车入场
      *
