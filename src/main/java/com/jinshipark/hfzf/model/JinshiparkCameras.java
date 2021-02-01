@@ -2,6 +2,7 @@ package com.jinshipark.hfzf.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import java.util.Date;
 
 public class JinshiparkCameras implements Serializable {
     private Integer id;
@@ -9,20 +10,8 @@ public class JinshiparkCameras implements Serializable {
     @ApiModelProperty(value = "摄像机名称")
     private String cameraname;
 
-    @ApiModelProperty(value = "摄像机所属岗亭")
-    private String watchhouse;
-
     @ApiModelProperty(value = "摄像机内部编号")
     private String cameraid;
-
-    @ApiModelProperty(value = "摄像机ip")
-    private String ipaddress;
-
-    @ApiModelProperty(value = "网络地址")
-    private String ipsubnet;
-
-    @ApiModelProperty(value = "网络地址")
-    private String ipgateway;
 
     @ApiModelProperty(value = "进出口")
     private String inorout;
@@ -33,11 +22,11 @@ public class JinshiparkCameras implements Serializable {
     @ApiModelProperty(value = "车场id")
     private String parkid;
 
-    @ApiModelProperty(value = "代理商id")
-    private String agentid;
-
     @ApiModelProperty(value = "区域名称")
     private String areaname;
+
+    @ApiModelProperty(value = "生成的时间")
+    private Date createtime;
 
     @ApiModelProperty(value = "备注")
     private String remarks;
@@ -60,44 +49,12 @@ public class JinshiparkCameras implements Serializable {
         this.cameraname = cameraname;
     }
 
-    public String getWatchhouse() {
-        return watchhouse;
-    }
-
-    public void setWatchhouse(String watchhouse) {
-        this.watchhouse = watchhouse;
-    }
-
     public String getCameraid() {
         return cameraid;
     }
 
     public void setCameraid(String cameraid) {
         this.cameraid = cameraid;
-    }
-
-    public String getIpaddress() {
-        return ipaddress;
-    }
-
-    public void setIpaddress(String ipaddress) {
-        this.ipaddress = ipaddress;
-    }
-
-    public String getIpsubnet() {
-        return ipsubnet;
-    }
-
-    public void setIpsubnet(String ipsubnet) {
-        this.ipsubnet = ipsubnet;
-    }
-
-    public String getIpgateway() {
-        return ipgateway;
-    }
-
-    public void setIpgateway(String ipgateway) {
-        this.ipgateway = ipgateway;
     }
 
     public String getInorout() {
@@ -124,20 +81,20 @@ public class JinshiparkCameras implements Serializable {
         this.parkid = parkid;
     }
 
-    public String getAgentid() {
-        return agentid;
-    }
-
-    public void setAgentid(String agentid) {
-        this.agentid = agentid;
-    }
-
     public String getAreaname() {
         return areaname;
     }
 
     public void setAreaname(String areaname) {
         this.areaname = areaname;
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 
     public String getRemarks() {
@@ -156,16 +113,12 @@ public class JinshiparkCameras implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", cameraname=").append(cameraname);
-        sb.append(", watchhouse=").append(watchhouse);
         sb.append(", cameraid=").append(cameraid);
-        sb.append(", ipaddress=").append(ipaddress);
-        sb.append(", ipsubnet=").append(ipsubnet);
-        sb.append(", ipgateway=").append(ipgateway);
         sb.append(", inorout=").append(inorout);
         sb.append(", status=").append(status);
         sb.append(", parkid=").append(parkid);
-        sb.append(", agentid=").append(agentid);
         sb.append(", areaname=").append(areaname);
+        sb.append(", createtime=").append(createtime);
         sb.append(", remarks=").append(remarks);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

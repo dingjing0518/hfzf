@@ -1,6 +1,7 @@
 package com.jinshipark.hfzf.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class JinshiparkCamerasExample {
@@ -234,76 +235,6 @@ public class JinshiparkCamerasExample {
             return (Criteria) this;
         }
 
-        public Criteria andWatchhouseIsNull() {
-            addCriterion("WatchHouse is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andWatchhouseIsNotNull() {
-            addCriterion("WatchHouse is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andWatchhouseEqualTo(String value) {
-            addCriterion("WatchHouse =", value, "watchhouse");
-            return (Criteria) this;
-        }
-
-        public Criteria andWatchhouseNotEqualTo(String value) {
-            addCriterion("WatchHouse <>", value, "watchhouse");
-            return (Criteria) this;
-        }
-
-        public Criteria andWatchhouseGreaterThan(String value) {
-            addCriterion("WatchHouse >", value, "watchhouse");
-            return (Criteria) this;
-        }
-
-        public Criteria andWatchhouseGreaterThanOrEqualTo(String value) {
-            addCriterion("WatchHouse >=", value, "watchhouse");
-            return (Criteria) this;
-        }
-
-        public Criteria andWatchhouseLessThan(String value) {
-            addCriterion("WatchHouse <", value, "watchhouse");
-            return (Criteria) this;
-        }
-
-        public Criteria andWatchhouseLessThanOrEqualTo(String value) {
-            addCriterion("WatchHouse <=", value, "watchhouse");
-            return (Criteria) this;
-        }
-
-        public Criteria andWatchhouseLike(String value) {
-            addCriterion("WatchHouse like", value, "watchhouse");
-            return (Criteria) this;
-        }
-
-        public Criteria andWatchhouseNotLike(String value) {
-            addCriterion("WatchHouse not like", value, "watchhouse");
-            return (Criteria) this;
-        }
-
-        public Criteria andWatchhouseIn(List<String> values) {
-            addCriterion("WatchHouse in", values, "watchhouse");
-            return (Criteria) this;
-        }
-
-        public Criteria andWatchhouseNotIn(List<String> values) {
-            addCriterion("WatchHouse not in", values, "watchhouse");
-            return (Criteria) this;
-        }
-
-        public Criteria andWatchhouseBetween(String value1, String value2) {
-            addCriterion("WatchHouse between", value1, value2, "watchhouse");
-            return (Criteria) this;
-        }
-
-        public Criteria andWatchhouseNotBetween(String value1, String value2) {
-            addCriterion("WatchHouse not between", value1, value2, "watchhouse");
-            return (Criteria) this;
-        }
-
         public Criteria andCameraidIsNull() {
             addCriterion("CameraID is null");
             return (Criteria) this;
@@ -371,216 +302,6 @@ public class JinshiparkCamerasExample {
 
         public Criteria andCameraidNotBetween(String value1, String value2) {
             addCriterion("CameraID not between", value1, value2, "cameraid");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpaddressIsNull() {
-            addCriterion("IPAddress is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpaddressIsNotNull() {
-            addCriterion("IPAddress is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpaddressEqualTo(String value) {
-            addCriterion("IPAddress =", value, "ipaddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpaddressNotEqualTo(String value) {
-            addCriterion("IPAddress <>", value, "ipaddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpaddressGreaterThan(String value) {
-            addCriterion("IPAddress >", value, "ipaddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpaddressGreaterThanOrEqualTo(String value) {
-            addCriterion("IPAddress >=", value, "ipaddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpaddressLessThan(String value) {
-            addCriterion("IPAddress <", value, "ipaddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpaddressLessThanOrEqualTo(String value) {
-            addCriterion("IPAddress <=", value, "ipaddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpaddressLike(String value) {
-            addCriterion("IPAddress like", value, "ipaddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpaddressNotLike(String value) {
-            addCriterion("IPAddress not like", value, "ipaddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpaddressIn(List<String> values) {
-            addCriterion("IPAddress in", values, "ipaddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpaddressNotIn(List<String> values) {
-            addCriterion("IPAddress not in", values, "ipaddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpaddressBetween(String value1, String value2) {
-            addCriterion("IPAddress between", value1, value2, "ipaddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpaddressNotBetween(String value1, String value2) {
-            addCriterion("IPAddress not between", value1, value2, "ipaddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpsubnetIsNull() {
-            addCriterion("IPSubnet is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpsubnetIsNotNull() {
-            addCriterion("IPSubnet is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpsubnetEqualTo(String value) {
-            addCriterion("IPSubnet =", value, "ipsubnet");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpsubnetNotEqualTo(String value) {
-            addCriterion("IPSubnet <>", value, "ipsubnet");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpsubnetGreaterThan(String value) {
-            addCriterion("IPSubnet >", value, "ipsubnet");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpsubnetGreaterThanOrEqualTo(String value) {
-            addCriterion("IPSubnet >=", value, "ipsubnet");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpsubnetLessThan(String value) {
-            addCriterion("IPSubnet <", value, "ipsubnet");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpsubnetLessThanOrEqualTo(String value) {
-            addCriterion("IPSubnet <=", value, "ipsubnet");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpsubnetLike(String value) {
-            addCriterion("IPSubnet like", value, "ipsubnet");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpsubnetNotLike(String value) {
-            addCriterion("IPSubnet not like", value, "ipsubnet");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpsubnetIn(List<String> values) {
-            addCriterion("IPSubnet in", values, "ipsubnet");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpsubnetNotIn(List<String> values) {
-            addCriterion("IPSubnet not in", values, "ipsubnet");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpsubnetBetween(String value1, String value2) {
-            addCriterion("IPSubnet between", value1, value2, "ipsubnet");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpsubnetNotBetween(String value1, String value2) {
-            addCriterion("IPSubnet not between", value1, value2, "ipsubnet");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpgatewayIsNull() {
-            addCriterion("IPGateway is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpgatewayIsNotNull() {
-            addCriterion("IPGateway is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpgatewayEqualTo(String value) {
-            addCriterion("IPGateway =", value, "ipgateway");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpgatewayNotEqualTo(String value) {
-            addCriterion("IPGateway <>", value, "ipgateway");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpgatewayGreaterThan(String value) {
-            addCriterion("IPGateway >", value, "ipgateway");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpgatewayGreaterThanOrEqualTo(String value) {
-            addCriterion("IPGateway >=", value, "ipgateway");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpgatewayLessThan(String value) {
-            addCriterion("IPGateway <", value, "ipgateway");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpgatewayLessThanOrEqualTo(String value) {
-            addCriterion("IPGateway <=", value, "ipgateway");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpgatewayLike(String value) {
-            addCriterion("IPGateway like", value, "ipgateway");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpgatewayNotLike(String value) {
-            addCriterion("IPGateway not like", value, "ipgateway");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpgatewayIn(List<String> values) {
-            addCriterion("IPGateway in", values, "ipgateway");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpgatewayNotIn(List<String> values) {
-            addCriterion("IPGateway not in", values, "ipgateway");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpgatewayBetween(String value1, String value2) {
-            addCriterion("IPGateway between", value1, value2, "ipgateway");
-            return (Criteria) this;
-        }
-
-        public Criteria andIpgatewayNotBetween(String value1, String value2) {
-            addCriterion("IPGateway not between", value1, value2, "ipgateway");
             return (Criteria) this;
         }
 
@@ -794,76 +515,6 @@ public class JinshiparkCamerasExample {
             return (Criteria) this;
         }
 
-        public Criteria andAgentidIsNull() {
-            addCriterion("AgentID is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgentidIsNotNull() {
-            addCriterion("AgentID is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgentidEqualTo(String value) {
-            addCriterion("AgentID =", value, "agentid");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgentidNotEqualTo(String value) {
-            addCriterion("AgentID <>", value, "agentid");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgentidGreaterThan(String value) {
-            addCriterion("AgentID >", value, "agentid");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgentidGreaterThanOrEqualTo(String value) {
-            addCriterion("AgentID >=", value, "agentid");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgentidLessThan(String value) {
-            addCriterion("AgentID <", value, "agentid");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgentidLessThanOrEqualTo(String value) {
-            addCriterion("AgentID <=", value, "agentid");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgentidLike(String value) {
-            addCriterion("AgentID like", value, "agentid");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgentidNotLike(String value) {
-            addCriterion("AgentID not like", value, "agentid");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgentidIn(List<String> values) {
-            addCriterion("AgentID in", values, "agentid");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgentidNotIn(List<String> values) {
-            addCriterion("AgentID not in", values, "agentid");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgentidBetween(String value1, String value2) {
-            addCriterion("AgentID between", value1, value2, "agentid");
-            return (Criteria) this;
-        }
-
-        public Criteria andAgentidNotBetween(String value1, String value2) {
-            addCriterion("AgentID not between", value1, value2, "agentid");
-            return (Criteria) this;
-        }
-
         public Criteria andAreanameIsNull() {
             addCriterion("AreaName is null");
             return (Criteria) this;
@@ -931,6 +582,66 @@ public class JinshiparkCamerasExample {
 
         public Criteria andAreanameNotBetween(String value1, String value2) {
             addCriterion("AreaName not between", value1, value2, "areaname");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeIsNull() {
+            addCriterion("CreateTime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeIsNotNull() {
+            addCriterion("CreateTime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeEqualTo(Date value) {
+            addCriterion("CreateTime =", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeNotEqualTo(Date value) {
+            addCriterion("CreateTime <>", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeGreaterThan(Date value) {
+            addCriterion("CreateTime >", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("CreateTime >=", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeLessThan(Date value) {
+            addCriterion("CreateTime <", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeLessThanOrEqualTo(Date value) {
+            addCriterion("CreateTime <=", value, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeIn(List<Date> values) {
+            addCriterion("CreateTime in", values, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeNotIn(List<Date> values) {
+            addCriterion("CreateTime not in", values, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeBetween(Date value1, Date value2) {
+            addCriterion("CreateTime between", value1, value2, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatetimeNotBetween(Date value1, Date value2) {
+            addCriterion("CreateTime not between", value1, value2, "createtime");
             return (Criteria) this;
         }
 

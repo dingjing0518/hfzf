@@ -4,16 +4,12 @@
   <resultMap id="BaseResultMap" type="com.jinshipark.hfzf.model.JinshiparkCameras">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="CameraName" jdbcType="VARCHAR" property="cameraname" />
-    <result column="WatchHouse" jdbcType="VARCHAR" property="watchhouse" />
     <result column="CameraID" jdbcType="VARCHAR" property="cameraid" />
-    <result column="IPAddress" jdbcType="VARCHAR" property="ipaddress" />
-    <result column="IPSubnet" jdbcType="VARCHAR" property="ipsubnet" />
-    <result column="IPGateway" jdbcType="VARCHAR" property="ipgateway" />
     <result column="InOrOut" jdbcType="VARCHAR" property="inorout" />
     <result column="Status" jdbcType="VARCHAR" property="status" />
     <result column="ParkID" jdbcType="VARCHAR" property="parkid" />
-    <result column="AgentID" jdbcType="VARCHAR" property="agentid" />
     <result column="AreaName" jdbcType="VARCHAR" property="areaname" />
+    <result column="CreateTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="Remarks" jdbcType="VARCHAR" property="remarks" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -75,8 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, CameraName, WatchHouse, CameraID, IPAddress, IPSubnet, IPGateway, InOrOut, Status, 
-    ParkID, AgentID, AreaName, Remarks
+    id, CameraName, CameraID, InOrOut, Status, ParkID, AreaName, CreateTime, Remarks
   </sql>
   <select id="selectByExample" parameterType="com.jinshipark.hfzf.model.JinshiparkCamerasExample" resultMap="BaseResultMap">
     select
@@ -112,16 +107,12 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into jinshipark_cameras (CameraName, WatchHouse, CameraID, 
-      IPAddress, IPSubnet, IPGateway, 
-      InOrOut, Status, ParkID, 
-      AgentID, AreaName, Remarks
-      )
-    values (#{cameraname,jdbcType=VARCHAR}, #{watchhouse,jdbcType=VARCHAR}, #{cameraid,jdbcType=VARCHAR}, 
-      #{ipaddress,jdbcType=VARCHAR}, #{ipsubnet,jdbcType=VARCHAR}, #{ipgateway,jdbcType=VARCHAR}, 
-      #{inorout,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{parkid,jdbcType=VARCHAR}, 
-      #{agentid,jdbcType=VARCHAR}, #{areaname,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}
-      )
+    insert into jinshipark_cameras (CameraName, CameraID, InOrOut, 
+      Status, ParkID, AreaName, 
+      CreateTime, Remarks)
+    values (#{cameraname,jdbcType=VARCHAR}, #{cameraid,jdbcType=VARCHAR}, #{inorout,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{parkid,jdbcType=VARCHAR}, #{areaname,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jinshipark.hfzf.model.JinshiparkCameras">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -132,20 +123,8 @@
       <if test="cameraname != null">
         CameraName,
       </if>
-      <if test="watchhouse != null">
-        WatchHouse,
-      </if>
       <if test="cameraid != null">
         CameraID,
-      </if>
-      <if test="ipaddress != null">
-        IPAddress,
-      </if>
-      <if test="ipsubnet != null">
-        IPSubnet,
-      </if>
-      <if test="ipgateway != null">
-        IPGateway,
       </if>
       <if test="inorout != null">
         InOrOut,
@@ -156,11 +135,11 @@
       <if test="parkid != null">
         ParkID,
       </if>
-      <if test="agentid != null">
-        AgentID,
-      </if>
       <if test="areaname != null">
         AreaName,
+      </if>
+      <if test="createtime != null">
+        CreateTime,
       </if>
       <if test="remarks != null">
         Remarks,
@@ -170,20 +149,8 @@
       <if test="cameraname != null">
         #{cameraname,jdbcType=VARCHAR},
       </if>
-      <if test="watchhouse != null">
-        #{watchhouse,jdbcType=VARCHAR},
-      </if>
       <if test="cameraid != null">
         #{cameraid,jdbcType=VARCHAR},
-      </if>
-      <if test="ipaddress != null">
-        #{ipaddress,jdbcType=VARCHAR},
-      </if>
-      <if test="ipsubnet != null">
-        #{ipsubnet,jdbcType=VARCHAR},
-      </if>
-      <if test="ipgateway != null">
-        #{ipgateway,jdbcType=VARCHAR},
       </if>
       <if test="inorout != null">
         #{inorout,jdbcType=VARCHAR},
@@ -194,11 +161,11 @@
       <if test="parkid != null">
         #{parkid,jdbcType=VARCHAR},
       </if>
-      <if test="agentid != null">
-        #{agentid,jdbcType=VARCHAR},
-      </if>
       <if test="areaname != null">
         #{areaname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="remarks != null">
         #{remarks,jdbcType=VARCHAR},
@@ -220,20 +187,8 @@
       <if test="record.cameraname != null">
         CameraName = #{record.cameraname,jdbcType=VARCHAR},
       </if>
-      <if test="record.watchhouse != null">
-        WatchHouse = #{record.watchhouse,jdbcType=VARCHAR},
-      </if>
       <if test="record.cameraid != null">
         CameraID = #{record.cameraid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.ipaddress != null">
-        IPAddress = #{record.ipaddress,jdbcType=VARCHAR},
-      </if>
-      <if test="record.ipsubnet != null">
-        IPSubnet = #{record.ipsubnet,jdbcType=VARCHAR},
-      </if>
-      <if test="record.ipgateway != null">
-        IPGateway = #{record.ipgateway,jdbcType=VARCHAR},
       </if>
       <if test="record.inorout != null">
         InOrOut = #{record.inorout,jdbcType=VARCHAR},
@@ -244,11 +199,11 @@
       <if test="record.parkid != null">
         ParkID = #{record.parkid,jdbcType=VARCHAR},
       </if>
-      <if test="record.agentid != null">
-        AgentID = #{record.agentid,jdbcType=VARCHAR},
-      </if>
       <if test="record.areaname != null">
         AreaName = #{record.areaname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.remarks != null">
         Remarks = #{record.remarks,jdbcType=VARCHAR},
@@ -262,16 +217,12 @@
     update jinshipark_cameras
     set id = #{record.id,jdbcType=INTEGER},
       CameraName = #{record.cameraname,jdbcType=VARCHAR},
-      WatchHouse = #{record.watchhouse,jdbcType=VARCHAR},
       CameraID = #{record.cameraid,jdbcType=VARCHAR},
-      IPAddress = #{record.ipaddress,jdbcType=VARCHAR},
-      IPSubnet = #{record.ipsubnet,jdbcType=VARCHAR},
-      IPGateway = #{record.ipgateway,jdbcType=VARCHAR},
       InOrOut = #{record.inorout,jdbcType=VARCHAR},
       Status = #{record.status,jdbcType=VARCHAR},
       ParkID = #{record.parkid,jdbcType=VARCHAR},
-      AgentID = #{record.agentid,jdbcType=VARCHAR},
       AreaName = #{record.areaname,jdbcType=VARCHAR},
+      CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
       Remarks = #{record.remarks,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -283,20 +234,8 @@
       <if test="cameraname != null">
         CameraName = #{cameraname,jdbcType=VARCHAR},
       </if>
-      <if test="watchhouse != null">
-        WatchHouse = #{watchhouse,jdbcType=VARCHAR},
-      </if>
       <if test="cameraid != null">
         CameraID = #{cameraid,jdbcType=VARCHAR},
-      </if>
-      <if test="ipaddress != null">
-        IPAddress = #{ipaddress,jdbcType=VARCHAR},
-      </if>
-      <if test="ipsubnet != null">
-        IPSubnet = #{ipsubnet,jdbcType=VARCHAR},
-      </if>
-      <if test="ipgateway != null">
-        IPGateway = #{ipgateway,jdbcType=VARCHAR},
       </if>
       <if test="inorout != null">
         InOrOut = #{inorout,jdbcType=VARCHAR},
@@ -307,11 +246,11 @@
       <if test="parkid != null">
         ParkID = #{parkid,jdbcType=VARCHAR},
       </if>
-      <if test="agentid != null">
-        AgentID = #{agentid,jdbcType=VARCHAR},
-      </if>
       <if test="areaname != null">
         AreaName = #{areaname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="remarks != null">
         Remarks = #{remarks,jdbcType=VARCHAR},
@@ -322,16 +261,12 @@
   <update id="updateByPrimaryKey" parameterType="com.jinshipark.hfzf.model.JinshiparkCameras">
     update jinshipark_cameras
     set CameraName = #{cameraname,jdbcType=VARCHAR},
-      WatchHouse = #{watchhouse,jdbcType=VARCHAR},
       CameraID = #{cameraid,jdbcType=VARCHAR},
-      IPAddress = #{ipaddress,jdbcType=VARCHAR},
-      IPSubnet = #{ipsubnet,jdbcType=VARCHAR},
-      IPGateway = #{ipgateway,jdbcType=VARCHAR},
       InOrOut = #{inorout,jdbcType=VARCHAR},
       Status = #{status,jdbcType=VARCHAR},
       ParkID = #{parkid,jdbcType=VARCHAR},
-      AgentID = #{agentid,jdbcType=VARCHAR},
       AreaName = #{areaname,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
       Remarks = #{remarks,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

@@ -89,6 +89,7 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         lincensePlate.setLpOrderState("支付成功");//订单状态
         lincensePlate.setLpPaymentType("扫码支付出场");//支付方式
         lincensePlate.setLpParkingRealCost(pay_amt);//实付金额
+        lincensePlate.setLpDepartureTime(new Date());//离场时间
         logger.error("===无牌车支付回调参数===");
         logger.error("订单号:{},支付金额:{}元", order_no, pay_amt);
         int result = lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
@@ -103,10 +104,31 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         JinshiparkCamerasExample camerasExample = new JinshiparkCamerasExample();
         JinshiparkCamerasExample.Criteria exampleCriteria = camerasExample.createCriteria();
         exampleCriteria.andCameraidEqualTo(lp.getLpDepartureCname());//出场口名
-        exampleCriteria.andAreanameEqualTo(lp.getLpCarType());//区域名称
-        JinshiparkCameras jinshiparkCameras = new JinshiparkCameras();
-        jinshiparkCameras.setStatus("0");
-        jinshiparkCamerasMapper.updateByExampleSelective(jinshiparkCameras, camerasExample);
+        exampleCriteria.andParkidEqualTo(lp.getLpParkingName());//车场名称
+
+        List<JinshiparkCameras> list = jinshiparkCamerasMapper.selectByExample(camerasExample);
+        if (list.size() > 0) {
+            JinshiparkCameras updateRecord = new JinshiparkCameras();
+            updateRecord.setStatus("0");
+            updateRecord.setCreatetime(new Date());
+            int update = jinshiparkCamerasMapper.updateByExampleSelective(updateRecord, camerasExample);
+            if (update < 1) {
+                logger.error("===更新===");
+                logger.error("===车牌：{}出场抬杆失败===", lp.getLpLincensePlateIdCar());
+            }
+        } else {
+            JinshiparkCameras insertRecord = new JinshiparkCameras();
+            insertRecord.setCameraid(lp.getLpDepartureCname());
+            insertRecord.setParkid(lp.getLpParkingName());
+            insertRecord.setCreatetime(new Date());
+            insertRecord.setStatus("0");
+            insertRecord.setInorout("出口");
+            int insert = jinshiparkCamerasMapper.insertSelective(insertRecord);
+            if (insert < 1) {
+                logger.error("===新增===");
+                logger.error("===车牌：{}出场抬杆失败===", lp.getLpLincensePlateIdCar());
+            }
+        }
 
         //3.移动在场记录表里数据到在场历史表里
         LincensePlateHistory lincensePlateHistory = new LincensePlateHistory();
@@ -158,18 +180,35 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         int result = lincensePlateMapper.insertSelective(lincensePlate);
         if (result > 0) {
             //修改摄像机表标志位抬杆
+            //1.根据入场口名和车场名称查询摄像机表是否存在
             JinshiparkCamerasExample camerasExample = new JinshiparkCamerasExample();
             JinshiparkCamerasExample.Criteria exampleCriteria = camerasExample.createCriteria();
             exampleCriteria.andCameraidEqualTo(lincensePlateVO.getLpInboundCname());//入场口名
-            exampleCriteria.andAreanameEqualTo(lincensePlateVO.getLpCarType());//区域名称
-            JinshiparkCameras jinshiparkCameras = new JinshiparkCameras();
-            jinshiparkCameras.setStatus("0");
-            int count = jinshiparkCamerasMapper.updateByExampleSelective(jinshiparkCameras, camerasExample);
-            if (count > 0) {
-                return JinshiparkJSONResult.ok("入场成功");
+            exampleCriteria.andParkidEqualTo(lincensePlateVO.getLpParkingName());//车场名称
+            List<JinshiparkCameras> list = jinshiparkCamerasMapper.selectByExample(camerasExample);
+            if (list.size() > 0) {
+                JinshiparkCameras updateRecord = new JinshiparkCameras();
+                updateRecord.setStatus("0");
+                updateRecord.setCreatetime(new Date());
+                int update = jinshiparkCamerasMapper.updateByExampleSelective(updateRecord, camerasExample);
+                if (update < 1) {
+                    return JinshiparkJSONResult.errorMsg("系统异常");
+                }
+
             } else {
-                return JinshiparkJSONResult.ok("系统异常");
+                JinshiparkCameras insertRecord = new JinshiparkCameras();
+                insertRecord.setCameraid(lincensePlateVO.getLpInboundCname());
+                insertRecord.setParkid(lincensePlateVO.getLpParkingName());
+                insertRecord.setCreatetime(new Date());
+                insertRecord.setStatus("0");
+                insertRecord.setInorout("进口");
+                int insert = jinshiparkCamerasMapper.insertSelective(insertRecord);
+                if (insert < 1) {
+                    return JinshiparkJSONResult.errorMsg("系统异常");
+                }
             }
+            return JinshiparkJSONResult.ok("入场成功");
+
         }
         return JinshiparkJSONResult.errorMsg("系统异常");
     }
