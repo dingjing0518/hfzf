@@ -4,6 +4,7 @@ import com.jinshipark.hfzf.mapper.JinshiParkSettingMapper;
 import com.jinshipark.hfzf.mapper.JinshiparkCamerasMapper;
 import com.jinshipark.hfzf.mapper.LincensePlateHistoryMapper;
 import com.jinshipark.hfzf.mapper.LincensePlateMapper;
+import com.jinshipark.hfzf.mapper2.JinshiparkApakeyMapper;
 import com.jinshipark.hfzf.model.*;
 import com.jinshipark.hfzf.model.vo.LincensePlateVO;
 import com.jinshipark.hfzf.service.LincensePlateService;
@@ -31,6 +32,9 @@ public class LincensePlateServiceImpl implements LincensePlateService {
     private LincensePlateHistoryMapper lincensePlateHistoryMapper;
     @Autowired
     private JinshiParkSettingMapper jinshiParkSettingMapper;
+
+    @Autowired
+    private JinshiparkApakeyMapper jinshiparkApakeyMapper;
 
     @Override
     public JinshiparkJSONResult getLincensePlate(LincensePlateVO lincensePlateVO) {
@@ -262,5 +266,24 @@ public class LincensePlateServiceImpl implements LincensePlateService {
 
         }
         return JinshiparkJSONResult.errorMsg("系统异常");
+    }
+
+    @Override
+    public JinshiparkJSONResult getLincensePlateInfo(LincensePlateVO lincensePlateVO) {
+        LincensePlateExample example = new LincensePlateExample();
+        LincensePlateExample.Criteria criteria = example.createCriteria();
+        criteria.andLpLincensePlateIdCarEqualTo(lincensePlateVO.getLpLincensePlateIdCar());
+        List<LincensePlate> lincensePlates = lincensePlateMapper.selectByExample(example);
+
+        LincensePlate lincensePlate = lincensePlates.get(0);
+
+        JinshiparkApakeyExample jinshiparkApakeyExample = new JinshiparkApakeyExample();
+        JinshiparkApakeyExample.Criteria jinshiparkApakeyExampleCriteria = jinshiparkApakeyExample.createCriteria();
+        jinshiparkApakeyExampleCriteria.andParkidEqualTo(lincensePlate.getLpParkingName());
+        List<JinshiparkApakey> jinshiparkApakeys = jinshiparkApakeyMapper.selectByExample(jinshiparkApakeyExample);
+
+        BeanUtils.copyProperties(lincensePlate, lincensePlateVO);
+        lincensePlateVO.setParkName(jinshiparkApakeys.get(0).getParkname());
+        return JinshiparkJSONResult.ok(lincensePlateVO);
     }
 }

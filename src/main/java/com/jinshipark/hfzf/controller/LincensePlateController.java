@@ -34,6 +34,7 @@ public class LincensePlateController {
     public JinshiparkJSONResult getLincensePlateByNoPlate(@RequestBody LincensePlateVO lincensePlateVO) {
         return lincensePlateService.getLincensePlateByNoPlate(lincensePlateVO);
     }
+
     /**
      * 无牌车入场
      *
@@ -45,5 +46,15 @@ public class LincensePlateController {
     @ResponseBody
     public JinshiparkJSONResult saveLincensePlate(@RequestBody LincensePlateVO lincensePlateVO) {
         return lincensePlateService.saveLincensePlate(lincensePlateVO);
+    }
+
+    /**
+     * 根据车牌获取详情
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/getLincensePlateInfo", method = RequestMethod.POST)
+    @ResponseBody
+    public JinshiparkJSONResult getLincensePlateInfo(@RequestBody LincensePlateVO lincensePlateVO) {
+        return lincensePlateService.getLincensePlateInfo(lincensePlateVO);
     }
 }

@@ -17,4 +17,6 @@ public interface LincensePlateService {
     JinshiparkJSONResult getLincensePlateByNoPlate(LincensePlateVO lincensePlateVO);
 
     JinshiparkJSONResult saveLincensePlate(LincensePlateVO lincensePlateVO);
+
+    JinshiparkJSONResult getLincensePlateInfo(LincensePlateVO lincensePlateVO);
 }

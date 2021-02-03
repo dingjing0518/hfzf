@@ -73,7 +73,7 @@ public class LincensePlateVO {
     @ApiModelProperty(value = "车牌收费类型（0 表示临时车，1 表示会员车）")
     private Integer lpLgType;
 
-    private static final long serialVersionUID = 1L;
+    private String parkName;
 
     public Integer getLpId() {
         return lpId;
@@ -257,5 +257,13 @@ public class LincensePlateVO {
 
     public void setLpLgType(Integer lpLgType) {
         this.lpLgType = lpLgType;
+    }
+
+    public String getParkName() {
+        return parkName;
+    }
+
+    public void setParkName(String parkName) {
+        this.parkName = parkName;
     }
 }
