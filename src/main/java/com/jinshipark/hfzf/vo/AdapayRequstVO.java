@@ -17,6 +17,7 @@ public class AdapayRequstVO {
     private String parkId;//车场Id
     private String notify_url;//回调地址
     private String lpDepartureCname;//出场口名
+    private String paymentId;//汇付唯一Id
 
     public String getOrder_no() {
         return order_no;
@@ -120,5 +121,13 @@ public class AdapayRequstVO {
 
     public void setLpDepartureCname(String lpDepartureCname) {
         this.lpDepartureCname = lpDepartureCname;
+    }
+
+    public String getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
     }
 }

@@ -3,12 +3,15 @@ package com.jinshipark.hfzf.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.huifu.adapay.Adapay;
 import com.huifu.adapay.core.AdapayCore;
+import com.huifu.adapay.core.exception.BaseAdaPayException;
 import com.huifu.adapay.core.util.AdapaySign;
 import com.huifu.adapay.model.MerConfig;
+import com.huifu.adapay.model.Refund;
 import com.jinshipark.hfzf.config.ADAPayPropertyConfig;
+import com.jinshipark.hfzf.mapper.LincensePlateHistoryMapper;
+import com.jinshipark.hfzf.mapper.LincensePlateMapper;
 import com.jinshipark.hfzf.mapper2.JinshiparkApakeyMapper;
-import com.jinshipark.hfzf.model.JinshiparkApakey;
-import com.jinshipark.hfzf.model.JinshiparkApakeyExample;
+import com.jinshipark.hfzf.model.*;
 import com.jinshipark.hfzf.model.vo.JinshiparkApakeyVO;
 import com.jinshipark.hfzf.service.*;
 import com.jinshipark.hfzf.utils.JinshiparkJSONResult;
@@ -21,8 +24,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 汇付天下相关控制类
@@ -46,6 +52,12 @@ public class AdapayController {
     private NoPlatePayService noPlatePayService;
     @Autowired
     private JinshiparkApakeyMapper jinshiparkApakeyMapper;
+
+    @Autowired
+    private LincensePlateMapper lincensePlateMapper;
+
+    @Autowired
+    private LincensePlateHistoryMapper lincensePlateHistoryMapper;
 
     /**
      * 支付宝APP支付
@@ -129,8 +141,12 @@ public class AdapayController {
                 String order_no = jsonObject.getString("order_no");
                 String pay_channel = jsonObject.getString("pay_channel");
                 String pay_amt = jsonObject.getString("pay_amt");
+                String paymentId = jsonObject.getString("id");
+                String status = jsonObject.getString("status");
+                if (status.equals("succeeded")) {
+                    lincensePlateService.updateLincensePlate(order_no, pay_channel, pay_amt, paymentId);
+                }
 
-                lincensePlateService.updateLincensePlate(order_no, pay_channel, pay_amt);
             }
         } catch (Exception e) {
             logger.error("异步回调异常，Exception：{}", e.getMessage());
@@ -162,8 +178,11 @@ public class AdapayController {
                 String order_no = jsonObject.getString("order_no");
                 String pay_channel = jsonObject.getString("pay_channel");
                 String pay_amt = jsonObject.getString("pay_amt");
-
-                lincensePlateService.updateLincensePlateForPrePay(order_no, pay_channel, pay_amt);
+                String paymentId = jsonObject.getString("id");
+                String status = jsonObject.getString("status");
+                if (status.equals("succeeded")) {
+                    lincensePlateService.updateLincensePlateForPrePay(order_no, pay_channel, pay_amt, paymentId);
+                }
             }
         } catch (Exception e) {
             logger.error("异步回调异常，Exception：{}", e.getMessage());
@@ -195,8 +214,11 @@ public class AdapayController {
                 String order_no = jsonObject.getString("order_no");
                 String pay_channel = jsonObject.getString("pay_channel");
                 String pay_amt = jsonObject.getString("pay_amt");
-
-                lincensePlateService.updateLincensePlateForNoPlate(order_no, pay_channel, pay_amt);
+                String paymentId = jsonObject.getString("id");
+                String status = jsonObject.getString("status");
+                if (status.equals("succeeded")) {
+                    lincensePlateService.updateLincensePlateForNoPlate(order_no, pay_channel, pay_amt, paymentId);
+                }
             }
         } catch (Exception e) {
             logger.error("异步回调异常，Exception：{}", e.getMessage());
@@ -274,5 +296,59 @@ public class AdapayController {
             return JinshiparkJSONResult.errorMsg("新增失败！");
         }
         return JinshiparkJSONResult.ok();
+    }
+
+    /**
+     * 退款接口
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/refund", method = RequestMethod.POST)
+    @ResponseBody
+    public JinshiparkJSONResult refund(@RequestBody AdapayRequstVO adapayRequstVO) {
+        if (StringUtils.isBlank(adapayRequstVO.getPaymentId())) {
+            return JinshiparkJSONResult.errorMsg("参数不能为空");
+        }
+        LincensePlateExample lincensePlateExample = new LincensePlateExample();
+        LincensePlateExample.Criteria lincensePlateExampleCriteria = lincensePlateExample.createCriteria();
+        lincensePlateExampleCriteria.andLpOrderIdEqualTo(adapayRequstVO.getOrder_no());
+        List<LincensePlate> lincensePlates = lincensePlateMapper.selectByExample(lincensePlateExample);
+        if (lincensePlates.size() > 0) {
+            LincensePlate lincensePlate = lincensePlates.get(0);
+            Map<String, Object> refundParams = new HashMap<String, Object>();
+            refundParams.put("refund_amt", new DecimalFormat("0.00").format(Float.parseFloat(lincensePlate.getLpParkingRealCost())));
+            refundParams.put("refund_order_no", lincensePlate.getLpOrderId());
+            try {
+                Map<String, Object> response = Refund.create(adapayRequstVO.getPaymentId(), refundParams);
+                if (response.get("status").equals("failed")) {
+                    return JinshiparkJSONResult.errorMsg(String.valueOf(response.get("error_msg")));
+                }
+                return JinshiparkJSONResult.ok();
+
+            } catch (BaseAdaPayException e) {
+                return JinshiparkJSONResult.errorMsg("调用汇付退款接口异常");
+            }
+        } else {
+            LincensePlateHistoryExample lincensePlateHistoryExample = new LincensePlateHistoryExample();
+            LincensePlateHistoryExample.Criteria lincensePlateHistoryExampleCriteria = lincensePlateHistoryExample.createCriteria();
+            lincensePlateHistoryExampleCriteria.andLpOrderIdEqualTo(adapayRequstVO.getOrder_no());
+            List<LincensePlateHistory> lincensePlateHistories = lincensePlateHistoryMapper.selectByExample(lincensePlateHistoryExample);
+            if (lincensePlateHistories.size() == 0) {
+                return JinshiparkJSONResult.errorMsg("未查询到记录");
+            }
+            LincensePlateHistory lincensePlateHistory = lincensePlateHistories.get(0);
+            Map<String, Object> refundParams = new HashMap<String, Object>();
+            refundParams.put("refund_amt", new DecimalFormat("0.00").format(Float.parseFloat(lincensePlateHistory.getLpParkingRealCost())));
+            refundParams.put("refund_order_no", lincensePlateHistory.getLpOrderId());
+            try {
+                Map<String, Object> response = Refund.create(adapayRequstVO.getPaymentId(), refundParams);
+                if (response.get("status").equals("failed")) {
+                    return JinshiparkJSONResult.errorMsg(String.valueOf(response.get("error_msg")));
+                }
+                return JinshiparkJSONResult.ok();
+
+            } catch (BaseAdaPayException e) {
+                return JinshiparkJSONResult.errorMsg("调用汇付退款接口异常");
+            }
+        }
     }
 }

@@ -1794,6 +1794,76 @@ public class LincensePlateHistoryExample {
             addCriterion("OutPicPath not between", value1, value2, "outpicpath");
             return (Criteria) this;
         }
+
+        public Criteria andPaymentidIsNull() {
+            addCriterion("PaymentID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidIsNotNull() {
+            addCriterion("PaymentID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidEqualTo(String value) {
+            addCriterion("PaymentID =", value, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidNotEqualTo(String value) {
+            addCriterion("PaymentID <>", value, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidGreaterThan(String value) {
+            addCriterion("PaymentID >", value, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidGreaterThanOrEqualTo(String value) {
+            addCriterion("PaymentID >=", value, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidLessThan(String value) {
+            addCriterion("PaymentID <", value, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidLessThanOrEqualTo(String value) {
+            addCriterion("PaymentID <=", value, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidLike(String value) {
+            addCriterion("PaymentID like", value, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidNotLike(String value) {
+            addCriterion("PaymentID not like", value, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidIn(List<String> values) {
+            addCriterion("PaymentID in", values, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidNotIn(List<String> values) {
+            addCriterion("PaymentID not in", values, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidBetween(String value1, String value2) {
+            addCriterion("PaymentID between", value1, value2, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidNotBetween(String value1, String value2) {
+            addCriterion("PaymentID not between", value1, value2, "paymentid");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

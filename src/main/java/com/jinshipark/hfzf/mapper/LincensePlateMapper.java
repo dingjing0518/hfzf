@@ -1,12 +1,9 @@
 package com.jinshipark.hfzf.mapper;
 
-
 import com.jinshipark.hfzf.model.LincensePlate;
 import com.jinshipark.hfzf.model.LincensePlateExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
-
+import org.apache.ibatis.annotations.Param;
 
 public interface LincensePlateMapper {
     long countByExample(LincensePlateExample example);

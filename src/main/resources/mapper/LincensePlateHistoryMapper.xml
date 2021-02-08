@@ -27,6 +27,7 @@
     <result column="lp_lg_type" jdbcType="INTEGER" property="lpLgType" />
     <result column="InPicPath" jdbcType="VARCHAR" property="inpicpath" />
     <result column="OutPicPath" jdbcType="VARCHAR" property="outpicpath" />
+    <result column="PaymentID" jdbcType="VARCHAR" property="paymentid" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -91,7 +92,7 @@
     lp_departure_time, lp_rent_time, lp_create_time, lp_order_id, lp_car_type, lp_car_color, 
     lp_lincense_type, lp_parking_often, lp_parking_cost, lp_parking_real_cost, lp_inbound_cname, 
     lp_departure_cname, lp_parking_name, lp_agent_name, lp_order_state, lp_payment_type, 
-    lp_lg_id, lp_lg_type, InPicPath, OutPicPath
+    lp_lg_id, lp_lg_type, InPicPath, OutPicPath, PaymentID
   </sql>
   <select id="selectByExample" parameterType="com.jinshipark.hfzf.model.LincensePlateHistoryExample" resultMap="BaseResultMap">
     select
@@ -135,7 +136,7 @@
       lp_inbound_cname, lp_departure_cname, lp_parking_name, 
       lp_agent_name, lp_order_state, lp_payment_type, 
       lp_lg_id, lp_lg_type, InPicPath, 
-      OutPicPath)
+      OutPicPath, PaymentID)
     values (#{lpMemberIdCar,jdbcType=VARCHAR}, #{lpLincensePlateIdCar,jdbcType=VARCHAR}, 
       #{lpServiceTypeCar,jdbcType=VARCHAR}, #{lpInboundTime,jdbcType=TIMESTAMP}, #{lpDepartureTime,jdbcType=TIMESTAMP}, 
       #{lpRentTime,jdbcType=VARCHAR}, #{lpCreateTime,jdbcType=TIMESTAMP}, #{lpOrderId,jdbcType=VARCHAR}, 
@@ -144,7 +145,7 @@
       #{lpInboundCname,jdbcType=VARCHAR}, #{lpDepartureCname,jdbcType=VARCHAR}, #{lpParkingName,jdbcType=VARCHAR}, 
       #{lpAgentName,jdbcType=VARCHAR}, #{lpOrderState,jdbcType=VARCHAR}, #{lpPaymentType,jdbcType=VARCHAR}, 
       #{lpLgId,jdbcType=INTEGER}, #{lpLgType,jdbcType=INTEGER}, #{inpicpath,jdbcType=VARCHAR}, 
-      #{outpicpath,jdbcType=VARCHAR})
+      #{outpicpath,jdbcType=VARCHAR}, #{paymentid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jinshipark.hfzf.model.LincensePlateHistory">
     <selectKey keyProperty="lpId" order="AFTER" resultType="java.lang.Integer">
@@ -224,6 +225,9 @@
       <if test="outpicpath != null">
         OutPicPath,
       </if>
+      <if test="paymentid != null">
+        PaymentID,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="lpMemberIdCar != null">
@@ -297,6 +301,9 @@
       </if>
       <if test="outpicpath != null">
         #{outpicpath,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentid != null">
+        #{paymentid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -384,6 +391,9 @@
       <if test="record.outpicpath != null">
         OutPicPath = #{record.outpicpath,jdbcType=VARCHAR},
       </if>
+      <if test="record.paymentid != null">
+        PaymentID = #{record.paymentid,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -415,7 +425,8 @@
       lp_lg_id = #{record.lpLgId,jdbcType=INTEGER},
       lp_lg_type = #{record.lpLgType,jdbcType=INTEGER},
       InPicPath = #{record.inpicpath,jdbcType=VARCHAR},
-      OutPicPath = #{record.outpicpath,jdbcType=VARCHAR}
+      OutPicPath = #{record.outpicpath,jdbcType=VARCHAR},
+      PaymentID = #{record.paymentid,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -495,6 +506,9 @@
       <if test="outpicpath != null">
         OutPicPath = #{outpicpath,jdbcType=VARCHAR},
       </if>
+      <if test="paymentid != null">
+        PaymentID = #{paymentid,jdbcType=VARCHAR},
+      </if>
     </set>
     where lp_id = #{lpId,jdbcType=INTEGER}
   </update>
@@ -523,7 +537,8 @@
       lp_lg_id = #{lpLgId,jdbcType=INTEGER},
       lp_lg_type = #{lpLgType,jdbcType=INTEGER},
       InPicPath = #{inpicpath,jdbcType=VARCHAR},
-      OutPicPath = #{outpicpath,jdbcType=VARCHAR}
+      OutPicPath = #{outpicpath,jdbcType=VARCHAR},
+      PaymentID = #{paymentid,jdbcType=VARCHAR}
     where lp_id = #{lpId,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,7 +1,6 @@
 package com.jinshipark.hfzf.model;
 
 import io.swagger.annotations.ApiModelProperty;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -73,6 +72,15 @@ public class LincensePlate implements Serializable {
 
     @ApiModelProperty(value = "车牌收费类型（0 表示临时车，1 表示会员车）")
     private Integer lpLgType;
+
+    @ApiModelProperty(value = "进场图片保存路径")
+    private String inpicpath;
+
+    @ApiModelProperty(value = "出场图片保存路径")
+    private String outpicpath;
+
+    @ApiModelProperty(value = "支付ID")
+    private String paymentid;
 
     private static final long serialVersionUID = 1L;
 
@@ -260,6 +268,30 @@ public class LincensePlate implements Serializable {
         this.lpLgType = lpLgType;
     }
 
+    public String getInpicpath() {
+        return inpicpath;
+    }
+
+    public void setInpicpath(String inpicpath) {
+        this.inpicpath = inpicpath;
+    }
+
+    public String getOutpicpath() {
+        return outpicpath;
+    }
+
+    public void setOutpicpath(String outpicpath) {
+        this.outpicpath = outpicpath;
+    }
+
+    public String getPaymentid() {
+        return paymentid;
+    }
+
+    public void setPaymentid(String paymentid) {
+        this.paymentid = paymentid;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -289,6 +321,9 @@ public class LincensePlate implements Serializable {
         sb.append(", lpPaymentType=").append(lpPaymentType);
         sb.append(", lpLgId=").append(lpLgId);
         sb.append(", lpLgType=").append(lpLgType);
+        sb.append(", inpicpath=").append(inpicpath);
+        sb.append(", outpicpath=").append(outpicpath);
+        sb.append(", paymentid=").append(paymentid);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

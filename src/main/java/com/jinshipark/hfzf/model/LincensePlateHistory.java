@@ -79,6 +79,9 @@ public class LincensePlateHistory implements Serializable {
     @ApiModelProperty(value = "出场图片保存路径")
     private String outpicpath;
 
+    @ApiModelProperty(value = "支付ID，退款用")
+    private String paymentid;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getLpId() {
@@ -281,6 +284,14 @@ public class LincensePlateHistory implements Serializable {
         this.outpicpath = outpicpath;
     }
 
+    public String getPaymentid() {
+        return paymentid;
+    }
+
+    public void setPaymentid(String paymentid) {
+        this.paymentid = paymentid;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -312,6 +323,7 @@ public class LincensePlateHistory implements Serializable {
         sb.append(", lpLgType=").append(lpLgType);
         sb.append(", inpicpath=").append(inpicpath);
         sb.append(", outpicpath=").append(outpicpath);
+        sb.append(", paymentid=").append(paymentid);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

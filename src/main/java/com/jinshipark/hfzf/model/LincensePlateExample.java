@@ -1654,6 +1654,216 @@ public class LincensePlateExample {
             addCriterion("lp_lg_type not between", value1, value2, "lpLgType");
             return (Criteria) this;
         }
+
+        public Criteria andInpicpathIsNull() {
+            addCriterion("InPicPath is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInpicpathIsNotNull() {
+            addCriterion("InPicPath is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInpicpathEqualTo(String value) {
+            addCriterion("InPicPath =", value, "inpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andInpicpathNotEqualTo(String value) {
+            addCriterion("InPicPath <>", value, "inpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andInpicpathGreaterThan(String value) {
+            addCriterion("InPicPath >", value, "inpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andInpicpathGreaterThanOrEqualTo(String value) {
+            addCriterion("InPicPath >=", value, "inpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andInpicpathLessThan(String value) {
+            addCriterion("InPicPath <", value, "inpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andInpicpathLessThanOrEqualTo(String value) {
+            addCriterion("InPicPath <=", value, "inpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andInpicpathLike(String value) {
+            addCriterion("InPicPath like", value, "inpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andInpicpathNotLike(String value) {
+            addCriterion("InPicPath not like", value, "inpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andInpicpathIn(List<String> values) {
+            addCriterion("InPicPath in", values, "inpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andInpicpathNotIn(List<String> values) {
+            addCriterion("InPicPath not in", values, "inpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andInpicpathBetween(String value1, String value2) {
+            addCriterion("InPicPath between", value1, value2, "inpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andInpicpathNotBetween(String value1, String value2) {
+            addCriterion("InPicPath not between", value1, value2, "inpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutpicpathIsNull() {
+            addCriterion("OutPicPath is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutpicpathIsNotNull() {
+            addCriterion("OutPicPath is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutpicpathEqualTo(String value) {
+            addCriterion("OutPicPath =", value, "outpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutpicpathNotEqualTo(String value) {
+            addCriterion("OutPicPath <>", value, "outpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutpicpathGreaterThan(String value) {
+            addCriterion("OutPicPath >", value, "outpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutpicpathGreaterThanOrEqualTo(String value) {
+            addCriterion("OutPicPath >=", value, "outpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutpicpathLessThan(String value) {
+            addCriterion("OutPicPath <", value, "outpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutpicpathLessThanOrEqualTo(String value) {
+            addCriterion("OutPicPath <=", value, "outpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutpicpathLike(String value) {
+            addCriterion("OutPicPath like", value, "outpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutpicpathNotLike(String value) {
+            addCriterion("OutPicPath not like", value, "outpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutpicpathIn(List<String> values) {
+            addCriterion("OutPicPath in", values, "outpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutpicpathNotIn(List<String> values) {
+            addCriterion("OutPicPath not in", values, "outpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutpicpathBetween(String value1, String value2) {
+            addCriterion("OutPicPath between", value1, value2, "outpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutpicpathNotBetween(String value1, String value2) {
+            addCriterion("OutPicPath not between", value1, value2, "outpicpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidIsNull() {
+            addCriterion("PaymentID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidIsNotNull() {
+            addCriterion("PaymentID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidEqualTo(String value) {
+            addCriterion("PaymentID =", value, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidNotEqualTo(String value) {
+            addCriterion("PaymentID <>", value, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidGreaterThan(String value) {
+            addCriterion("PaymentID >", value, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidGreaterThanOrEqualTo(String value) {
+            addCriterion("PaymentID >=", value, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidLessThan(String value) {
+            addCriterion("PaymentID <", value, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidLessThanOrEqualTo(String value) {
+            addCriterion("PaymentID <=", value, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidLike(String value) {
+            addCriterion("PaymentID like", value, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidNotLike(String value) {
+            addCriterion("PaymentID not like", value, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidIn(List<String> values) {
+            addCriterion("PaymentID in", values, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidNotIn(List<String> values) {
+            addCriterion("PaymentID not in", values, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidBetween(String value1, String value2) {
+            addCriterion("PaymentID between", value1, value2, "paymentid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentidNotBetween(String value1, String value2) {
+            addCriterion("PaymentID not between", value1, value2, "paymentid");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
