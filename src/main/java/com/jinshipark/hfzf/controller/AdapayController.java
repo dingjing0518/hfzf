@@ -391,18 +391,18 @@ public class AdapayController {
                 JSONObject jsonObject = JSONObject.parseObject(data);
                 String paymentId = jsonObject.getString("payment_id");
                 String status = jsonObject.getString("status");
-                String pay_amt = jsonObject.getString("pay_amt");
-                logger.error("退款金额：{}", pay_amt);
+                String refund_amt = jsonObject.getString("refund_amt");
+                logger.error("退款金额：{}", refund_amt);
                 LincensePlateExample lincensePlateExample = new LincensePlateExample();
                 LincensePlateExample.Criteria lincensePlateExampleCriteria = lincensePlateExample.createCriteria();
                 lincensePlateExampleCriteria.andPaymentidEqualTo(paymentId);
                 List<LincensePlate> lincensePlates = lincensePlateMapper.selectByExample(lincensePlateExample);
                 if (lincensePlates.size() > 0) {
-                    logger.error("退款详情：车牌:{},退款金额：{},订单号:{}", lincensePlates.get(0).getLpLincensePlateIdCar(),pay_amt,lincensePlates.get(0).getLpOrderId());
+                    logger.error("退款详情：车牌:{},退款金额：{},订单号:{}", lincensePlates.get(0).getLpLincensePlateIdCar(),refund_amt,lincensePlates.get(0).getLpOrderId());
                     LincensePlate record = new LincensePlate();
                     if (status.equals("succeeded")) {
                         record.setRefundstatus("1");
-                        record.setRefundmoney(pay_amt);
+                        record.setRefundmoney(refund_amt);
                     } else {
                         record.setRefundstatus("0");
                     }
@@ -414,11 +414,11 @@ public class AdapayController {
                     lincensePlateHistoryExampleCriteria.andPaymentidEqualTo(paymentId);
                     List<LincensePlateHistory> lincensePlateHistories = lincensePlateHistoryMapper.selectByExample(lincensePlateHistoryExample);
                     if (lincensePlateHistories.size() > 0) {
-                        logger.error("退款详情：车牌:{},退款金额：{},订单号:{}", lincensePlateHistories.get(0).getLpLincensePlateIdCar(), pay_amt, lincensePlateHistories.get(0).getLpOrderId());
+                        logger.error("退款详情：车牌:{},退款金额：{},订单号:{}", lincensePlateHistories.get(0).getLpLincensePlateIdCar(), refund_amt, lincensePlateHistories.get(0).getLpOrderId());
                         LincensePlateHistory record = new LincensePlateHistory();
                         if (status.equals("succeeded")) {
                             record.setRefundstatus("1");
-                            record.setRefundmoney(pay_amt);
+                            record.setRefundmoney(refund_amt);
                         } else {
                             record.setRefundstatus("0");
                         }
