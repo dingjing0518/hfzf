@@ -28,6 +28,8 @@
     <result column="InPicPath" jdbcType="VARCHAR" property="inpicpath" />
     <result column="OutPicPath" jdbcType="VARCHAR" property="outpicpath" />
     <result column="PaymentID" jdbcType="VARCHAR" property="paymentid" />
+    <result column="RefundStatus" jdbcType="VARCHAR" property="refundstatus" />
+    <result column="RefundMoney" jdbcType="VARCHAR" property="refundmoney" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -92,7 +94,7 @@
     lp_departure_time, lp_rent_time, lp_create_time, lp_order_id, lp_car_type, lp_car_color, 
     lp_lincense_type, lp_parking_often, lp_parking_cost, lp_parking_real_cost, lp_inbound_cname, 
     lp_departure_cname, lp_parking_name, lp_agent_name, lp_order_state, lp_payment_type, 
-    lp_lg_id, lp_lg_type, InPicPath, OutPicPath, PaymentID
+    lp_lg_id, lp_lg_type, InPicPath, OutPicPath, PaymentID, RefundStatus, RefundMoney
   </sql>
   <select id="selectByExample" parameterType="com.jinshipark.hfzf.model.LincensePlateExample" resultMap="BaseResultMap">
     select
@@ -136,7 +138,8 @@
       lp_inbound_cname, lp_departure_cname, lp_parking_name, 
       lp_agent_name, lp_order_state, lp_payment_type, 
       lp_lg_id, lp_lg_type, InPicPath, 
-      OutPicPath, PaymentID)
+      OutPicPath, PaymentID, RefundStatus, 
+      RefundMoney)
     values (#{lpMemberIdCar,jdbcType=VARCHAR}, #{lpLincensePlateIdCar,jdbcType=VARCHAR}, 
       #{lpServiceTypeCar,jdbcType=VARCHAR}, #{lpInboundTime,jdbcType=TIMESTAMP}, #{lpDepartureTime,jdbcType=TIMESTAMP}, 
       #{lpRentTime,jdbcType=VARCHAR}, #{lpCreateTime,jdbcType=TIMESTAMP}, #{lpOrderId,jdbcType=VARCHAR}, 
@@ -145,7 +148,8 @@
       #{lpInboundCname,jdbcType=VARCHAR}, #{lpDepartureCname,jdbcType=VARCHAR}, #{lpParkingName,jdbcType=VARCHAR}, 
       #{lpAgentName,jdbcType=VARCHAR}, #{lpOrderState,jdbcType=VARCHAR}, #{lpPaymentType,jdbcType=VARCHAR}, 
       #{lpLgId,jdbcType=INTEGER}, #{lpLgType,jdbcType=INTEGER}, #{inpicpath,jdbcType=VARCHAR}, 
-      #{outpicpath,jdbcType=VARCHAR}, #{paymentid,jdbcType=VARCHAR})
+      #{outpicpath,jdbcType=VARCHAR}, #{paymentid,jdbcType=VARCHAR}, #{refundstatus,jdbcType=VARCHAR}, 
+      #{refundmoney,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jinshipark.hfzf.model.LincensePlate">
     <selectKey keyProperty="lpId" order="AFTER" resultType="java.lang.Integer">
@@ -228,6 +232,12 @@
       <if test="paymentid != null">
         PaymentID,
       </if>
+      <if test="refundstatus != null">
+        RefundStatus,
+      </if>
+      <if test="refundmoney != null">
+        RefundMoney,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="lpMemberIdCar != null">
@@ -304,6 +314,12 @@
       </if>
       <if test="paymentid != null">
         #{paymentid,jdbcType=VARCHAR},
+      </if>
+      <if test="refundstatus != null">
+        #{refundstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="refundmoney != null">
+        #{refundmoney,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -394,6 +410,12 @@
       <if test="record.paymentid != null">
         PaymentID = #{record.paymentid,jdbcType=VARCHAR},
       </if>
+      <if test="record.refundstatus != null">
+        RefundStatus = #{record.refundstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundmoney != null">
+        RefundMoney = #{record.refundmoney,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -426,7 +448,9 @@
       lp_lg_type = #{record.lpLgType,jdbcType=INTEGER},
       InPicPath = #{record.inpicpath,jdbcType=VARCHAR},
       OutPicPath = #{record.outpicpath,jdbcType=VARCHAR},
-      PaymentID = #{record.paymentid,jdbcType=VARCHAR}
+      PaymentID = #{record.paymentid,jdbcType=VARCHAR},
+      RefundStatus = #{record.refundstatus,jdbcType=VARCHAR},
+      RefundMoney = #{record.refundmoney,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -509,6 +533,12 @@
       <if test="paymentid != null">
         PaymentID = #{paymentid,jdbcType=VARCHAR},
       </if>
+      <if test="refundstatus != null">
+        RefundStatus = #{refundstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="refundmoney != null">
+        RefundMoney = #{refundmoney,jdbcType=VARCHAR},
+      </if>
     </set>
     where lp_id = #{lpId,jdbcType=INTEGER}
   </update>
@@ -538,7 +568,9 @@
       lp_lg_type = #{lpLgType,jdbcType=INTEGER},
       InPicPath = #{inpicpath,jdbcType=VARCHAR},
       OutPicPath = #{outpicpath,jdbcType=VARCHAR},
-      PaymentID = #{paymentid,jdbcType=VARCHAR}
+      PaymentID = #{paymentid,jdbcType=VARCHAR},
+      RefundStatus = #{refundstatus,jdbcType=VARCHAR},
+      RefundMoney = #{refundmoney,jdbcType=VARCHAR}
     where lp_id = #{lpId,jdbcType=INTEGER}
   </update>
 </mapper>

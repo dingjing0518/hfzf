@@ -82,6 +82,12 @@ public class LincensePlate implements Serializable {
     @ApiModelProperty(value = "支付ID")
     private String paymentid;
 
+    @ApiModelProperty(value = "1-已退款 0-未退款")
+    private String refundstatus;
+
+    @ApiModelProperty(value = "退款金额")
+    private String refundmoney;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getLpId() {
@@ -292,6 +298,22 @@ public class LincensePlate implements Serializable {
         this.paymentid = paymentid;
     }
 
+    public String getRefundstatus() {
+        return refundstatus;
+    }
+
+    public void setRefundstatus(String refundstatus) {
+        this.refundstatus = refundstatus;
+    }
+
+    public String getRefundmoney() {
+        return refundmoney;
+    }
+
+    public void setRefundmoney(String refundmoney) {
+        this.refundmoney = refundmoney;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -324,6 +346,8 @@ public class LincensePlate implements Serializable {
         sb.append(", inpicpath=").append(inpicpath);
         sb.append(", outpicpath=").append(outpicpath);
         sb.append(", paymentid=").append(paymentid);
+        sb.append(", refundstatus=").append(refundstatus);
+        sb.append(", refundmoney=").append(refundmoney);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

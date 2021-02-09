@@ -236,10 +236,7 @@ public class AdapayController {
         if (StringUtils.isBlank(parkId)) {
             return JinshiparkJSONResult.errorMsg("parkId不能为空");
         }
-        JinshiparkApakeyExample example = new JinshiparkApakeyExample();
-        JinshiparkApakeyExample.Criteria criteria = example.createCriteria();
-        criteria.andParkidEqualTo(parkId);
-        List<JinshiparkApakey> jinshiparkApakeys = jinshiparkApakeyMapper.selectByExample(example);
+        List<JinshiparkApakey> jinshiparkApakeys = getJinshiparkApakeys(parkId);
         //判断是有存在要配置得记录
         if (jinshiparkApakeys.size() == 0) {
             return JinshiparkJSONResult.errorMsg("不存在该商户配置");
@@ -305,23 +302,33 @@ public class AdapayController {
     @RequestMapping(value = "/refund", method = RequestMethod.POST)
     @ResponseBody
     public JinshiparkJSONResult refund(@RequestBody AdapayRequstVO adapayRequstVO) {
-        if (StringUtils.isBlank(adapayRequstVO.getPaymentId())) {
+        if (StringUtils.isBlank(adapayRequstVO.getOrder_no())) {
             return JinshiparkJSONResult.errorMsg("参数不能为空");
         }
+        String realCost = adapayRequstVO.getPay_amt();
         LincensePlateExample lincensePlateExample = new LincensePlateExample();
         LincensePlateExample.Criteria lincensePlateExampleCriteria = lincensePlateExample.createCriteria();
         lincensePlateExampleCriteria.andLpOrderIdEqualTo(adapayRequstVO.getOrder_no());
         List<LincensePlate> lincensePlates = lincensePlateMapper.selectByExample(lincensePlateExample);
         if (lincensePlates.size() > 0) {
             LincensePlate lincensePlate = lincensePlates.get(0);
-            Map<String, Object> refundParams = new HashMap<String, Object>();
-            refundParams.put("refund_amt", new DecimalFormat("0.00").format(Float.parseFloat(lincensePlate.getLpParkingRealCost())));
-            refundParams.put("refund_order_no", lincensePlate.getLpOrderId());
+            String parkId = lincensePlate.getLpParkingName();
+            List<JinshiparkApakey> list = getJinshiparkApakeys(parkId);
+            if (list.size() == 0) {
+                return JinshiparkJSONResult.errorMsg("支付参数不正确");
+            }
+            String paymentId = lincensePlate.getPaymentid();
+            String orderId = lincensePlate.getLpOrderId();
+            String appId = list.get(0).getAppid();
+            Map<String, Object> refundParams = getRefundParams(realCost, orderId, appId);
             try {
-                Map<String, Object> response = Refund.create(adapayRequstVO.getPaymentId(), refundParams);
+                Map<String, Object> response = Refund.create(paymentId, refundParams, parkId);
                 if (response.get("status").equals("failed")) {
                     return JinshiparkJSONResult.errorMsg(String.valueOf(response.get("error_msg")));
                 }
+                LincensePlate plate = new LincensePlate();
+                plate.setRefundstatus("2");//退款中
+                lincensePlateMapper.updateByExampleSelective(plate, lincensePlateExample);
                 return JinshiparkJSONResult.ok();
 
             } catch (BaseAdaPayException e) {
@@ -336,19 +343,108 @@ public class AdapayController {
                 return JinshiparkJSONResult.errorMsg("未查询到记录");
             }
             LincensePlateHistory lincensePlateHistory = lincensePlateHistories.get(0);
-            Map<String, Object> refundParams = new HashMap<String, Object>();
-            refundParams.put("refund_amt", new DecimalFormat("0.00").format(Float.parseFloat(lincensePlateHistory.getLpParkingRealCost())));
-            refundParams.put("refund_order_no", lincensePlateHistory.getLpOrderId());
+            String parkId = lincensePlateHistory.getLpParkingName();
+            List<JinshiparkApakey> list = getJinshiparkApakeys(parkId);
+            if (list.size() == 0) {
+                return JinshiparkJSONResult.errorMsg("支付参数不正确");
+            }
+            String paymentId = lincensePlateHistory.getPaymentid();
+            String orderId = lincensePlateHistory.getLpOrderId();
+            String appId = list.get(0).getAppid();
+            Map<String, Object> refundParams = getRefundParams(realCost, orderId, appId);
             try {
-                Map<String, Object> response = Refund.create(adapayRequstVO.getPaymentId(), refundParams);
+                Map<String, Object> response = Refund.create(paymentId, refundParams, parkId);
                 if (response.get("status").equals("failed")) {
                     return JinshiparkJSONResult.errorMsg(String.valueOf(response.get("error_msg")));
                 }
+                LincensePlateHistory history = new LincensePlateHistory();
+                history.setRefundstatus("2");//退款中
+                lincensePlateHistoryMapper.updateByExampleSelective(history, lincensePlateHistoryExample);
                 return JinshiparkJSONResult.ok();
 
             } catch (BaseAdaPayException e) {
                 return JinshiparkJSONResult.errorMsg("调用汇付退款接口异常");
             }
         }
+    }
+
+    /**
+     * 退款回调
+     */
+    @PostMapping("/refundCallback")
+    public void refundCallback(HttpServletRequest request) {
+        try {
+            //验签请参data
+            String data = request.getParameter("data");
+            //验签请参sign
+            String sign = request.getParameter("sign");
+            //验签标记
+            boolean checkSign;
+            //验签请参publicKey
+            String publicKey = AdapayCore.PUBLIC_KEY;
+            logger.error("验签请参：data={},sign={}", data, sign);
+            //验签
+            checkSign = AdapaySign.verifySign(data, sign, publicKey);
+            if (checkSign) {
+                logger.error("===退款回调开始===");
+                //验签成功逻辑
+                JSONObject jsonObject = JSONObject.parseObject(data);
+                String paymentId = jsonObject.getString("payment_id");
+                String status = jsonObject.getString("status");
+                String pay_amt = jsonObject.getString("pay_amt");
+                logger.error("退款金额：{}", pay_amt);
+                LincensePlateExample lincensePlateExample = new LincensePlateExample();
+                LincensePlateExample.Criteria lincensePlateExampleCriteria = lincensePlateExample.createCriteria();
+                lincensePlateExampleCriteria.andPaymentidEqualTo(paymentId);
+                List<LincensePlate> lincensePlates = lincensePlateMapper.selectByExample(lincensePlateExample);
+                if (lincensePlates.size() > 0) {
+                    logger.error("退款详情：车牌:{},退款金额：{},订单号:{}", lincensePlates.get(0).getLpLincensePlateIdCar(),pay_amt,lincensePlates.get(0).getLpOrderId());
+                    LincensePlate record = new LincensePlate();
+                    if (status.equals("succeeded")) {
+                        record.setRefundstatus("1");
+                        record.setRefundmoney(pay_amt);
+                    } else {
+                        record.setRefundstatus("0");
+                    }
+                    lincensePlateMapper.updateByExampleSelective(record, lincensePlateExample);
+                    logger.error("===退款回调更新在场记录表结束===");
+                } else {
+                    LincensePlateHistoryExample lincensePlateHistoryExample = new LincensePlateHistoryExample();
+                    LincensePlateHistoryExample.Criteria lincensePlateHistoryExampleCriteria = lincensePlateHistoryExample.createCriteria();
+                    lincensePlateHistoryExampleCriteria.andPaymentidEqualTo(paymentId);
+                    List<LincensePlateHistory> lincensePlateHistories = lincensePlateHistoryMapper.selectByExample(lincensePlateHistoryExample);
+                    if (lincensePlateHistories.size() > 0) {
+                        logger.error("退款详情：车牌:{},退款金额：{},订单号:{}", lincensePlateHistories.get(0).getLpLincensePlateIdCar(), pay_amt, lincensePlateHistories.get(0).getLpOrderId());
+                        LincensePlateHistory record = new LincensePlateHistory();
+                        if (status.equals("succeeded")) {
+                            record.setRefundstatus("1");
+                            record.setRefundmoney(pay_amt);
+                        } else {
+                            record.setRefundstatus("0");
+                        }
+                        lincensePlateHistoryMapper.updateByExampleSelective(record, lincensePlateHistoryExample);
+                        logger.error("===退款回调更新历史表结束===");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logger.error("异步回调异常，Exception：{}", e.getMessage());
+        }
+    }
+
+    private Map<String, Object> getRefundParams(String realCost, String orderId, String appId) {
+        Map<String, Object> refundParams = new HashMap<String, Object>();
+        refundParams.put("app_id", appId);
+        refundParams.put("refund_amt", new DecimalFormat("0.00").format(Float.parseFloat(realCost)));
+        refundParams.put("refund_order_no", orderId);
+        refundParams.put("notify_url", ADAPayPropertyConfig.getStrValueByKey("refund_notify_url"));
+        return refundParams;
+    }
+
+    private List<JinshiparkApakey> getJinshiparkApakeys(String parkId) {
+        JinshiparkApakeyExample jinshiparkApakeyExample = new JinshiparkApakeyExample();
+        JinshiparkApakeyExample.Criteria jinshiparkApakeyExampleCriteria = jinshiparkApakeyExample.createCriteria();
+        jinshiparkApakeyExampleCriteria.andParkidEqualTo(parkId);
+        return jinshiparkApakeyMapper.selectByExample(jinshiparkApakeyExample);
     }
 }

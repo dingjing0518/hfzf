@@ -38,7 +38,7 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.jinshipark.hfzf.mapper"
                              targetProject="F:\jding\hfzf\src\main\java"/>
         <!--生成全部表tableName设为%-->
-        <table tableName="lincense_plate_history">
+        <table tableName="lincense_plate">
             <generatedKey column="lp_id" sqlStatement="MySql" identity="true"/>
         </table>
 <!--        <table tableName="member">-->
