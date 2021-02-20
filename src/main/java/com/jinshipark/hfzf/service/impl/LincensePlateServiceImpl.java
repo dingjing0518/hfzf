@@ -51,7 +51,7 @@ public class LincensePlateServiceImpl implements LincensePlateService {
     }
 
     @Override
-    public void updateLincensePlate(String order_no, String pay_channel, String pay_amt, String paymentId) {
+    public void updateLincensePlate(String order_no, String pay_channel, String pay_amt, String paymentId, String adaorderid) {
         LincensePlateExample example = new LincensePlateExample();
         LincensePlateExample.Criteria criteria = example.createCriteria();
         criteria.andLpOrderIdEqualTo(order_no);
@@ -60,6 +60,7 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         lincensePlate.setLpPaymentType("扫码支付出场");//支付方式
         lincensePlate.setLpParkingRealCost(pay_amt);//实付金额
         lincensePlate.setPaymentid(paymentId);
+        lincensePlate.setAdaorderid(adaorderid);
         logger.error("===扫码支付回调参数===");
         logger.error("订单号:{},支付金额:{}元", order_no, pay_amt);
         int result = lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
@@ -71,7 +72,7 @@ public class LincensePlateServiceImpl implements LincensePlateService {
     }
 
     @Override
-    public void updateLincensePlateForPrePay(String order_no, String pay_channel, String pay_amt, String paymentId) {
+    public void updateLincensePlateForPrePay(String order_no, String pay_channel, String pay_amt, String paymentId, String adaorderid) {
         LincensePlateExample example = new LincensePlateExample();
         LincensePlateExample.Criteria criteria = example.createCriteria();
         criteria.andLpOrderIdEqualTo(order_no);
@@ -80,6 +81,7 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         lincensePlate.setLpPaymentType("预付款出场");//支付方式
         lincensePlate.setLpParkingRealCost(pay_amt);//实付金额
         lincensePlate.setPaymentid(paymentId);
+        lincensePlate.setAdaorderid(adaorderid);
         logger.error("===预支付回调参数===");
         logger.error("订单号:{},支付金额:{}元", order_no, pay_amt);
         int result = lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
@@ -91,7 +93,7 @@ public class LincensePlateServiceImpl implements LincensePlateService {
     }
 
     @Override
-        public void updateLincensePlateForNoPlate(String order_no, String pay_channel, String pay_amt, String paymentId) {
+    public void updateLincensePlateForNoPlate(String order_no, String pay_channel, String pay_amt, String paymentId, String adaorderid) {
         //1.更新在场记录表数据
         LincensePlateExample example = new LincensePlateExample();
         LincensePlateExample.Criteria criteria = example.createCriteria();
@@ -102,6 +104,7 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         lincensePlate.setLpParkingRealCost(pay_amt);//实付金额
         lincensePlate.setLpDepartureTime(new Date());//离场时间
         lincensePlate.setPaymentid(paymentId);
+        lincensePlate.setAdaorderid(adaorderid);
         logger.error("===无牌车支付回调参数===");
         logger.error("订单号:{},支付金额:{}元", order_no, pay_amt);
         int result = lincensePlateMapper.updateByExampleSelective(lincensePlate, example);

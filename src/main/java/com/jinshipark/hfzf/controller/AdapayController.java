@@ -143,8 +143,9 @@ public class AdapayController {
                 String pay_amt = jsonObject.getString("pay_amt");
                 String paymentId = jsonObject.getString("id");
                 String status = jsonObject.getString("status");
+                String adaorderid = jsonObject.getString("party_order_id");
                 if (status.equals("succeeded")) {
-                    lincensePlateService.updateLincensePlate(order_no, pay_channel, pay_amt, paymentId);
+                    lincensePlateService.updateLincensePlate(order_no, pay_channel, pay_amt, paymentId, adaorderid);
                 }
 
             }
@@ -180,8 +181,9 @@ public class AdapayController {
                 String pay_amt = jsonObject.getString("pay_amt");
                 String paymentId = jsonObject.getString("id");
                 String status = jsonObject.getString("status");
+                String adaorderid = jsonObject.getString("party_order_id");
                 if (status.equals("succeeded")) {
-                    lincensePlateService.updateLincensePlateForPrePay(order_no, pay_channel, pay_amt, paymentId);
+                    lincensePlateService.updateLincensePlateForPrePay(order_no, pay_channel, pay_amt, paymentId,adaorderid);
                 }
             }
         } catch (Exception e) {
@@ -216,8 +218,9 @@ public class AdapayController {
                 String pay_amt = jsonObject.getString("pay_amt");
                 String paymentId = jsonObject.getString("id");
                 String status = jsonObject.getString("status");
+                String adaorderid = jsonObject.getString("party_order_id");
                 if (status.equals("succeeded")) {
-                    lincensePlateService.updateLincensePlateForNoPlate(order_no, pay_channel, pay_amt, paymentId);
+                    lincensePlateService.updateLincensePlateForNoPlate(order_no, pay_channel, pay_amt, paymentId, adaorderid);
                 }
             }
         } catch (Exception e) {

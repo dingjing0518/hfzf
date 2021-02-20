@@ -88,6 +88,9 @@ public class LincensePlate implements Serializable {
     @ApiModelProperty(value = "退款金额")
     private String refundmoney;
 
+    @ApiModelProperty(value = "支付平台订单ID")
+    private String adaorderid;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getLpId() {
@@ -314,6 +317,14 @@ public class LincensePlate implements Serializable {
         this.refundmoney = refundmoney;
     }
 
+    public String getAdaorderid() {
+        return adaorderid;
+    }
+
+    public void setAdaorderid(String adaorderid) {
+        this.adaorderid = adaorderid;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -348,6 +359,7 @@ public class LincensePlate implements Serializable {
         sb.append(", paymentid=").append(paymentid);
         sb.append(", refundstatus=").append(refundstatus);
         sb.append(", refundmoney=").append(refundmoney);
+        sb.append(", adaorderid=").append(adaorderid);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

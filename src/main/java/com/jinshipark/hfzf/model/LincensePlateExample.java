@@ -2004,6 +2004,76 @@ public class LincensePlateExample {
             addCriterion("RefundMoney not between", value1, value2, "refundmoney");
             return (Criteria) this;
         }
+
+        public Criteria andAdaorderidIsNull() {
+            addCriterion("ADAOrderID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdaorderidIsNotNull() {
+            addCriterion("ADAOrderID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdaorderidEqualTo(String value) {
+            addCriterion("ADAOrderID =", value, "adaorderid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdaorderidNotEqualTo(String value) {
+            addCriterion("ADAOrderID <>", value, "adaorderid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdaorderidGreaterThan(String value) {
+            addCriterion("ADAOrderID >", value, "adaorderid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdaorderidGreaterThanOrEqualTo(String value) {
+            addCriterion("ADAOrderID >=", value, "adaorderid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdaorderidLessThan(String value) {
+            addCriterion("ADAOrderID <", value, "adaorderid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdaorderidLessThanOrEqualTo(String value) {
+            addCriterion("ADAOrderID <=", value, "adaorderid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdaorderidLike(String value) {
+            addCriterion("ADAOrderID like", value, "adaorderid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdaorderidNotLike(String value) {
+            addCriterion("ADAOrderID not like", value, "adaorderid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdaorderidIn(List<String> values) {
+            addCriterion("ADAOrderID in", values, "adaorderid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdaorderidNotIn(List<String> values) {
+            addCriterion("ADAOrderID not in", values, "adaorderid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdaorderidBetween(String value1, String value2) {
+            addCriterion("ADAOrderID between", value1, value2, "adaorderid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdaorderidNotBetween(String value1, String value2) {
+            addCriterion("ADAOrderID not between", value1, value2, "adaorderid");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

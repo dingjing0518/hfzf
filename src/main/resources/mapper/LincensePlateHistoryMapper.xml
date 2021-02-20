@@ -30,6 +30,7 @@
     <result column="PaymentID" jdbcType="VARCHAR" property="paymentid" />
     <result column="RefundStatus" jdbcType="VARCHAR" property="refundstatus" />
     <result column="RefundMoney" jdbcType="VARCHAR" property="refundmoney" />
+    <result column="ADAOrderID" jdbcType="VARCHAR" property="adaorderid" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -94,7 +95,8 @@
     lp_departure_time, lp_rent_time, lp_create_time, lp_order_id, lp_car_type, lp_car_color, 
     lp_lincense_type, lp_parking_often, lp_parking_cost, lp_parking_real_cost, lp_inbound_cname, 
     lp_departure_cname, lp_parking_name, lp_agent_name, lp_order_state, lp_payment_type, 
-    lp_lg_id, lp_lg_type, InPicPath, OutPicPath, PaymentID, RefundStatus, RefundMoney
+    lp_lg_id, lp_lg_type, InPicPath, OutPicPath, PaymentID, RefundStatus, RefundMoney, 
+    ADAOrderID
   </sql>
   <select id="selectByExample" parameterType="com.jinshipark.hfzf.model.LincensePlateHistoryExample" resultMap="BaseResultMap">
     select
@@ -139,7 +141,7 @@
       lp_agent_name, lp_order_state, lp_payment_type, 
       lp_lg_id, lp_lg_type, InPicPath, 
       OutPicPath, PaymentID, RefundStatus, 
-      RefundMoney)
+      RefundMoney, ADAOrderID)
     values (#{lpMemberIdCar,jdbcType=VARCHAR}, #{lpLincensePlateIdCar,jdbcType=VARCHAR}, 
       #{lpServiceTypeCar,jdbcType=VARCHAR}, #{lpInboundTime,jdbcType=TIMESTAMP}, #{lpDepartureTime,jdbcType=TIMESTAMP}, 
       #{lpRentTime,jdbcType=VARCHAR}, #{lpCreateTime,jdbcType=TIMESTAMP}, #{lpOrderId,jdbcType=VARCHAR}, 
@@ -149,7 +151,7 @@
       #{lpAgentName,jdbcType=VARCHAR}, #{lpOrderState,jdbcType=VARCHAR}, #{lpPaymentType,jdbcType=VARCHAR}, 
       #{lpLgId,jdbcType=INTEGER}, #{lpLgType,jdbcType=INTEGER}, #{inpicpath,jdbcType=VARCHAR}, 
       #{outpicpath,jdbcType=VARCHAR}, #{paymentid,jdbcType=VARCHAR}, #{refundstatus,jdbcType=VARCHAR}, 
-      #{refundmoney,jdbcType=VARCHAR})
+      #{refundmoney,jdbcType=VARCHAR}, #{adaorderid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jinshipark.hfzf.model.LincensePlateHistory">
     <selectKey keyProperty="lpId" order="AFTER" resultType="java.lang.Integer">
@@ -238,6 +240,9 @@
       <if test="refundmoney != null">
         RefundMoney,
       </if>
+      <if test="adaorderid != null">
+        ADAOrderID,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="lpMemberIdCar != null">
@@ -320,6 +325,9 @@
       </if>
       <if test="refundmoney != null">
         #{refundmoney,jdbcType=VARCHAR},
+      </if>
+      <if test="adaorderid != null">
+        #{adaorderid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -416,6 +424,9 @@
       <if test="record.refundmoney != null">
         RefundMoney = #{record.refundmoney,jdbcType=VARCHAR},
       </if>
+      <if test="record.adaorderid != null">
+        ADAOrderID = #{record.adaorderid,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -450,7 +461,8 @@
       OutPicPath = #{record.outpicpath,jdbcType=VARCHAR},
       PaymentID = #{record.paymentid,jdbcType=VARCHAR},
       RefundStatus = #{record.refundstatus,jdbcType=VARCHAR},
-      RefundMoney = #{record.refundmoney,jdbcType=VARCHAR}
+      RefundMoney = #{record.refundmoney,jdbcType=VARCHAR},
+      ADAOrderID = #{record.adaorderid,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -539,6 +551,9 @@
       <if test="refundmoney != null">
         RefundMoney = #{refundmoney,jdbcType=VARCHAR},
       </if>
+      <if test="adaorderid != null">
+        ADAOrderID = #{adaorderid,jdbcType=VARCHAR},
+      </if>
     </set>
     where lp_id = #{lpId,jdbcType=INTEGER}
   </update>
@@ -570,7 +585,8 @@
       OutPicPath = #{outpicpath,jdbcType=VARCHAR},
       PaymentID = #{paymentid,jdbcType=VARCHAR},
       RefundStatus = #{refundstatus,jdbcType=VARCHAR},
-      RefundMoney = #{refundmoney,jdbcType=VARCHAR}
+      RefundMoney = #{refundmoney,jdbcType=VARCHAR},
+      ADAOrderID = #{adaorderid,jdbcType=VARCHAR}
     where lp_id = #{lpId,jdbcType=INTEGER}
   </update>
 </mapper>
