@@ -174,14 +174,17 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         LincensePlateExample.Criteria criteria = example.createCriteria();
         criteria.andLpLincensePlateIdCarEqualTo(lincensePlateVO.getLpLincensePlateIdCar());
         List<LincensePlate> lincensePlateList = lincensePlateMapper.selectByExample(example);
-        //第一步：是否为在场车辆
+        //是否为在场车辆
         if (lincensePlateList.size() == 0) {
             return JinshiparkJSONResult.errorMsg("未查询到车辆");
         }
 
         LincensePlate lincensePlate = lincensePlateList.get(0);
         LincensePlate lincense = new LincensePlate();
-
+        //判断是否在该区域内
+        if (!lincense.getLpParkingName().equals(lincensePlateVO.getLpParkingName()) || !lincense.getLpCarType().equals(lincensePlateVO.getLpCarType())) {
+            return JinshiparkJSONResult.errorMsg("车辆不在该区域内");
+        }
         BeanUtils.copyProperties(lincensePlate, lincense);
         Integer dateOften = PayUtils.getDateOften(new Date(), lincense.getLpInboundTime());
         String lpParkingName = lincense.getLpParkingName();
