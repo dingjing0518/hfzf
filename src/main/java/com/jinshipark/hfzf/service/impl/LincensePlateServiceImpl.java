@@ -182,7 +182,9 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         LincensePlate lincensePlate = lincensePlateList.get(0);
         LincensePlate lincense = new LincensePlate();
         //判断是否在该区域内
-        if (!lincense.getLpParkingName().equals(lincensePlateVO.getLpParkingName()) || !lincense.getLpCarType().equals(lincensePlateVO.getLpCarType())) {
+        logger.error("lincensePlate.getLpParkingName():{},lincense.getLpCarType():{}", lincensePlate.getLpParkingName(), lincense.getLpCarType());
+        logger.error("lincensePlateVO.getLpParkingName():{},lincensePlateVO.getLpCarType():{}", lincensePlateVO.getLpParkingName(), lincensePlateVO.getLpCarType());
+        if (!lincensePlate.getLpParkingName().equals(lincensePlateVO.getLpParkingName()) || !lincensePlate.getLpCarType().equals(lincensePlateVO.getLpCarType())) {
             return JinshiparkJSONResult.errorMsg("车辆不在该区域内");
         }
         BeanUtils.copyProperties(lincensePlate, lincense);
