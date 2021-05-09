@@ -18,6 +18,9 @@ public class AdapayRequstVO {
     private String notify_url;//回调地址
     private String lpDepartureCname;//出场口名
     private String paymentId;//汇付唯一Id
+    private String userName;//操作员名称
+    private String adaorderid;//汇付平台订单号
+
 
     public String getOrder_no() {
         return order_no;
@@ -129,5 +132,21 @@ public class AdapayRequstVO {
 
     public void setPaymentId(String paymentId) {
         this.paymentId = paymentId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getAdaorderid() {
+        return adaorderid;
+    }
+
+    public void setAdaorderid(String adaorderid) {
+        this.adaorderid = adaorderid;
     }
 }
