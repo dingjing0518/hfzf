@@ -54,7 +54,7 @@ public class LincensePlateServiceImpl implements LincensePlateService {
     public void updateLincensePlate(String order_no, String pay_channel, String pay_amt, String paymentId, String adaorderid) {
         LincensePlateExample example = new LincensePlateExample();
         LincensePlateExample.Criteria criteria = example.createCriteria();
-        criteria.andLpOrderIdLike("%" + order_no.substring(24, order_no.length()));
+        criteria.andLpOrderIdEqualTo(order_no);
         LincensePlate lincensePlate = new LincensePlate();
         lincensePlate.setLpOrderState("支付成功");//订单状态
         lincensePlate.setLpPaymentType("扫码支付出场");//支付方式
@@ -65,9 +65,9 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         logger.error("订单号:{},支付金额:{}元", order_no, pay_amt);
         int result = lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
         if (result > 0) {
-            logger.error("===更新成功订单号:{}成功,更新记录数:{}===", order_no.substring(24, order_no.length()), result);
+            logger.error("===更新成功订单号:{}成功===", order_no);
         } else {
-            logger.error("===更新成功订单号:{}失败,更新记录数:{}===", order_no.substring(24, order_no.length()), result);
+            logger.error("===更新成功订单号:{}失败===", order_no);
         }
     }
 
@@ -75,7 +75,7 @@ public class LincensePlateServiceImpl implements LincensePlateService {
     public void updateLincensePlateForPrePay(String order_no, String pay_channel, String pay_amt, String paymentId, String adaorderid) {
         LincensePlateExample example = new LincensePlateExample();
         LincensePlateExample.Criteria criteria = example.createCriteria();
-        criteria.andLpOrderIdLike("%" + order_no.substring(24, order_no.length()));
+        criteria.andLpOrderIdEqualTo(order_no);
         LincensePlate lincensePlate = new LincensePlate();
         lincensePlate.setLpOrderState("支付成功");//订单状态
         lincensePlate.setLpPaymentType("预付款出场");//支付方式
@@ -86,9 +86,9 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         logger.error("订单号:{},支付金额:{}元", order_no, pay_amt);
         int result = lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
         if (result > 0) {
-            logger.error("===更新成功订单号:{}成功,更新记录数:{}===", order_no.substring(24, order_no.length()), result);
+            logger.error("===更新成功订单号:{}成功===", order_no);
         } else {
-            logger.error("===更新成功订单号:{}失败,更新记录数:{}===", order_no.substring(24, order_no.length()), result);
+            logger.error("===更新成功订单号:{}失败===", order_no);
         }
     }
 
@@ -97,7 +97,7 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         //1.更新在场记录表数据
         LincensePlateExample example = new LincensePlateExample();
         LincensePlateExample.Criteria criteria = example.createCriteria();
-        criteria.andLpOrderIdLike("%" + order_no.substring(24, order_no.length()));
+        criteria.andLpOrderIdEqualTo(order_no);
         LincensePlate lincensePlate = new LincensePlate();
         lincensePlate.setLpOrderState("支付成功");//订单状态
         lincensePlate.setLpPaymentType("扫码支付出场");//支付方式
@@ -109,9 +109,9 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         logger.error("订单号:{},支付金额:{}元", order_no, pay_amt);
         int result = lincensePlateMapper.updateByExampleSelective(lincensePlate, example);
         if (result > 0) {
-            logger.error("===更新成功订单号:{}成功,更新记录数:{}===", order_no.substring(24, order_no.length()), result);
+            logger.error("===更新成功订单号:{}成功===", order_no);
         } else {
-            logger.error("===更新成功订单号:{}失败,更新记录数:{}===", order_no.substring(24, order_no.length()), result);
+            logger.error("===更新成功订单号:{}失败===", order_no);
         }
         List<LincensePlate> lincensePlateList = lincensePlateMapper.selectByExample(example);
         LincensePlate lp = lincensePlateList.get(0);
