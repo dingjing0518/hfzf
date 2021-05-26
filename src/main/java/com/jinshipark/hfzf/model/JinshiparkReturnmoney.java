@@ -19,6 +19,9 @@ public class JinshiparkReturnmoney implements Serializable {
     @ApiModelProperty(value = "退款金额")
     private String returnmoney;
 
+    @ApiModelProperty(value = "退费手续费")
+    private String refundservicefee;
+
     @ApiModelProperty(value = "退款时间")
     private Date createtime;
 
@@ -73,6 +76,14 @@ public class JinshiparkReturnmoney implements Serializable {
         this.returnmoney = returnmoney;
     }
 
+    public String getRefundservicefee() {
+        return refundservicefee;
+    }
+
+    public void setRefundservicefee(String refundservicefee) {
+        this.refundservicefee = refundservicefee;
+    }
+
     public Date getCreatetime() {
         return createtime;
     }
@@ -116,6 +127,7 @@ public class JinshiparkReturnmoney implements Serializable {
         sb.append(", orderid=").append(orderid);
         sb.append(", hforderid=").append(hforderid);
         sb.append(", returnmoney=").append(returnmoney);
+        sb.append(", refundservicefee=").append(refundservicefee);
         sb.append(", createtime=").append(createtime);
         sb.append(", username=").append(username);
         sb.append(", parkid=").append(parkid);

@@ -17,6 +17,7 @@
     <result column="lp_parking_often" jdbcType="VARCHAR" property="lpParkingOften" />
     <result column="lp_parking_cost" jdbcType="VARCHAR" property="lpParkingCost" />
     <result column="lp_parking_real_cost" jdbcType="VARCHAR" property="lpParkingRealCost" />
+    <result column="ServiceFee" jdbcType="VARCHAR" property="servicefee" />
     <result column="lp_inbound_cname" jdbcType="VARCHAR" property="lpInboundCname" />
     <result column="lp_departure_cname" jdbcType="VARCHAR" property="lpDepartureCname" />
     <result column="lp_parking_name" jdbcType="VARCHAR" property="lpParkingName" />
@@ -30,6 +31,7 @@
     <result column="PaymentID" jdbcType="VARCHAR" property="paymentid" />
     <result column="RefundStatus" jdbcType="VARCHAR" property="refundstatus" />
     <result column="RefundMoney" jdbcType="VARCHAR" property="refundmoney" />
+    <result column="RefundServiceFee" jdbcType="VARCHAR" property="refundservicefee" />
     <result column="ADAOrderID" jdbcType="VARCHAR" property="adaorderid" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -93,10 +95,10 @@
   <sql id="Base_Column_List">
     lp_id, lp_member_id_car, lp_lincense_plate_id_car, lp_service_type_car, lp_inbound_time, 
     lp_departure_time, lp_rent_time, lp_create_time, lp_order_id, lp_car_type, lp_car_color, 
-    lp_lincense_type, lp_parking_often, lp_parking_cost, lp_parking_real_cost, lp_inbound_cname, 
-    lp_departure_cname, lp_parking_name, lp_agent_name, lp_order_state, lp_payment_type, 
-    lp_lg_id, lp_lg_type, InPicPath, OutPicPath, PaymentID, RefundStatus, RefundMoney, 
-    ADAOrderID
+    lp_lincense_type, lp_parking_often, lp_parking_cost, lp_parking_real_cost, ServiceFee, 
+    lp_inbound_cname, lp_departure_cname, lp_parking_name, lp_agent_name, lp_order_state, 
+    lp_payment_type, lp_lg_id, lp_lg_type, InPicPath, OutPicPath, PaymentID, RefundStatus, 
+    RefundMoney, RefundServiceFee, ADAOrderID
   </sql>
   <select id="selectByExample" parameterType="com.jinshipark.hfzf.model.LincensePlateExample" resultMap="BaseResultMap">
     select
@@ -137,21 +139,23 @@
       lp_rent_time, lp_create_time, lp_order_id, 
       lp_car_type, lp_car_color, lp_lincense_type, 
       lp_parking_often, lp_parking_cost, lp_parking_real_cost, 
-      lp_inbound_cname, lp_departure_cname, lp_parking_name, 
-      lp_agent_name, lp_order_state, lp_payment_type, 
-      lp_lg_id, lp_lg_type, InPicPath, 
-      OutPicPath, PaymentID, RefundStatus, 
-      RefundMoney, ADAOrderID)
+      ServiceFee, lp_inbound_cname, lp_departure_cname, 
+      lp_parking_name, lp_agent_name, lp_order_state, 
+      lp_payment_type, lp_lg_id, lp_lg_type, 
+      InPicPath, OutPicPath, PaymentID, 
+      RefundStatus, RefundMoney, RefundServiceFee, 
+      ADAOrderID)
     values (#{lpMemberIdCar,jdbcType=VARCHAR}, #{lpLincensePlateIdCar,jdbcType=VARCHAR}, 
       #{lpServiceTypeCar,jdbcType=VARCHAR}, #{lpInboundTime,jdbcType=TIMESTAMP}, #{lpDepartureTime,jdbcType=TIMESTAMP}, 
       #{lpRentTime,jdbcType=VARCHAR}, #{lpCreateTime,jdbcType=TIMESTAMP}, #{lpOrderId,jdbcType=VARCHAR}, 
       #{lpCarType,jdbcType=VARCHAR}, #{lpCarColor,jdbcType=VARCHAR}, #{lpLincenseType,jdbcType=VARCHAR}, 
       #{lpParkingOften,jdbcType=VARCHAR}, #{lpParkingCost,jdbcType=VARCHAR}, #{lpParkingRealCost,jdbcType=VARCHAR}, 
-      #{lpInboundCname,jdbcType=VARCHAR}, #{lpDepartureCname,jdbcType=VARCHAR}, #{lpParkingName,jdbcType=VARCHAR}, 
-      #{lpAgentName,jdbcType=VARCHAR}, #{lpOrderState,jdbcType=VARCHAR}, #{lpPaymentType,jdbcType=VARCHAR}, 
-      #{lpLgId,jdbcType=INTEGER}, #{lpLgType,jdbcType=INTEGER}, #{inpicpath,jdbcType=VARCHAR}, 
-      #{outpicpath,jdbcType=VARCHAR}, #{paymentid,jdbcType=VARCHAR}, #{refundstatus,jdbcType=VARCHAR}, 
-      #{refundmoney,jdbcType=VARCHAR}, #{adaorderid,jdbcType=VARCHAR})
+      #{servicefee,jdbcType=VARCHAR}, #{lpInboundCname,jdbcType=VARCHAR}, #{lpDepartureCname,jdbcType=VARCHAR}, 
+      #{lpParkingName,jdbcType=VARCHAR}, #{lpAgentName,jdbcType=VARCHAR}, #{lpOrderState,jdbcType=VARCHAR}, 
+      #{lpPaymentType,jdbcType=VARCHAR}, #{lpLgId,jdbcType=INTEGER}, #{lpLgType,jdbcType=INTEGER}, 
+      #{inpicpath,jdbcType=VARCHAR}, #{outpicpath,jdbcType=VARCHAR}, #{paymentid,jdbcType=VARCHAR}, 
+      #{refundstatus,jdbcType=VARCHAR}, #{refundmoney,jdbcType=VARCHAR}, #{refundservicefee,jdbcType=VARCHAR}, 
+      #{adaorderid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jinshipark.hfzf.model.LincensePlate">
     <selectKey keyProperty="lpId" order="AFTER" resultType="java.lang.Integer">
@@ -201,6 +205,9 @@
       <if test="lpParkingRealCost != null">
         lp_parking_real_cost,
       </if>
+      <if test="servicefee != null">
+        ServiceFee,
+      </if>
       <if test="lpInboundCname != null">
         lp_inbound_cname,
       </if>
@@ -239,6 +246,9 @@
       </if>
       <if test="refundmoney != null">
         RefundMoney,
+      </if>
+      <if test="refundservicefee != null">
+        RefundServiceFee,
       </if>
       <if test="adaorderid != null">
         ADAOrderID,
@@ -287,6 +297,9 @@
       <if test="lpParkingRealCost != null">
         #{lpParkingRealCost,jdbcType=VARCHAR},
       </if>
+      <if test="servicefee != null">
+        #{servicefee,jdbcType=VARCHAR},
+      </if>
       <if test="lpInboundCname != null">
         #{lpInboundCname,jdbcType=VARCHAR},
       </if>
@@ -325,6 +338,9 @@
       </if>
       <if test="refundmoney != null">
         #{refundmoney,jdbcType=VARCHAR},
+      </if>
+      <if test="refundservicefee != null">
+        #{refundservicefee,jdbcType=VARCHAR},
       </if>
       <if test="adaorderid != null">
         #{adaorderid,jdbcType=VARCHAR},
@@ -385,6 +401,9 @@
       <if test="record.lpParkingRealCost != null">
         lp_parking_real_cost = #{record.lpParkingRealCost,jdbcType=VARCHAR},
       </if>
+      <if test="record.servicefee != null">
+        ServiceFee = #{record.servicefee,jdbcType=VARCHAR},
+      </if>
       <if test="record.lpInboundCname != null">
         lp_inbound_cname = #{record.lpInboundCname,jdbcType=VARCHAR},
       </if>
@@ -424,6 +443,9 @@
       <if test="record.refundmoney != null">
         RefundMoney = #{record.refundmoney,jdbcType=VARCHAR},
       </if>
+      <if test="record.refundservicefee != null">
+        RefundServiceFee = #{record.refundservicefee,jdbcType=VARCHAR},
+      </if>
       <if test="record.adaorderid != null">
         ADAOrderID = #{record.adaorderid,jdbcType=VARCHAR},
       </if>
@@ -449,6 +471,7 @@
       lp_parking_often = #{record.lpParkingOften,jdbcType=VARCHAR},
       lp_parking_cost = #{record.lpParkingCost,jdbcType=VARCHAR},
       lp_parking_real_cost = #{record.lpParkingRealCost,jdbcType=VARCHAR},
+      ServiceFee = #{record.servicefee,jdbcType=VARCHAR},
       lp_inbound_cname = #{record.lpInboundCname,jdbcType=VARCHAR},
       lp_departure_cname = #{record.lpDepartureCname,jdbcType=VARCHAR},
       lp_parking_name = #{record.lpParkingName,jdbcType=VARCHAR},
@@ -462,6 +485,7 @@
       PaymentID = #{record.paymentid,jdbcType=VARCHAR},
       RefundStatus = #{record.refundstatus,jdbcType=VARCHAR},
       RefundMoney = #{record.refundmoney,jdbcType=VARCHAR},
+      RefundServiceFee = #{record.refundservicefee,jdbcType=VARCHAR},
       ADAOrderID = #{record.adaorderid,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -512,6 +536,9 @@
       <if test="lpParkingRealCost != null">
         lp_parking_real_cost = #{lpParkingRealCost,jdbcType=VARCHAR},
       </if>
+      <if test="servicefee != null">
+        ServiceFee = #{servicefee,jdbcType=VARCHAR},
+      </if>
       <if test="lpInboundCname != null">
         lp_inbound_cname = #{lpInboundCname,jdbcType=VARCHAR},
       </if>
@@ -551,6 +578,9 @@
       <if test="refundmoney != null">
         RefundMoney = #{refundmoney,jdbcType=VARCHAR},
       </if>
+      <if test="refundservicefee != null">
+        RefundServiceFee = #{refundservicefee,jdbcType=VARCHAR},
+      </if>
       <if test="adaorderid != null">
         ADAOrderID = #{adaorderid,jdbcType=VARCHAR},
       </if>
@@ -573,6 +603,7 @@
       lp_parking_often = #{lpParkingOften,jdbcType=VARCHAR},
       lp_parking_cost = #{lpParkingCost,jdbcType=VARCHAR},
       lp_parking_real_cost = #{lpParkingRealCost,jdbcType=VARCHAR},
+      ServiceFee = #{servicefee,jdbcType=VARCHAR},
       lp_inbound_cname = #{lpInboundCname,jdbcType=VARCHAR},
       lp_departure_cname = #{lpDepartureCname,jdbcType=VARCHAR},
       lp_parking_name = #{lpParkingName,jdbcType=VARCHAR},
@@ -586,6 +617,7 @@
       PaymentID = #{paymentid,jdbcType=VARCHAR},
       RefundStatus = #{refundstatus,jdbcType=VARCHAR},
       RefundMoney = #{refundmoney,jdbcType=VARCHAR},
+      RefundServiceFee = #{refundservicefee,jdbcType=VARCHAR},
       ADAOrderID = #{adaorderid,jdbcType=VARCHAR}
     where lp_id = #{lpId,jdbcType=INTEGER}
   </update>

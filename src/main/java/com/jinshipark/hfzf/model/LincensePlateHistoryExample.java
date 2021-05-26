@@ -1115,6 +1115,76 @@ public class LincensePlateHistoryExample {
             return (Criteria) this;
         }
 
+        public Criteria andServicefeeIsNull() {
+            addCriterion("ServiceFee is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andServicefeeIsNotNull() {
+            addCriterion("ServiceFee is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andServicefeeEqualTo(String value) {
+            addCriterion("ServiceFee =", value, "servicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andServicefeeNotEqualTo(String value) {
+            addCriterion("ServiceFee <>", value, "servicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andServicefeeGreaterThan(String value) {
+            addCriterion("ServiceFee >", value, "servicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andServicefeeGreaterThanOrEqualTo(String value) {
+            addCriterion("ServiceFee >=", value, "servicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andServicefeeLessThan(String value) {
+            addCriterion("ServiceFee <", value, "servicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andServicefeeLessThanOrEqualTo(String value) {
+            addCriterion("ServiceFee <=", value, "servicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andServicefeeLike(String value) {
+            addCriterion("ServiceFee like", value, "servicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andServicefeeNotLike(String value) {
+            addCriterion("ServiceFee not like", value, "servicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andServicefeeIn(List<String> values) {
+            addCriterion("ServiceFee in", values, "servicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andServicefeeNotIn(List<String> values) {
+            addCriterion("ServiceFee not in", values, "servicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andServicefeeBetween(String value1, String value2) {
+            addCriterion("ServiceFee between", value1, value2, "servicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andServicefeeNotBetween(String value1, String value2) {
+            addCriterion("ServiceFee not between", value1, value2, "servicefee");
+            return (Criteria) this;
+        }
+
         public Criteria andLpInboundCnameIsNull() {
             addCriterion("lp_inbound_cname is null");
             return (Criteria) this;
@@ -2072,6 +2142,76 @@ public class LincensePlateHistoryExample {
 
         public Criteria andAdaorderidNotBetween(String value1, String value2) {
             addCriterion("ADAOrderID not between", value1, value2, "adaorderid");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeIsNull() {
+            addCriterion("RefundServiceFee is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeIsNotNull() {
+            addCriterion("RefundServiceFee is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeEqualTo(String value) {
+            addCriterion("RefundServiceFee =", value, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeNotEqualTo(String value) {
+            addCriterion("RefundServiceFee <>", value, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeGreaterThan(String value) {
+            addCriterion("RefundServiceFee >", value, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeGreaterThanOrEqualTo(String value) {
+            addCriterion("RefundServiceFee >=", value, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeLessThan(String value) {
+            addCriterion("RefundServiceFee <", value, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeLessThanOrEqualTo(String value) {
+            addCriterion("RefundServiceFee <=", value, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeLike(String value) {
+            addCriterion("RefundServiceFee like", value, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeNotLike(String value) {
+            addCriterion("RefundServiceFee not like", value, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeIn(List<String> values) {
+            addCriterion("RefundServiceFee in", values, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeNotIn(List<String> values) {
+            addCriterion("RefundServiceFee not in", values, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeBetween(String value1, String value2) {
+            addCriterion("RefundServiceFee between", value1, value2, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeNotBetween(String value1, String value2) {
+            addCriterion("RefundServiceFee not between", value1, value2, "refundservicefee");
             return (Criteria) this;
         }
     }

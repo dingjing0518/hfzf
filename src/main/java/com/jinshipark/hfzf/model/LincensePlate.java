@@ -49,6 +49,9 @@ public class LincensePlate implements Serializable {
     @ApiModelProperty(value = "实收费用")
     private String lpParkingRealCost;
 
+    @ApiModelProperty(value = "手续费")
+    private String servicefee;
+
     @ApiModelProperty(value = "入场口名")
     private String lpInboundCname;
 
@@ -87,6 +90,9 @@ public class LincensePlate implements Serializable {
 
     @ApiModelProperty(value = "退款金额")
     private String refundmoney;
+
+    @ApiModelProperty(value = "退款手续费")
+    private String refundservicefee;
 
     @ApiModelProperty(value = "支付平台订单ID")
     private String adaorderid;
@@ -213,6 +219,14 @@ public class LincensePlate implements Serializable {
         this.lpParkingRealCost = lpParkingRealCost;
     }
 
+    public String getServicefee() {
+        return servicefee;
+    }
+
+    public void setServicefee(String servicefee) {
+        this.servicefee = servicefee;
+    }
+
     public String getLpInboundCname() {
         return lpInboundCname;
     }
@@ -317,6 +331,14 @@ public class LincensePlate implements Serializable {
         this.refundmoney = refundmoney;
     }
 
+    public String getRefundservicefee() {
+        return refundservicefee;
+    }
+
+    public void setRefundservicefee(String refundservicefee) {
+        this.refundservicefee = refundservicefee;
+    }
+
     public String getAdaorderid() {
         return adaorderid;
     }
@@ -346,6 +368,7 @@ public class LincensePlate implements Serializable {
         sb.append(", lpParkingOften=").append(lpParkingOften);
         sb.append(", lpParkingCost=").append(lpParkingCost);
         sb.append(", lpParkingRealCost=").append(lpParkingRealCost);
+        sb.append(", servicefee=").append(servicefee);
         sb.append(", lpInboundCname=").append(lpInboundCname);
         sb.append(", lpDepartureCname=").append(lpDepartureCname);
         sb.append(", lpParkingName=").append(lpParkingName);
@@ -359,6 +382,7 @@ public class LincensePlate implements Serializable {
         sb.append(", paymentid=").append(paymentid);
         sb.append(", refundstatus=").append(refundstatus);
         sb.append(", refundmoney=").append(refundmoney);
+        sb.append(", refundservicefee=").append(refundservicefee);
         sb.append(", adaorderid=").append(adaorderid);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

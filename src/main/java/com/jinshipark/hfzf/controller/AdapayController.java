@@ -56,9 +56,6 @@ public class AdapayController {
     private JinshiparkApakeyMapper jinshiparkApakeyMapper;
 
     @Autowired
-    private LincensePlateMapper lincensePlateMapper;
-
-    @Autowired
     private JinshiparkReturnmoneyMapper jinshiparkReturnmoneyMapper;
 
     @Autowired
@@ -143,14 +140,15 @@ public class AdapayController {
             if (checkSign) {
                 //验签成功逻辑
                 JSONObject jsonObject = JSONObject.parseObject(data);
-                String order_no = jsonObject.getString("order_no");
-                String pay_channel = jsonObject.getString("pay_channel");
-                String pay_amt = jsonObject.getString("pay_amt");
-                String paymentId = jsonObject.getString("id");
                 String status = jsonObject.getString("status");
-                String adaorderid = jsonObject.getString("party_order_id");
                 if (status.equals("succeeded")) {
-                    lincensePlateService.updateLincensePlate(order_no, pay_channel, pay_amt, paymentId, adaorderid);
+                    String order_no = jsonObject.getString("order_no");
+                    String pay_channel = jsonObject.getString("pay_channel");
+                    String pay_amt = jsonObject.getString("pay_amt");
+                    String paymentId = jsonObject.getString("id");
+                    String adaorderid = jsonObject.getString("party_order_id");
+                    String fee_amt = jsonObject.getString("fee_amt");
+                    lincensePlateService.updateLincensePlate(order_no, pay_channel, pay_amt, paymentId, adaorderid, fee_amt);
                 }
 
             }
@@ -181,14 +179,15 @@ public class AdapayController {
             if (checkSign) {
                 //验签成功逻辑
                 JSONObject jsonObject = JSONObject.parseObject(data);
-                String order_no = jsonObject.getString("order_no");
-                String pay_channel = jsonObject.getString("pay_channel");
-                String pay_amt = jsonObject.getString("pay_amt");
-                String paymentId = jsonObject.getString("id");
                 String status = jsonObject.getString("status");
-                String adaorderid = jsonObject.getString("party_order_id");
                 if (status.equals("succeeded")) {
-                    lincensePlateService.updateLincensePlateForPrePay(order_no, pay_channel, pay_amt, paymentId, adaorderid);
+                    String order_no = jsonObject.getString("order_no");
+                    String pay_channel = jsonObject.getString("pay_channel");
+                    String pay_amt = jsonObject.getString("pay_amt");
+                    String paymentId = jsonObject.getString("id");
+                    String adaorderid = jsonObject.getString("party_order_id");
+                    String fee_amt = jsonObject.getString("fee_amt");
+                    lincensePlateService.updateLincensePlateForPrePay(order_no, pay_channel, pay_amt, paymentId, adaorderid, fee_amt);
                 }
             }
         } catch (Exception e) {
@@ -218,14 +217,15 @@ public class AdapayController {
             if (checkSign) {
                 //验签成功逻辑
                 JSONObject jsonObject = JSONObject.parseObject(data);
-                String order_no = jsonObject.getString("order_no");
-                String pay_channel = jsonObject.getString("pay_channel");
-                String pay_amt = jsonObject.getString("pay_amt");
-                String paymentId = jsonObject.getString("id");
                 String status = jsonObject.getString("status");
-                String adaorderid = jsonObject.getString("party_order_id");
                 if (status.equals("succeeded")) {
-                    lincensePlateService.updateLincensePlateForNoPlate(order_no, pay_channel, pay_amt, paymentId, adaorderid);
+                    String order_no = jsonObject.getString("order_no");
+                    String pay_channel = jsonObject.getString("pay_channel");
+                    String pay_amt = jsonObject.getString("pay_amt");
+                    String paymentId = jsonObject.getString("id");
+                    String adaorderid = jsonObject.getString("party_order_id");
+                    String fee_amt = jsonObject.getString("fee_amt");
+                    lincensePlateService.updateLincensePlateForNoPlate(order_no, pay_channel, pay_amt, paymentId, adaorderid, fee_amt);
                 }
             }
         } catch (Exception e) {
@@ -395,12 +395,20 @@ public class AdapayController {
                 if (lincensePlateHistories.size() > 0) {
                     logger.error("退款详情：车牌:{},退款金额：{},订单号:{}", lincensePlateHistories.get(0).getLpLincensePlateIdCar(), refund_amt, lincensePlateHistories.get(0).getLpOrderId());
                     LincensePlateHistory record = new LincensePlateHistory();
+
+                    JinshiparkReturnmoneyExample jinshiparkReturnmoneyExample = new JinshiparkReturnmoneyExample();
+                    JinshiparkReturnmoneyExample.Criteria criteria = jinshiparkReturnmoneyExample.createCriteria();
+                    criteria.andOrderidEqualTo(lincensePlateHistories.get(0).getLpOrderId());
+
                     if (status.equals("succeeded")) {
+                        //更新退款表中的退款手续费
+                        String fee_amt = jsonObject.getString("fee_amt");
+                        JinshiparkReturnmoney returnMoney = new JinshiparkReturnmoney();
+                        returnMoney.setRefundservicefee(fee_amt);
+                        jinshiparkReturnmoneyMapper.updateByExampleSelective(returnMoney, jinshiparkReturnmoneyExample);
                         record.setRefundstatus("1");
                     } else {
-                        JinshiparkReturnmoneyExample jinshiparkReturnmoneyExample = new JinshiparkReturnmoneyExample();
-                        JinshiparkReturnmoneyExample.Criteria criteria = jinshiparkReturnmoneyExample.createCriteria();
-                        criteria.andOrderidEqualTo(lincensePlateHistories.get(0).getLpOrderId());
+
                         jinshiparkReturnmoneyMapper.deleteByExample(jinshiparkReturnmoneyExample);
                         record.setRefundstatus("0");
                     }

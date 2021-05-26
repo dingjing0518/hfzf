@@ -31,10 +31,10 @@ public class LincensePlateHistory implements Serializable {
     @ApiModelProperty(value = "订单id")
     private String lpOrderId;
 
-    @ApiModelProperty(value = "车辆类型")
+    @ApiModelProperty(value = "车辆类型，区域名称")
     private String lpCarType;
 
-    @ApiModelProperty(value = "车辆颜色")
+    @ApiModelProperty(value = "车辆颜色,公司名称")
     private String lpCarColor;
 
     @ApiModelProperty(value = "车牌类型")
@@ -48,6 +48,9 @@ public class LincensePlateHistory implements Serializable {
 
     @ApiModelProperty(value = "实收费用")
     private String lpParkingRealCost;
+
+    @ApiModelProperty(value = "手续费")
+    private String servicefee;
 
     @ApiModelProperty(value = "入场口名")
     private String lpInboundCname;
@@ -90,6 +93,9 @@ public class LincensePlateHistory implements Serializable {
 
     @ApiModelProperty(value = "支付平台订单ID")
     private String adaorderid;
+
+    @ApiModelProperty(value = "退款手续费")
+    private String refundservicefee;
 
     private static final long serialVersionUID = 1L;
 
@@ -213,6 +219,14 @@ public class LincensePlateHistory implements Serializable {
         this.lpParkingRealCost = lpParkingRealCost;
     }
 
+    public String getServicefee() {
+        return servicefee;
+    }
+
+    public void setServicefee(String servicefee) {
+        this.servicefee = servicefee;
+    }
+
     public String getLpInboundCname() {
         return lpInboundCname;
     }
@@ -325,6 +339,14 @@ public class LincensePlateHistory implements Serializable {
         this.adaorderid = adaorderid;
     }
 
+    public String getRefundservicefee() {
+        return refundservicefee;
+    }
+
+    public void setRefundservicefee(String refundservicefee) {
+        this.refundservicefee = refundservicefee;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -346,6 +368,7 @@ public class LincensePlateHistory implements Serializable {
         sb.append(", lpParkingOften=").append(lpParkingOften);
         sb.append(", lpParkingCost=").append(lpParkingCost);
         sb.append(", lpParkingRealCost=").append(lpParkingRealCost);
+        sb.append(", servicefee=").append(servicefee);
         sb.append(", lpInboundCname=").append(lpInboundCname);
         sb.append(", lpDepartureCname=").append(lpDepartureCname);
         sb.append(", lpParkingName=").append(lpParkingName);
@@ -360,6 +383,7 @@ public class LincensePlateHistory implements Serializable {
         sb.append(", refundstatus=").append(refundstatus);
         sb.append(", refundmoney=").append(refundmoney);
         sb.append(", adaorderid=").append(adaorderid);
+        sb.append(", refundservicefee=").append(refundservicefee);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -445,6 +445,76 @@ public class JinshiparkReturnmoneyExample {
             return (Criteria) this;
         }
 
+        public Criteria andRefundservicefeeIsNull() {
+            addCriterion("RefundServiceFee is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeIsNotNull() {
+            addCriterion("RefundServiceFee is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeEqualTo(String value) {
+            addCriterion("RefundServiceFee =", value, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeNotEqualTo(String value) {
+            addCriterion("RefundServiceFee <>", value, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeGreaterThan(String value) {
+            addCriterion("RefundServiceFee >", value, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeGreaterThanOrEqualTo(String value) {
+            addCriterion("RefundServiceFee >=", value, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeLessThan(String value) {
+            addCriterion("RefundServiceFee <", value, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeLessThanOrEqualTo(String value) {
+            addCriterion("RefundServiceFee <=", value, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeLike(String value) {
+            addCriterion("RefundServiceFee like", value, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeNotLike(String value) {
+            addCriterion("RefundServiceFee not like", value, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeIn(List<String> values) {
+            addCriterion("RefundServiceFee in", values, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeNotIn(List<String> values) {
+            addCriterion("RefundServiceFee not in", values, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeBetween(String value1, String value2) {
+            addCriterion("RefundServiceFee between", value1, value2, "refundservicefee");
+            return (Criteria) this;
+        }
+
+        public Criteria andRefundservicefeeNotBetween(String value1, String value2) {
+            addCriterion("RefundServiceFee not between", value1, value2, "refundservicefee");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatetimeIsNull() {
             addCriterion("CreateTime is null");
             return (Criteria) this;

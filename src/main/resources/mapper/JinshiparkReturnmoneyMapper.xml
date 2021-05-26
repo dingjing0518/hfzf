@@ -7,6 +7,7 @@
     <result column="OrderID" jdbcType="VARCHAR" property="orderid" />
     <result column="HFOrderID" jdbcType="VARCHAR" property="hforderid" />
     <result column="ReturnMoney" jdbcType="VARCHAR" property="returnmoney" />
+    <result column="RefundServiceFee" jdbcType="VARCHAR" property="refundservicefee" />
     <result column="CreateTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="UserName" jdbcType="VARCHAR" property="username" />
     <result column="ParkID" jdbcType="VARCHAR" property="parkid" />
@@ -71,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, CarNum, OrderID, HFOrderID, ReturnMoney, CreateTime, UserName, ParkID, Remarks
+    id, CarNum, OrderID, HFOrderID, ReturnMoney, RefundServiceFee, CreateTime, UserName, 
+    ParkID, Remarks
   </sql>
   <select id="selectByExample" parameterType="com.jinshipark.hfzf.model.JinshiparkReturnmoneyExample" resultMap="BaseResultMap">
     select
@@ -108,11 +110,13 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into jinshipark_returnmoney (CarNum, OrderID, HFOrderID, 
-      ReturnMoney, CreateTime, UserName, 
-      ParkID, Remarks)
+      ReturnMoney, RefundServiceFee, CreateTime, 
+      UserName, ParkID, Remarks
+      )
     values (#{carnum,jdbcType=VARCHAR}, #{orderid,jdbcType=VARCHAR}, #{hforderid,jdbcType=VARCHAR}, 
-      #{returnmoney,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{username,jdbcType=VARCHAR}, 
-      #{parkid,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR})
+      #{returnmoney,jdbcType=VARCHAR}, #{refundservicefee,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{username,jdbcType=VARCHAR}, #{parkid,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.jinshipark.hfzf.model.JinshiparkReturnmoney">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -131,6 +135,9 @@
       </if>
       <if test="returnmoney != null">
         ReturnMoney,
+      </if>
+      <if test="refundservicefee != null">
+        RefundServiceFee,
       </if>
       <if test="createtime != null">
         CreateTime,
@@ -157,6 +164,9 @@
       </if>
       <if test="returnmoney != null">
         #{returnmoney,jdbcType=VARCHAR},
+      </if>
+      <if test="refundservicefee != null">
+        #{refundservicefee,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null">
         #{createtime,jdbcType=TIMESTAMP},
@@ -196,6 +206,9 @@
       <if test="record.returnmoney != null">
         ReturnMoney = #{record.returnmoney,jdbcType=VARCHAR},
       </if>
+      <if test="record.refundservicefee != null">
+        RefundServiceFee = #{record.refundservicefee,jdbcType=VARCHAR},
+      </if>
       <if test="record.createtime != null">
         CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
@@ -220,6 +233,7 @@
       OrderID = #{record.orderid,jdbcType=VARCHAR},
       HFOrderID = #{record.hforderid,jdbcType=VARCHAR},
       ReturnMoney = #{record.returnmoney,jdbcType=VARCHAR},
+      RefundServiceFee = #{record.refundservicefee,jdbcType=VARCHAR},
       CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
       UserName = #{record.username,jdbcType=VARCHAR},
       ParkID = #{record.parkid,jdbcType=VARCHAR},
@@ -243,6 +257,9 @@
       <if test="returnmoney != null">
         ReturnMoney = #{returnmoney,jdbcType=VARCHAR},
       </if>
+      <if test="refundservicefee != null">
+        RefundServiceFee = #{refundservicefee,jdbcType=VARCHAR},
+      </if>
       <if test="createtime != null">
         CreateTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
@@ -264,6 +281,7 @@
       OrderID = #{orderid,jdbcType=VARCHAR},
       HFOrderID = #{hforderid,jdbcType=VARCHAR},
       ReturnMoney = #{returnmoney,jdbcType=VARCHAR},
+      RefundServiceFee = #{refundservicefee,jdbcType=VARCHAR},
       CreateTime = #{createtime,jdbcType=TIMESTAMP},
       UserName = #{username,jdbcType=VARCHAR},
       ParkID = #{parkid,jdbcType=VARCHAR},
