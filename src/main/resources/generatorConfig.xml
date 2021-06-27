@@ -38,15 +38,15 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.jinshipark.hfzf.mapper"
                              targetProject="D:\GitRepository\hfzf\src\main\java"/>
         <!--生成全部表tableName设为%-->
-        <table tableName="lincense_plate">
+        <table tableName="jinshipark_inrecord_road">
             <generatedKey column="lp_id" sqlStatement="MySql" identity="true"/>
         </table>
-        <table tableName="lincense_plate_history">
+        <table tableName="jinshipark_outrecord_road">
             <generatedKey column="lp_id" sqlStatement="MySql" identity="true"/>
         </table>
-        <table tableName="jinshipark_returnmoney">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
+<!--        <table tableName="jinshipark_returnmoney">-->
+<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
 <!--        <table tableName="member">-->
 <!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
 <!--        </table>-->

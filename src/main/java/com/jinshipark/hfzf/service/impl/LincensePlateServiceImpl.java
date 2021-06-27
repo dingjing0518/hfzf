@@ -1,9 +1,6 @@
 package com.jinshipark.hfzf.service.impl;
 
-import com.jinshipark.hfzf.mapper.JinshiParkSettingMapper;
-import com.jinshipark.hfzf.mapper.JinshiparkCamerasMapper;
-import com.jinshipark.hfzf.mapper.LincensePlateHistoryMapper;
-import com.jinshipark.hfzf.mapper.LincensePlateMapper;
+import com.jinshipark.hfzf.mapper.*;
 import com.jinshipark.hfzf.mapper2.JinshiparkApakeyMapper;
 import com.jinshipark.hfzf.model.*;
 import com.jinshipark.hfzf.model.vo.LincensePlateVO;
@@ -35,6 +32,12 @@ public class LincensePlateServiceImpl implements LincensePlateService {
 
     @Autowired
     private JinshiparkApakeyMapper jinshiparkApakeyMapper;
+
+    @Autowired
+    private JinshiparkInrecordRoadMapper jinshiparkInrecordRoadMapper;
+
+    @Autowired
+    private JinshiparkOutrecordRoadMapper jinshiparkOutrecordRoadMapper;
 
     @Override
     public JinshiparkJSONResult getLincensePlate(LincensePlateVO lincensePlateVO) {
@@ -70,6 +73,43 @@ public class LincensePlateServiceImpl implements LincensePlateService {
         } else {
             logger.error("===更新成功订单号:{}失败===", order_no);
         }
+    }
+
+    @Override
+    public void updateLincensePlateForRoad(String order_no, String pay_channel, String pay_amt, String paymentId, String adaorderid, String fee_amt) {
+        JinshiparkInrecordRoadExample example = new JinshiparkInrecordRoadExample();
+        JinshiparkInrecordRoadExample.Criteria criteria = example.createCriteria();
+        criteria.andLpOrderIdEqualTo(order_no);
+        List<JinshiparkInrecordRoad> jinshiparkInrecordRoads = jinshiparkInrecordRoadMapper.selectByExample(example);
+        if (jinshiparkInrecordRoads.size() > 0) {
+            JinshiparkInrecordRoad inrecordRoad = new JinshiparkInrecordRoad();
+            inrecordRoad.setLpOrderState("支付成功");//订单状态
+            inrecordRoad.setLpPaymentType("扫码支付出场");//支付方式
+            inrecordRoad.setLpParkingRealCost(pay_amt);//实付金额
+            inrecordRoad.setPaymentid(paymentId);
+            inrecordRoad.setAdaorderid(adaorderid);
+            inrecordRoad.setServicefee(fee_amt);
+            inrecordRoad.setLpDepartureTime(new Date());//离场时间
+            logger.error("===扫码支付回调参数(道路停车)===");
+            logger.error("订单号:{},支付金额:{}元", order_no, pay_amt);
+            int result = jinshiparkInrecordRoadMapper.updateByExampleSelective(inrecordRoad, example);
+            if (result > 0) {
+                logger.error("===更新成功订单号:{}成功===", order_no);
+                //移动在场记录表里数据到在场历史表里
+                List<JinshiparkInrecordRoad> roads = jinshiparkInrecordRoadMapper.selectByExample(example);
+                JinshiparkOutrecordRoad outrecordRoad = new JinshiparkOutrecordRoad();
+                BeanUtils.copyProperties(roads.get(0), outrecordRoad);
+                outrecordRoad.setLpId(null);
+                int count = jinshiparkOutrecordRoadMapper.insertSelective(outrecordRoad);
+                if (count > 0) {
+                    jinshiparkInrecordRoadMapper.deleteByExample(example);
+                }
+
+            } else {
+                logger.error("===更新成功订单号:{}失败===", order_no);
+            }
+        }
+
     }
 
     @Override

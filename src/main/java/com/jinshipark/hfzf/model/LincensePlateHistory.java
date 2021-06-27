@@ -76,6 +76,9 @@ public class LincensePlateHistory implements Serializable {
     @ApiModelProperty(value = "车牌收费类型（0 表示临时车，1 表示会员车）")
     private Integer lpLgType;
 
+    @ApiModelProperty(value = "登录账户")
+    private String loginname;
+
     @ApiModelProperty(value = "进场图片保存路径")
     private String inpicpath;
 
@@ -291,6 +294,14 @@ public class LincensePlateHistory implements Serializable {
         this.lpLgType = lpLgType;
     }
 
+    public String getLoginname() {
+        return loginname;
+    }
+
+    public void setLoginname(String loginname) {
+        this.loginname = loginname;
+    }
+
     public String getInpicpath() {
         return inpicpath;
     }
@@ -377,6 +388,7 @@ public class LincensePlateHistory implements Serializable {
         sb.append(", lpPaymentType=").append(lpPaymentType);
         sb.append(", lpLgId=").append(lpLgId);
         sb.append(", lpLgType=").append(lpLgType);
+        sb.append(", loginname=").append(loginname);
         sb.append(", inpicpath=").append(inpicpath);
         sb.append(", outpicpath=").append(outpicpath);
         sb.append(", paymentid=").append(paymentid);

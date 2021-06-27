@@ -6,4 +6,6 @@ import com.jinshipark.hfzf.vo.AdapayRequstVO;
 
 public interface AdapayAliPayService {
     JinshiparkJSONResult alipayExecutePayment(AdapayRequstVO adapayRequstVO);
+
+    JinshiparkJSONResult alipayExecutePaymentForRoad(AdapayRequstVO adapayRequstVO);
 }

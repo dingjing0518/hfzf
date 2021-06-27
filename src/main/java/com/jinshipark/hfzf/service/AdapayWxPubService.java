@@ -6,4 +6,6 @@ import com.jinshipark.hfzf.vo.AdapayRequstVO;
 
 public interface AdapayWxPubService {
     JinshiparkJSONResult wxPubExecutePayment(AdapayRequstVO adapayRequstVO);
+
+    JinshiparkJSONResult wxPubExecutePaymentForRoad(AdapayRequstVO adapayRequstVO);
 }

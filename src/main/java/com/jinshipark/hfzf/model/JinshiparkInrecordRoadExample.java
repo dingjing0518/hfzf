@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class LincensePlateExample {
+public class JinshiparkInrecordRoadExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public LincensePlateExample() {
+    public JinshiparkInrecordRoadExample() {
         oredCriteria = new ArrayList<>();
     }
 

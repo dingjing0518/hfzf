@@ -74,6 +74,20 @@ public class AdapayController {
         adapayRequstVO.setNotify_url(ADAPayPropertyConfig.getStrValueByKey("notify_url"));
         return adapayAliPayService.alipayExecutePayment(adapayRequstVO);
     }
+    /**
+     * 支付宝APP支付--道路停车
+     *
+     * @param adapayRequstVO 请求参数实体
+     * @return 处理结果
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/alipayExecutePaymentForRoad", method = RequestMethod.POST)
+    @ResponseBody
+    public JinshiparkJSONResult alipayExecutePaymentForRoad(@RequestBody AdapayRequstVO adapayRequstVO) {
+        adapayRequstVO.setNotify_url(ADAPayPropertyConfig.getStrValueByKey("road_notify_url"));
+        return adapayAliPayService.alipayExecutePaymentForRoad(adapayRequstVO);
+    }
+
 
     /**
      * 微信公众号支付
@@ -89,6 +103,19 @@ public class AdapayController {
         return adapayWxPubService.wxPubExecutePayment(adapayRequstVO);
     }
 
+    /**
+     * 微信公众号支付--道路停车
+     *
+     * @param adapayRequstVO 请求参数实体
+     * @return 处理结果
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/wxPubExecutePaymentForRoad", method = RequestMethod.POST)
+    @ResponseBody
+    public JinshiparkJSONResult wxPubExecutePaymentForRoad(@RequestBody AdapayRequstVO adapayRequstVO) {
+        adapayRequstVO.setNotify_url(ADAPayPropertyConfig.getStrValueByKey("road_notify_url"));
+        return adapayWxPubService.wxPubExecutePaymentForRoad(adapayRequstVO);
+    }
     /**
      * 预支付接口
      *
@@ -156,7 +183,44 @@ public class AdapayController {
             logger.error("异步回调异常，Exception：{}", e.getMessage());
         }
     }
+    /**
+     * 汇付支付回调--道路停车
+     *
+     * @param request 请求
+     */
+    @PostMapping("/roadCallback")
+    public void roadCallback(HttpServletRequest request) {
+        try {
+            //验签请参data
+            String data = request.getParameter("data");
+            //验签请参sign
+            String sign = request.getParameter("sign");
+            //验签标记
+            boolean checkSign;
+            //验签请参publicKey
+            String publicKey = AdapayCore.PUBLIC_KEY;
+            logger.error("验签请参：data={},sign={}", data, sign);
+            //验签
+            checkSign = AdapaySign.verifySign(data, sign, publicKey);
+            if (checkSign) {
+                //验签成功逻辑
+                JSONObject jsonObject = JSONObject.parseObject(data);
+                String status = jsonObject.getString("status");
+                if (status.equals("succeeded")) {
+                    String order_no = jsonObject.getString("order_no");
+                    String pay_channel = jsonObject.getString("pay_channel");
+                    String pay_amt = jsonObject.getString("pay_amt");
+                    String paymentId = jsonObject.getString("id");
+                    String adaorderid = jsonObject.getString("party_order_id");
+                    String fee_amt = jsonObject.getString("fee_amt");
+                    lincensePlateService.updateLincensePlateForRoad(order_no, pay_channel, pay_amt, paymentId, adaorderid, fee_amt);
+                }
 
+            }
+        } catch (Exception e) {
+            logger.error("异步回调异常，Exception：{}", e.getMessage());
+        }
+    }
     /**
      * 汇付预支付回调
      *

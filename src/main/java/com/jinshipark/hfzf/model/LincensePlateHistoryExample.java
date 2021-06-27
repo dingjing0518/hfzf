@@ -1725,6 +1725,76 @@ public class LincensePlateHistoryExample {
             return (Criteria) this;
         }
 
+        public Criteria andLoginnameIsNull() {
+            addCriterion("LoginName is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoginnameIsNotNull() {
+            addCriterion("LoginName is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoginnameEqualTo(String value) {
+            addCriterion("LoginName =", value, "loginname");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoginnameNotEqualTo(String value) {
+            addCriterion("LoginName <>", value, "loginname");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoginnameGreaterThan(String value) {
+            addCriterion("LoginName >", value, "loginname");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoginnameGreaterThanOrEqualTo(String value) {
+            addCriterion("LoginName >=", value, "loginname");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoginnameLessThan(String value) {
+            addCriterion("LoginName <", value, "loginname");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoginnameLessThanOrEqualTo(String value) {
+            addCriterion("LoginName <=", value, "loginname");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoginnameLike(String value) {
+            addCriterion("LoginName like", value, "loginname");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoginnameNotLike(String value) {
+            addCriterion("LoginName not like", value, "loginname");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoginnameIn(List<String> values) {
+            addCriterion("LoginName in", values, "loginname");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoginnameNotIn(List<String> values) {
+            addCriterion("LoginName not in", values, "loginname");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoginnameBetween(String value1, String value2) {
+            addCriterion("LoginName between", value1, value2, "loginname");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoginnameNotBetween(String value1, String value2) {
+            addCriterion("LoginName not between", value1, value2, "loginname");
+            return (Criteria) this;
+        }
+
         public Criteria andInpicpathIsNull() {
             addCriterion("InPicPath is null");
             return (Criteria) this;

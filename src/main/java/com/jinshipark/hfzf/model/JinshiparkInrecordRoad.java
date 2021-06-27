@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 
-public class LincensePlate implements Serializable {
+public class JinshiparkInrecordRoad implements Serializable {
     private Integer lpId;
 
     @ApiModelProperty(value = "会员名")
